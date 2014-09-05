@@ -1,0 +1,16 @@
+@mixin container () {
+  margin: 0 auto;
+  width: $layout-width;
+  max-width: $layout-max;
+}
+
+@mixin grid ($grid, $cols, $float: left, $display: inline, $margin: $layout-margin) {
+  display: $display;
+  float: $float;
+  @if $margin != 0 {
+    margin: 0 $margin;
+    width: ( 100% / $grid * $cols ) - ( $margin * 2 );
+  } @else {
+    width: ( 100% / $grid * $cols );
+  }
+}

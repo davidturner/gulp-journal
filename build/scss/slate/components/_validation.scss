@@ -1,0 +1,98 @@
+@if $component-validation == 1 {
+  .#{$class-validation},
+  .#{$class-validation}__error,
+  .#{$class-validation}__warning,
+  .#{$class-validation}__notification,
+  .#{$class-validation}__info,
+  .#{$class-validation}__success {
+    text-align: left;
+    display: block;
+    margin: 0.5em 0;
+    padding: 0.25em 0.5em;
+    color: #fff;
+    &:before {
+      content: '';
+      margin-right: 0.25em;
+    }
+    &.arrow {
+      position: relative;
+    }
+  }
+  .#{$class-validation}__error {
+    background: $error-color;
+    border: 1px solid $error-border-color;
+    &:before {
+      content: $error-text;
+    }
+    &.#{$class-arrow}__left:after {
+      border-right-color: $error-border-color;
+    }
+    &.#{$class-arrow}__right:after {
+      border-left-color: $error-border-color;
+    }
+    &.#{$class-arrow}__top:after {
+      border-bottom-color: $error-border-color;
+    }
+    &.#{$class-arrow}__bottom:after {
+      border-top-color: $error-border-color;
+    }
+  }
+  .#{$class-validation}__warning {
+    background: $warning-color;
+    border: 1px solid $warning-border-color;
+    &:before {
+      content: $warning-text;
+    }
+    &.#{$class-arrow}__left:after {
+      border-right-color: $warning-border-color;
+    }
+    &.#{$class-arrow}__right:after {
+      border-left-color: $warning-border-color;
+    }
+    &.#{$class-arrow}__top:after {
+      border-bottom-color: $warning-border-color;
+    }
+    &.#{$class-arrow}__bottom:after {
+      border-top-color: $warning-border-color;
+    }
+  }
+  .#{$class-validation}__notification,
+  .#{$class-validation}__info {
+    background: $info-color;
+    border: 1px solid $info-border-color;
+    &:before {
+      content: $info-text;
+    }
+    &.#{$class-arrow}__left:after {
+      border-right-color: $info-border-color;
+    }
+    &.#{$class-arrow}__right:after {
+      border-left-color: $info-border-color;
+    }
+    &.#{$class-arrow}__top:after {
+      border-bottom-color: $info-border-color;
+    }
+    &.#{$class-arrow}__bottom:after {
+      border-top-color: $info-border-color;
+    }
+  }
+  .#{$class-validation}__success {
+    background: $success-color;
+    border: 1px solid $success-border-color;
+    &:before {
+      content: $success-text;
+    }
+    &.#{$class-arrow}__left:after {
+      border-right-color: $success-border-color;
+    }
+    &.#{$class-arrow}__right:after {
+      border-left-color: $success-border-color;
+    }
+    &.#{$class-arrow}__top:after {
+      border-bottom-color: $success-border-color;
+    }
+    &.#{$class-arrow}__bottom:after {
+      border-top-color: $success-border-color;
+    }
+  }
+}

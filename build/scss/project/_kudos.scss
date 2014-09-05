@@ -1,0 +1,92 @@
+/*
+ * Kudos
+ */
+$kudos_duration: 1.5s;
+$kudos_duration_finish: .45s;
+$kudos_width: 2em;
+$kudos_height: 2em;
+$kudos_color_alpha: $background-color;
+$kudos_color_beta: $link-color;
+
+.kudos-wrapper {
+  display: inline-block;
+  float: right;
+  margin-top: -0.8em;
+  margin-right: 110px;
+}
+
+.kudos {
+  color:$primary-color;
+  position:relative;
+  width:$kudos_width;
+  height:$kudos_height;
+  margin:.5em auto 1.5em auto;
+  background:$kudos_color_alpha;
+  box-shadow:
+    inset 0 0 0 3px $primary-color,
+    inset 0 0 0 $kudos_width / 3 $kudos_color_alpha,
+    inset 0 0 0 $kudos_width $primary-color
+  ;
+  line-height:$kudos_height;
+  text-align:center;
+  border-radius:50%;
+  -webkit-background-clip: padding-box;
+  transition: box-shadow $kudos_duration_finish / 2 ease-out;
+  display: block;
+
+  &:before {
+    transition: font-size $kudos_duration_finish ease-in;
+    font-size:1.75em;
+    line-height:1.75;
+    color:$kudos_color_alpha;
+  }
+
+  &.active {
+    transition: box-shadow $kudos_duration linear;
+    box-shadow:
+      inset 0 0 0 .25em $primary-color,
+      inset 0 0 0 0 $kudos_color_alpha,
+      inset 0 0 0 .75em rgba($kudos_color_beta, .75),
+      inset 0 0 0 $kudos_width $kudos_color_beta
+    ;
+
+    &:after {
+       content: 'Don\'t move!';
+    }
+  }
+
+  &.finish {
+    transition: box-shadow $kudos_duration_finish linear,
+                transform $kudos_duration_finish * 1.25 ease-in-out;
+    box-shadow:
+      inset 0 0 0 3px rgba($kudos_color_beta, .5),
+      inset 0 0 0 .5em $kudos_color_alpha,
+      inset 0 0 0 $kudos_width $kudos_color_beta
+    ;
+
+    &:hover {
+      transform: scale(1.25, 1.25), translateY(-.75em);
+    }
+
+    &:before {
+      font-size:2.25em;
+      line-height:2.25;
+      color:$kudos_color_alpha;
+    }
+  }
+
+  &:after {
+    position:relative;
+    content: attr(data-amount) ' Kudos';
+    top:0;
+    left:100%;
+    width: 110px;
+    // height: 0;
+    line-height: 0;
+    text-align:left;
+    display: inline-block;
+    line-height:1em;
+    padding-left: 0.25em;
+    // margin: 0 -2em;
+  }
+}

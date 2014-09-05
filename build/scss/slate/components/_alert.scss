@@ -1,0 +1,42 @@
+@if $component-alert == 1 {
+  .#{$class-alert} {
+    width: 400px;
+    margin: 1.5em 0;
+    border: 1px solid adjust-color($background-color, $saturation:  9%,  $lightness: -11%);
+    p {
+      padding: 0.5rem 1rem;
+      margin-top: 0;
+    }
+    h2 {
+      margin-top: 0;
+      border-left: 0;
+      border-top: 0;
+      border-right: 0;
+    }
+  }
+  .#{$class-alert}--error, .#{$class-alert}--warning, .#{$class-alert}--success, .#{$class-alert}--info {
+    padding: 0.5em 1em;
+    margin: 0;
+  }
+  .#{$class-alert}--error {
+    background: $error-color;
+    border: 1px solid $error-border-color;
+  }
+  .#{$class-alert}--warning {
+    background: $warning-color;
+    border: 1px solid $warning-border-color;
+  }
+  .#{$class-alert}--success {
+    background: $success-color;
+    border: 1px solid $success-border-color;
+  }
+  .#{$class-alert}--info {
+    background: $info-color;
+    border: 1px solid $info-border-color;
+  }
+  .#{$class-alert}__footer {
+    padding: 0.5rem 1rem;
+    border-top: 1px solid adjust-color($background-color, $saturation:  9%,  $lightness: -11%);
+    background: $background-color;
+  }
+}

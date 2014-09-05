@@ -1,0 +1,120 @@
+body {
+  @media all and (min-width: 1200px) {
+    font-size: $text-percentage * 1.1;
+  }
+}
+
+main, .main {
+  width: 90%;
+  max-width: 1000px;
+  display: block;
+  margin: 0 auto;
+  padding-bottom: 4em;
+}
+
+.post-title {
+  margin-bottom: 0;
+}
+.post-meta {
+  margin-top: 0;
+}
+
+ul, ol {
+  padding-left: 2em;
+  @media all and (min-width: 800px) {
+    padding-left: 0;
+    ul, ol {
+      padding-left: 2em;
+    }
+  }
+}
+
+ul {
+  list-style-type: square;
+}
+
+blockquote p:first-of-type {
+  padding-top: 0;
+}
+
+.pullquote {
+  width: 50%;
+  display: inline-block;
+  margin: 5%;
+  border-left: 0;
+  position: relative;
+  padding: 0;
+  &:nth-of-type(odd) {
+    float: left;
+    margin-left: 0;
+    @media all and (min-width: 1200px) {
+      left: -15%;
+      margin-right: -10%;
+      // margin-left: 5%;
+    }
+  }
+  &:nth-of-type(even) {
+    float: right;
+    margin-right: 0;
+    @media all and (min-width: 1200px) {
+      right: -15%;
+      margin-left: -10%;
+      // margin-right: 5%;
+    }
+  }
+  p:first-of-type {
+    margin-top: 0;
+  }
+  p:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+article {
+  margin-top: 4em;
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
+.btn {
+  border: 2px solid $link-color;
+  font-family: $text-title;
+  border-radius: 3px;
+  padding: 0 0.5em 2px;
+  &:hover {
+    background: $link-color;
+    color: $background-color;
+    border-color: $link-color;
+    text-decoration: none;
+
+  }
+}
+
+.pagination {
+  margin-top: 4em;
+  text-align: center;
+  font-family: $text-title;
+  li {
+    display: inline;
+  }
+  a {
+    padding: 0.25em 0.5em;
+    border-radius: 3px;
+    background-image: none;
+    text-shadow: none;
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+      text-decoration: none;
+      background-image: none;
+      text-shadow: none;
+    }
+  }
+  .current--page {
+    color: $primary-color;
+    &:hover {
+      background: transparent;
+      cursor: default;
+    }
+  }
+}

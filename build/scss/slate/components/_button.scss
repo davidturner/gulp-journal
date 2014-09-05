@@ -1,0 +1,20 @@
+@if $component-button == 1 {
+  .#{$class-button} {
+    @include simplebutton ($background-color, $aesthetic-semiflat);
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    -webkit-background-clip: padding-box;
+    &:hover:not(:disabled) {
+      cursor: pointer;
+    }
+  }
+  .#{$class-button}--primary {
+    @extend .button;
+    @include simplebutton ($primary-color, $aesthetic-semiflat);
+  }
+  .#{$class-button}--secondary {
+    @extend .button;
+    @include simplebutton ($secondary-color, $aesthetic-semiflat);
+  }
+}

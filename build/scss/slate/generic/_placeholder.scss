@@ -1,0 +1,40 @@
+%container {
+  @include container;
+}
+%hide--text {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+%visually--hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+%invert {
+  background: $body-color;
+  color: $background-color;
+}
+// %link {
+//   color:$link-color;
+//   @include transition (all 300ms ease-in-out);
+//   text-shadow: $text-shadow;
+//   font-weight: $weight-title;
+//   &:link{}
+//   &:visited{}
+//   &:hover, &:active{
+//     color: $hover-color;
+//   }
+// }
+
+//----------------------------------*\
+// EMPTY PLACEHOLDERS (this is defined in aesthetics)
+//----------------------------------*/
+// %input, %input-empty, %input-invalid, %input-valid, %input-checkbox, %input-radio {
+
+// }

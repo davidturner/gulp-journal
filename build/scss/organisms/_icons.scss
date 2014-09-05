@@ -1,0 +1,12 @@
+
+.no-svg .icon-svg {
+	display: inline-block;
+	background-image: url("../img/png-sprite.png");
+	background-size: 0px 0px;
+}
+
+.icon-svg {
+	display: inline-block;
+	background-image: url("../img/svg-sprite.svg");
+	background-repeat: no-repeat;
+}

@@ -1,0 +1,180 @@
+@import 'generic/_brandcolors';
+
+//----------------------------------*\
+// $DEFAULTS
+//----------------------------------*/
+
+//
+// Slate’s default variables. Redefine these in your `_settings.scss` file (found
+// in the inuit.css-web-template) to override them.
+//
+
+//----------------------------------*\
+// COLOR
+//----------------------------------*/
+$primary-color: #585D68!default;
+$secondary-color: complement($primary-color)!default;
+
+//----------------------------------*\
+// DEBUG
+//----------------------------------*/
+
+//
+// Debug mode will visually highlight any potential markup/accessibility quirks
+// in the browser. Set to `true` or `false`.
+//
+$debug: false!default;
+
+//----------------------------------*\
+// BORDER-BOX
+//----------------------------------*/
+
+//
+// Do you want all elements to adopt `box-sizing:border-box;` as per
+// paulirish.com/2012/box-sizing-border-box-ftw ?
+//
+$border-box: 1!default;
+
+//----------------------------------*\
+// TEXT-SELECT
+//----------------------------------*/
+$text-select: 1!default;
+
+//----------------------------------*\
+// RGBA-DARK
+//----------------------------------*/
+$rgba-dark: rgba(0,0,0,0.2)!default;
+
+//----------------------------------*\
+// RGBA-LIGHT
+//----------------------------------*/
+$rgba-light: rgba(255,255,255,0.2)!default;
+
+//----------------------------------*\
+// BACKGROUND
+//----------------------------------*/
+$background-color: #f9f9f9!default;
+
+//----------------------------------*\
+// BODY COLOR
+//----------------------------------*/
+$body-color: #222!default;
+
+//----------------------------------*\
+// LINK
+//----------------------------------*/
+$link-color: $primary-color!default;
+$hover-color: adjust-color($primary-color, $saturation:  9%,  $lightness: -11%)!default;
+
+//----------------------------------*\
+// LAYOUT
+//----------------------------------*/
+$layout-width: 90%!default;
+$layout-max: 1000px!default;
+$layout-columns: 3!default;
+$layout-margin: 2%!default;
+
+
+//----------------------------------*\
+// SYMBOLSET
+//----------------------------------*/
+$ss-standard: 0!default;
+$ss-social: 0!default;
+$ss-socialcircle: 0!default;
+$ss-pika: 0!default;
+$ss-symbolicons: 1!default;
+$ss-gizmo: 0!default;
+
+//----------------------------------*\
+// TEXT-SCALE
+//----------------------------------*/
+$text-scale: 1!default;
+$text-percentage: 120% * $text-scale!default; // Used for setting default font size (75% = 12px)
+$text-margin: 1.5em!default;
+
+//----------------------------------*\
+// TYPOGRAPHY
+//----------------------------------*/
+$font-serif: Georgia, serif !default;
+$font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif !default;
+$font-code: 'andale mono', 'lucida console', monospace !default;
+
+$text-body: skolar, Georgia, serif!default;
+$text-title: ff-meta-web-pro, 'Helvetica Neue', Helvetica, Arial, sans-serif!default;
+$text-form: $text-body!default;
+$text-code: $font-code!default;
+
+$weight-title: 700!default;
+
+$text-offset: 0 1px 0!default;
+$text-shadow: none!default;
+
+$font-dir: '../fonts/'!default;
+
+//----------------------------------*\
+// NOTIFICATIONS
+//----------------------------------*/
+$error-color: #cc031c!default;
+$error-border-color: #f6abab!default;
+$error-text: '␡'!default;
+
+$warning-color: #fff6bf!default;
+$warning-border-color: #fceb77!default;
+$warning-text: '⚠'!default;
+
+$success-color: #e5f8ce!default;
+$success-border-color: #d0f1a6!default;
+$success-text: '✓'!default;
+
+$info-color: #d1ecf7!default;
+$info-border-color: #bcdfef!default;
+$info-text: 'ℹ'!default;
+
+//----------------------------------*\
+// AESTHETIC
+//----------------------------------*/
+$aesthetic-flat: 1!default;           // Applies basic styling to certain elements
+$aesthetic-semiflat: 0!default;       // Applies subtle gradients and shadows over certain elements
+$aesthetic-gradient: 0!default;       // Applies additional gradients and shadows
+$aesthetic-rounded: 0!default;        // Applies rounded corners to certain elements
+
+//----------------------------------*\
+// COMPONENTS
+//----------------------------------*/
+$component-accordion: 0!default;      // Used for styling Accordions
+$component-alert: 0!default;          // Used for styling alerts and modals
+$component-arrow: 0!default;          // Used for styling (and creating) simple CSS arrows on boxes
+$component-breadcrumb: 0!default;     // Used for styling breadcrumb-style navigation
+$component-button: 0!default;         // Used for styling buttons
+$component-carousel: 0!default;       // Used for styling carousels
+$component-form: 0!default;           // Used for styling forms and inputs
+$component-icontext: 1!default;       // Used for styling icons using icon fonts
+$component-island: 0!default;         // Used for styling islands of content
+$component-lightbox: 0!default;       // Used for styling lightboxes
+$component-media: 0!default;          // Used for styling media elements (images/videos/etc)
+$component-nav: 0!default;            // Used for styling navigation menus
+$component-notification: 0!default;   // Used for styling notifications
+$component-pagination: 0!default;     // Used for styling pagination elements
+$component-table: 0!default;          // Used for styling tables
+$component-tooltip: 0!default;        // Used for styling tooltips
+$component-validation: 0!default;     // Used for styling error validation
+$component-well: 0!default;           // Used for styling wells of content
+$component-debug: 0!default;          // Used to help with site debugging
+
+//----------------------------------*\
+// COMPONENT CLASSES
+//----------------------------------*/
+$class-accordion: "accordion"!default;
+$class-alert: "alert"!default;
+$class-arrow: 'arrow'!default;
+$class-breadcrumb: 'breadcrumb'!default;
+$class-button: 'button'!default;
+$class-carousel: 'carousel'!default;
+$class-form: 'form'!default;
+$class-media: 'media'!default;
+$class-nav: 'nav'!default;
+$class-notification: 'notification'!default;
+$class-pagination: 'pagination'!default;
+$class-table: 'table'!default;
+$class-tooltip: 'tooltip'!default;
+$class-validation: 'validation'!default;

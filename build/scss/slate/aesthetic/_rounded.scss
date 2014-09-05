@@ -1,0 +1,16 @@
+@if $aesthetic-rounded == 1 {
+  .button {
+    border-radius: 0.25em;
+  }
+
+  @if $component-validation == 1 {
+    .#{$class-validation},
+    .#{$class-validation}__error,
+    .#{$class-validation}__warning,
+    .#{$class-validation}__notification,
+    .#{$class-validation}__info,
+    .#{$class-validation}__success {
+      border-radius: 0.25em;
+    }
+  }
+}

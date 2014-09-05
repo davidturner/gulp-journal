@@ -1,0 +1,273 @@
+@mixin position ($position: relative, $coordinates: 0 0 0 0) {
+    @if type-of($position) == list {
+        $coordinates:$position;
+        $position:relative;
+    }
+
+    $top:nth($coordinates, 1);
+    $right:nth($coordinates, 2);
+    $bottom:nth($coordinates, 3);
+    $left:nth($coordinates, 4);
+
+    position: $position;
+
+    @if $top == auto {
+        top:$top;
+    }
+    @else if not(unitless($top)) {
+        top:$top;
+    }
+    @if $right == auto {
+        right:$right;
+    }
+    @else if not(unitless($right)) {
+        right:$right;
+    }
+    @if $bottom == auto {
+        bottom:$bottom;
+    }
+    @else if not(unitless($bottom)) {
+        bottom:$bottom;
+    }
+    @if $left == auto {
+        left:$left;
+    }
+    @else if not(unitless($left)) {
+        left:$left;
+    }
+}
+
+@mixin slate-symbol ($slate-background: #95eea2) {
+  @include slate-text-color($slate-background);
+  display: inline-block;
+  line-height: 1;
+  border-radius: 50%;
+  background: $slate-background;
+}
+@mixin slate-symbol-alt ($slate-border: 2px solid #fff) {
+  @include slate-text-color($slate-background);
+  display: inline-block;
+  line-height: 1;
+  border-radius: 50%;
+  border: $slate-border;
+}
+@mixin slate-text-color ($slate-background) {
+  @if lightness($slate-background) > 70% {
+    color: $background-color;
+  } @else {
+    color: $body-color;
+  }
+}
+@mixin slate-text-shadow ($slate-background) {
+  @if lightness($slate-background) > 70% {
+    text-shadow: 0 0 2px $rgba-dark,
+                 0 0 2px $rgba-dark,
+                 0 0 1px $rgba-dark,
+                 0 0 1px $rgba-dark,
+                 0 0 1px $rgba-dark;
+  } @else {
+    text-shadow: 0 0 2px $rgba-light,
+                 0 0 2px $rgba-light,
+                 0 0 1px $rgba-light,
+                 0 0 1px $rgba-light,
+                 0 0 1px $rgba-light;
+  }
+}
+@mixin font-face($font-family, $file-path, $weight: normal, $style: normal, $asset-pipeline: false ) {
+  @font-face {
+    font-family: $font-family;
+    font-weight: $weight;
+    font-style: $style;
+
+    @if $asset-pipeline == true {
+      src: font-url('#{$file-path}.eot');
+      src: font-url('#{$file-path}.eot?#iefix')          format('embedded-opentype'),
+           font-url('#{$file-path}.woff')                format('woff'),
+           font-url('#{$file-path}.ttf')                 format('truetype'),
+           font-url('#{$file-path}.svg##{$font-family}') format('svg');
+    } @else {
+      src: url('#{$file-path}.eot');
+      src: url('#{$file-path}.eot?#iefix')               format('embedded-opentype'),
+           url('#{$file-path}.woff')                     format('woff'),
+           url('#{$file-path}.ttf')                      format('truetype'),
+           url('#{$file-path}.svg##{$font-family}')      format('svg');
+    }
+  }
+}
+@mixin fontFace ($name,$file,$weight:500,$style:normal) {
+  @include font-face($name, $font-dir+''+$file, $weight, $style);
+}
+@mixin slate-media ($query, $size: max-width) {
+  @if $query != retina {
+    @media ($size: $query) { @content; }
+  } @else {
+    @media (min--moz-device-pixel-ratio: 1.3),
+         (-o-min-device-pixel-ratio: 2.6/2),
+         (-webkit-min-device-pixel-ratio: 1.3),
+         (min-device-pixel-ratio: 1.3),
+         (min-resolution: 1.3dppx) { @content; }
+  }
+}
+@mixin slate-image-2x($image, $width, $height) {
+  @media (min--moz-device-pixel-ratio: 1.3),
+         (-o-min-device-pixel-ratio: 2.6/2),
+         (-webkit-min-device-pixel-ratio: 1.3),
+         (min-device-pixel-ratio: 1.3),
+         (min-resolution: 1.3dppx) {
+    /* on retina, use image that's scaled by 2 */
+    background-image: url($image);
+    background-size: $width $height;
+  }
+}
+@mixin simplebutton ($base-color: #c00,$extra: 0) {
+  $border: adjust-color($base-color, $saturation:  9%,  $lightness: -14%);
+  $inset-shadow: adjust-color($base-color, $saturation: -8%,  $lightness:  15%);
+  $stop-gradient: adjust-color($base-color, $saturation:  9%,  $lightness: -11%);
+  @if lightness($base-color) > 70% {
+    color:       hsl(0, 0, 20%);
+    text-shadow: 0 1px 0 adjust-color($base-color, $saturation: 10%, $lightness: 4%);
+  } @else {
+    color: hsl(0, 0, 100%);
+    text-shadow: 0 1px 0 adjust-color($base-color, $saturation:  15%, $lightness: -18%);
+  }
+  border: 1px solid $border;
+  @if $extra == 1 {
+    box-shadow: inset 0 1px 0 0 $inset-shadow;
+  }
+  background-color: $base-color;
+  @if $extra == 1 {
+    @include background-image(linear-gradient(rgba(255,255,255,0.2), rgba(0,0,0,0.2)));
+  }
+  &:hover:not(:disabled) {
+    $base-color-hover:    adjust-color($base-color, $saturation: -4%, $lightness: -5%);
+    $inset-shadow-hover:  adjust-color($base-color, $saturation: -7%, $lightness:  5%);
+    box-shadow: inset 0 1px 0 0 $inset-shadow-hover;
+    background-color: $base-color-hover;
+  }
+  &:active:not(:disabled) {
+    $border-active:       adjust-color($base-color, $saturation: 9%, $lightness: -14%);
+    $inset-shadow-active: adjust-color($base-color, $saturation: 7%, $lightness: -17%);
+    border: 1px solid $border-active;
+    box-shadow: inset 0 0 8px 4px $inset-shadow-active, inset 0 0 8px 4px $inset-shadow-active, 0 1px 1px 0 #eee;
+  }
+}
+
+// It strips the unit of measure and returns it
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+// Converts "px" to "em" using the ($)em-base
+@function convert-to-em($value, $base-value: $em-base)  {
+  $value: strip-unit($value) / strip-unit($base-value) * 1em;
+  @if ($value == 0em) { $value: 0; } // Turn 0em into 0
+  @return $value;
+}
+
+// EM for widths (mainly breakpoints)
+@function em-calc($values, $base-value: $em-base) {
+  $max: length($values); // Get the total number of parameters passed
+
+  // If there is only 1 parameter, then return it as an integer.
+  // This is done because a list can't be multiplied or divided even if it contains a single value
+  @if $max == 1 { @return convert-to-em(nth($values, 1), $base-value); }
+
+  $emValues: (); // This will eventually store the converted $values in a list
+  @for $i from 1 through $max {
+    $emValues: append($emValues, convert-to-em(nth($values, $i), $base-value));
+  }
+  @return $emValues;
+}
+
+// REM for text
+@mixin font-size($size: 16, $important: no) {
+  @if( $important == yes ) {
+  $rem: ($size / 16);
+  font-size: $size + px !important;
+  font-size: $rem + rem !important;
+  } @else {
+    $rem: ($size / 16);
+    font-size: $size + px;
+    font-size: $rem + rem;
+  }
+}
+
+@mixin vertically-center ($child: ".vcentered") {
+  display: table;
+  & > #{$child} {
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
+@mixin notify($background, $arrow: true, $arrow-pos: bottom, $border-colour: false){
+
+    @extend %clearfix;
+    display: block;
+    width: 100%;
+    max-width: 554px;
+    background: $background;
+    border-radius: $border-radius;
+    color: #fff;
+    position: relative;
+    padding: em-calc(3) em-calc(5);
+    margin-bottom: 20px;
+    @media screen and (min-width:em-calc(20)) {
+      padding: em-calc(10);
+    }
+
+    @if $border-colour != false {
+      border: 1px solid $border-colour;
+    }
+
+  @if $arrow == true {
+    &:after, &:before {
+
+      @if $arrow-pos == bottom {
+        bottom: 100%;
+      } @else {
+        top: 100%;
+      }
+
+      left: em-calc(27);
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    &:after {
+      border-color: rgba(0,0,0,0);
+      border-bottom-color: $background;
+      border-width: 10px;
+      margin-left: -10px;
+    }
+
+    @if $border-colour != false {
+      &:before {
+        border-color: rgba(0,0,0,0);
+        border-bottom-color: $border-colour;
+        border-width: 11px;
+        margin-left: -11px;
+      }
+    }
+  }
+
+}
+
+@mixin opacity($value){
+  opacity: $value / 100;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$value})";
+  filter: alpha(opacity=$value);
+}
+
+// Taken from bourbon
+@mixin inline-block {
+  display: inline-block;
+  vertical-align: baseline;
+  zoom: 1;
+  *display: inline;
+  *vertical-align: auto;
+}

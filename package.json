@@ -1,0 +1,41 @@
+{
+  "name": "gulp-invited",
+  "version": "0.0.1",
+  "description": "Gulp Workflow for Get Invited",
+  "main": "gulpfile.js",
+  "private": true,
+  "readme": "N/A",
+  "dependencies": {
+    "gulp": "~3.6",
+    "gulp-concat": "~2.1.7",
+    "gulp-jshint": "~1.4.0",
+    "gulp-rename": "~1.0.0",
+    "gulp-uglify": "~0.2.1"
+  },
+  "devDependencies": {
+    "gulp": "~3.6",
+    "gulp-rename": "~1.0.0",
+    "gulp-concat": "~2.1.7",
+    "gulp-uglify": "~0.2.1",
+    "gulp-jshint": "~1.4.0",
+    "gulp-ruby-sass": "~0.7.0",
+    "gulp-autoprefixer": "0.0.10",
+    "gulp-insert": "~0.2.0",
+    "gulp-replace": "~0.2.0",
+    "gulp-connect": "~0.7.0",
+    "gulp-imagemin": "~0.1.5",
+    "gulp-svgmin": "~0.4.4",
+    "gulp-svg2png": "~0.2.0",
+    "gulp-changed": "~0.3.0",
+    "gulp-raster": "0.0.2",
+    "gulp-file-include": "^0.3.1",
+    "gulp-gzip": "0.0.8",
+    "gulp-image-resize": "^0.5.0",
+    "favicons": "^1.2.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause"
+}

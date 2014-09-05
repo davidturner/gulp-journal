@@ -1,0 +1,14 @@
+@if $component-accordion == 1 {
+  .#{$class-accordion} {
+
+  }
+  .#{$class-accordion}__content {
+    @include transition (all 300ms ease-in-out);
+    min-height: 3em;
+  }
+  .#{$class-accordion}__content--hidden {
+    height: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+}

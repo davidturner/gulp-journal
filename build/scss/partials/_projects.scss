@@ -1,0 +1,85 @@
+.projects, .project {
+  width: 100%;
+  display: block;
+}
+.project {
+  border-top: 5px solid $link-color;
+  clear: both;
+  &:first-child {
+    border-top: 0;
+  }
+}
+
+.project-image, .project-description {
+  height: 0;
+  // background: rgba(0,0,0,0.2);
+  position: relative;
+  width: 100%;
+  display: block;
+  padding-bottom: 100%;
+  @media all and (min-width: 800px) {
+    height: 0;
+    width: 50%;
+    float: left;
+    display: inline-block;
+    padding-bottom: 50%;
+  }
+}
+.project-image {
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  &.project-even {
+    @media all and (min-width: 800px) {
+      float: right;
+    }
+  }
+}
+.project-description {
+  height: auto;
+  padding-bottom: 0;
+  color: $background-color;
+  @media all and (min-width: 800px) {
+    height: 0;
+    padding-bottom: 50%;
+  }
+  // &:after {
+  //   content: '';
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   bottom: 0;
+  //   right: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   background: rgba(255,255,255,0.6);
+  // }
+  a, p {
+    color: $background-color;
+    // color: $primary-color;
+  }
+  .btn {
+    border-color: $background-color;
+    // border-color: $primary-color;
+    &:hover {
+      color: $primary-color;
+      // color: attr(data-color);
+      background: $background-color;
+      border-color: $background-color;
+    }
+  }
+}
+.project-content {
+  padding: 2em 2em;
+  position: relative;
+  z-index: 10;
+  @media all and (min-width: 800px) {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  @media all and (min-width: 1200px) {
+    padding: 2em 10%;
+  }
+}

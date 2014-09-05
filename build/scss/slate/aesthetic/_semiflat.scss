@@ -1,0 +1,5 @@
+@if $aesthetic-semiflat == 1 {
+  %alert {
+    box-shadow: 0 0 5px $rgba-dark;
+  }
+}

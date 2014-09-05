@@ -1,0 +1,13 @@
+a {
+  color:$link-color;
+  transition: all 300ms ease-in-out;
+  text-shadow: $text-shadow;
+  font-weight: $weight-title;
+  text-decoration: none;
+  &:link{}
+  &:visited{}
+  &:hover, &:active{
+    color: $hover-color;
+    // text-decoration: underline;
+  }
+}

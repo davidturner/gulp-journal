@@ -1,0 +1,72 @@
+@if $component-icontext == 1 {
+  %data-icon {
+    position: relative;
+    top: 4px; // For some reason SymbolSet fonts need this to line up right…
+    margin-right: ($text-margin/6);
+    white-space: nowrap;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+  }
+  @if $ss-standard == 1 {
+    @include fontFace('SSStandard','ss-standard');
+    [data-icon-ss-standard]{
+      &::before {
+        @extend %data-icon;
+        content: attr(data-icon-ss-standard);
+        font-family: SSStandard;
+      }
+    }
+  }
+  @if $ss-social == 1
+   or $ss-socialcircle == 1 {
+    [data-icon-ss-social], [data-icon-ss-social-circle]{
+      &::before {
+        @extend %data-icon;
+        content: attr(data-icon-ss-social);
+        font-family: SSSocial;
+      }
+    }
+  }
+  @if $ss-social == 1 {
+    @include fontFace('SSSocial','ss-social-regular');
+  }
+  @if $ss-socialcircle == 1 {
+    @include fontFace('SSSocial','ss-social-circle', 700);
+    [data-icon-ss-social-circle]{
+      &::before {
+        font-weight: 700;
+      }
+    }
+  }
+  @if $ss-pika == 1 {
+    @include fontFace('SSPika','ss-pika');
+    [data-icon-ss-pika]{
+      &::before {
+        @extend %data-icon;
+        content: attr(data-icon-ss-pika);
+        font-family: SSPika;
+      }
+    }
+  }
+  @if $ss-symbolicons == 1 {
+    @include fontFace('SSSymbolicons','ss-symbolicons');
+    [data-icon-ss-symbolicons]{
+      &::before {
+        @extend %data-icon;
+        content: attr(data-icon-ss-symbolicons);
+        font-family: SSSymbolicons;
+      }
+    }
+  }
+  @if $ss-gizmo == 1 {
+    @include fontFace('SSGizmo','ss-gizmo');
+    [data-icon-ss-gizmo]{
+      &::before {
+        @extend %data-icon;
+        content: attr(data-icon-ss-gizmo);
+        font-family: SSGizmo;
+      }
+    }
+  }
+}

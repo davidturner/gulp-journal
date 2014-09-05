@@ -1,0 +1,5 @@
+@if $component-well == 1 {
+  %well {
+    background: adjust-color($background-color, $saturation:  -9%,  $lightness: -11%);
+  }
+}

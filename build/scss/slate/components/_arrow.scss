@@ -1,0 +1,43 @@
+@if $component-arrow == 1 {
+  $arrow-size: 6px!default;
+  .#{$class-arrow}{
+    position: relative;
+    &:after{
+      content: '';
+      border: $arrow-size solid transparent; // Arbitrary Number
+      display: block;
+    }
+  }
+  .#{$class-arrow}--left{
+    &:after{
+      position: absolute;
+      top: 50%;
+      right: 100%;
+      margin-top: ($arrow-size)*-1; // Matches the border size applied to the :before AND :after elements
+    }
+  }
+  .#{$class-arrow}--right{
+    &:after{
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      margin-top: ($arrow-size)*-1;
+    }
+  }
+  .#{$class-arrow}--top{
+    &:after{
+      position: absolute;
+      left: 50%;
+      bottom: 100%;
+      margin-left: ($arrow-size)*-1; // Matches the border size applied to the :before AND :after elements
+    }
+  }
+  .#{$class-arrow}--bottom{
+    &:after{
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      margin-left: ($arrow-size)*-1; // Matches the border size applied to the :before AND :after elements
+    }
+  }
+}

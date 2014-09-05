@@ -1,0 +1,20 @@
+//----------------------------------*\
+// DEFAULT SETUP MAGIC
+//----------------------------------*/
+
+@import 'slate/settings';
+@import 'project';
+@import 'slate/slate';
+@import 'dependencies/sassline';
+
+//----------------------------------*\
+// PARTIALS
+//----------------------------------*/
+
+@import 'partials/__partials';
+
+//----------------------------------*\
+// IMPORT STYLE
+//----------------------------------*/
+
+@import "project/__project.scss";
