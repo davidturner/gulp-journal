@@ -459,32 +459,32 @@ textarea {
   vertical-align: top; // 2
 }
 
-input, textarea,
-input:required:invalid.empty, input:focus:invalid.empty,
-textarea:required:invalid.empty, textarea:focus:invalid.empty {
-  @extend %input !optional;
-  @extend %input-empty !optional;
-}
+// input, textarea,
+// input:required:invalid.empty, input:focus:invalid.empty,
+// textarea:required:invalid.empty, textarea:focus:invalid.empty {
+//   @extend %input !optional;
+//   @extend %input-empty !optional;
+// }
 
-input:required:invalid, input:focus:invalid,
-textarea:required:invalid, textarea:focus:invalid {
-  @extend %input !optional;
-  @extend %input-invalid !optional;
-}
-input:valid,
-input:required:valid, input:focus:valid,
-textarea:required:valid, textarea:focus:valid {
-  @extend %input !optional;
-  @extend %input-valid !optional;
-}
+// input:required:invalid, input:focus:invalid,
+// textarea:required:invalid, textarea:focus:invalid {
+//   @extend %input !optional;
+//   @extend %input-invalid !optional;
+// }
+// input:valid,
+// input:required:valid, input:focus:valid,
+// textarea:required:valid, textarea:focus:valid {
+//   @extend %input !optional;
+//   @extend %input-valid !optional;
+// }
 
-input[type="checkbox"], input[type="checkbox"]:valid, input[type="checkbox"]:invalid {
-  @extend %input-checkbox !optional;
-}
+// input[type="checkbox"], input[type="checkbox"]:valid, input[type="checkbox"]:invalid {
+//   @extend %input-checkbox !optional;
+// }
 
-input[type="radio"], input[type="radio"]:valid, input[type="radio"]:invalid {
-  @extend %input-radio !optional;
-}
+// input[type="radio"], input[type="radio"]:valid, input[type="radio"]:invalid {
+//   @extend %input-radio !optional;
+// }
 
 //----------------------------------*\
 // Tables

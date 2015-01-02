@@ -71,7 +71,7 @@
 }
 .project-content {
   padding: 2em 2em;
-  position: relative;
+  position: absolute;
   z-index: 10;
   @media all and (min-width: 800px) {
     top: 50%;

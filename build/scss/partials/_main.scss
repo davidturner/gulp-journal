@@ -37,6 +37,30 @@ blockquote p:first-of-type {
   padding-top: 0;
 }
 
+.twitter-tweet, .twitter, .tweet {
+  border-left-color: $twitter;
+  position: relative;
+  &:after {
+    content: '';
+    background: $twitter url(../img/twitter.svg) center center no-repeat;
+    background-size: 70%;
+    width: 2em;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 100%;
+  }
+}
+.no-svg {
+  .twitter-tweet, .twitter, .tweet {
+    &:after {
+      content: '';
+      background: $twitter url(../img/twitter.png) center center no-repeat;
+      background-size: 70%;
+    }
+  }
+}
+
 .pullquote {
   width: 50%;
   display: inline-block;
