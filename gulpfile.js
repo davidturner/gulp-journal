@@ -1,6 +1,6 @@
 var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
-    sass = require('gulp-ruby-sass'),
+    sass = require('gulp-sass'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
@@ -54,7 +54,7 @@ gulp.task('svg', function() {
   'use strict';
   gulp.src(app.build + 'img/*.svg')
       .pipe(changed(app.ship + 'img'))
-      // .pipe(svgmin())
+      .pipe(imagemin())
       .pipe(gulp.dest(app.ship + 'img'));
   gulp.start('svg2png');
 });
@@ -62,10 +62,8 @@ gulp.task('svg2png', function() {
   'use strict';
   gulp.src(app.build + 'img/*.svg')
       .pipe(changed(app.ship + 'img'))
-      .pipe(raster())
-      .pipe(rename({
-        extname: '.png'
-      }))
+      .pipe(raster({format: 'png'}))
+      .pipe(rename({extname: '.png'}))
       .pipe(imagemin())
       .pipe(gulp.dest(app.ship + 'img'));
 });
@@ -98,10 +96,8 @@ gulp.task('lint', function() {
 // Compile Our Sass
 gulp.task('sass', function() {
   'use strict';
-  gulp.src(app.build + 'scss/site.live.scss').pipe(sass({
-        noCache: true,
-        style: 'compressed'
-      }))
+  gulp.src(app.build + 'scss/site.live.scss')
+      .pipe(sass())
       .pipe(prefix('last 1 version', '> 1%', 'ie 8', { map: true, to: 'site.live.css' }))
       .pipe(insert.prepend(banner.css))
       .pipe(replace('*/@charset "UTF-8";', '*/\n'))
