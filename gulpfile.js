@@ -1,5 +1,7 @@
 var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
+    spawn       = require('child_process').exec,
+    // sass = require('gulp-ruby-sass'),
     sass = require('gulp-sass'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
@@ -7,7 +9,7 @@ var gulp = require('gulp'),
     prefix = require('gulp-autoprefixer'),
     insert = require('gulp-insert'),
     replace = require('gulp-replace'),
-    // connect = require('gulp-connect'),
+    connect = require('gulp-connect'),
     imagemin = require('gulp-imagemin'),
     // svgmin = require('gulp-svgmin'),
     changed = require('gulp-changed'),
@@ -16,6 +18,8 @@ var gulp = require('gulp'),
     fileinclude = require('gulp-file-include'),
     gzip = require('gulp-gzip'),
     imageResize = require('gulp-image-resize'),
+    pngquant = require('imagemin-pngquant'),
+    shell       = require('gulp-shell'),
     favicons = require('favicons');
 var app = {
     title: 'Gulp Invited',
@@ -26,30 +30,37 @@ var app = {
     build: './build/',
     ship: './ship/'
 };
-favicons({
-    // I/O
-    source: app.build + 'portfolio.png',
-    dest: app.ship + 'icons',
-    // Icon Types
-    android: true,
-    apple: true,
-    coast: true,
-    favicons: true,
-    firefox: true,
-    windows: true,
-    // Miscellaneous
-    html: null,
-    background: '#BD6A6A',
-    tileBlackWhite: false,
-    manifest: null,
-    trueColor: false,
-    logging: false,
-    callback: null
-});
+// favicons({
+//     // I/O
+//     source: app.build + 'portfolio.png',
+//     dest: app.ship + 'icons',
+//     // Icon Types
+//     android: true,
+//     apple: true,
+//     coast: true,
+//     favicons: true,
+//     firefox: true,
+//     windows: true,
+//     // Miscellaneous
+//     html: null,
+//     background: '#BD6A6A',
+//     tileBlackWhite: false,
+//     manifest: null,
+//     trueColor: false,
+//     logging: false,
+//     callback: null
+// });
 var banner = {
     css: '@charset "UTF-8";\n' + '/*!\n' + ' * ' + app.title + '\n' + ' * ' + app.url + '\n' + ' * @author ' + app.author + '\n' + ' * @version ' + app.version + '\n' + ' * Copyright ' + app.copyright + '\n' + ' * Slate Framework v0.0.2 | MIT License | davidturner.name\n' + ' * normalize.css v2.1.0 | MIT License | git.io/normalize\n' + ' */\n',
     js: '/*!\n' + ' * ' + app.title + '\n' + ' * ' + app.url + '\n' + ' * @author ' + app.author + '\n' + ' * @version ' + app.version + '\n' + ' * Copyright ' + app.copyright + '\n' + ' */\n'
 };
+gulp.task('connect', function() {
+  connect.server({
+    root: ['ship/_site'],
+    port: 9000,
+    livereload: true
+  });
+});
 gulp.task('svg', function() {
   'use strict';
   gulp.src(app.build + 'img/*.svg')
@@ -66,6 +77,7 @@ gulp.task('svg2png', function() {
       .pipe(rename({extname: '.png'}))
       .pipe(imagemin())
       .pipe(gulp.dest(app.ship + 'img'));
+  gulp.start('jekyll');
 });
 gulp.task('images', function() {
   'use strict';
@@ -74,8 +86,13 @@ gulp.task('images', function() {
       .pipe(imageResize({
         width: 1000
       }))
-      .pipe(imagemin())
+      .pipe(imagemin({
+          progressive: true,
+          svgoPlugins: [{removeViewBox: false}],
+          use: [pngquant()]
+      }))
       .pipe(gulp.dest(app.ship + 'img'));
+  gulp.start('jekyll');
 });
 gulp.task('html', function() {
   'use strict';
@@ -85,6 +102,7 @@ gulp.task('html', function() {
         basepath: '@file'
       }))
       .pipe(gulp.dest(app.ship));
+  gulp.start('jekyll');
 });
 // Lint Task
 gulp.task('lint', function() {
@@ -92,6 +110,7 @@ gulp.task('lint', function() {
   gulp.src(app.build + 'js/site.js')
       .pipe(jshint())
       .pipe(jshint.reporter('default'));
+  gulp.start('jekyll');
 });
 // Compile Our Sass
 gulp.task('sass', function() {
@@ -106,6 +125,7 @@ gulp.task('sass', function() {
       .pipe(gulp.dest(app.ship + 'css'))
       .pipe(gzip())
       .pipe(gulp.dest(app.ship + 'css'));
+  gulp.start('jekyll');
 });
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
@@ -118,6 +138,22 @@ gulp.task('scripts', function() {
       .pipe(gulp.dest(app.ship + 'js/'))
       .pipe(gzip())
       .pipe(gulp.dest(app.ship + 'js/'));
+  gulp.start('jekyll');
+});
+gulp.task('jekyll', function (gulpCallBack){
+  var jekyll = spawn('jekyll build --source ship --config ship/_config_dev.yml --destination ship/_site'); ;
+
+  jekyll.on('exit', function(code) {
+    gulpCallBack(code === 0 ? null : 'ERROR: Jekyll process exited with code: '+code);
+  });
+});
+gulp.task('jekyll-build', function (gulpCallBack){
+  // shell.task([ 'jekyll build -s ship --config ship/_config_dev.yml' ]);
+  var jekyll = spawn('jekyll build --source ship --config ship/_config.yml --destination ship/_site'); ;
+
+  jekyll.on('exit', function(code) {
+    gulpCallBack(code === 0 ? null : 'ERROR: Jekyll process exited with code: '+code);
+  });
 });
 // Watch Files For Changes
 gulp.task('watch', function() {
@@ -128,4 +164,4 @@ gulp.task('watch', function() {
   gulp.watch(app.build + '*.html', ['html']);
 });
 // Default Task
-gulp.task('default', ['html', 'lint', 'scripts', 'sass', 'svg', 'images', 'watch']);
+gulp.task('default', ['html', 'lint', 'scripts', 'sass', 'svg', 'images', 'watch', 'connect', 'jekyll']);
