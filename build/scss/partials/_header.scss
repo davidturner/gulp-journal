@@ -7,12 +7,13 @@
   background-position: center left 6px;
   background-repeat: no-repeat;
   border-color: transparent;
+  cursor: pointer;
   padding-left: 36px;
   transition: all 300ms ease-in-out;
   width: 40px;
 
   &:focus {
-    width: 240px;
+    width: 260px;
   }
 }
 
