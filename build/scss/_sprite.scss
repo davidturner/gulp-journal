@@ -1,0 +1,13 @@
+
+%icon,
+.icon {
+  background-image: url('../img/sprite.svg');
+  background-repeat: no-repeat;
+  background-size: 0em 0em;
+  font-size: 10px;
+
+  .no-svg & {
+    background-image: url('../img/sprite.png');
+  }
+}
+

@@ -1,0 +1,74 @@
+<p>This article is one of a series that I plan on covering, regarding HTML5. Over the series I plan to take a look at various aspects of HTML5, be it browser support, how you can start working with it <em>now</em> or how to get HTML5 Video working across browsers, with support for those who don’t yet support these tags.</p>
+
+<h3 id="browser-support--here-amp-now">Browser Support – Here &amp; Now</h3>
+
+<p>Today, as the title suggests, I’ll be dealing with the support offered by the most common browsers, and what we can do for those browsers that don’t support HTML5 currently. The browsers that I’ll be covering are:</p>
+
+<ul>
+  <li>Firefox</li>
+  <li>Safari</li>
+  <li>Chrome</li>
+  <li>Opera</li>
+  <li>Internet Explorer 6</li>
+  <li>Internet Explorer 7</li>
+  <li>Internet Explorer 8</li>
+</ul>
+
+<p>Whilst IE6 isn’t a modern browser and many designers/developers have an intense dislike for it, including myself, it is an unfortunate reality that it is still a common browser and thus it is a browser that we need to keep in mind when developing using HTML5.</p>
+
+<h4 id="firefox-chrome-safari-amp-opera">Firefox, Chrome, Safari &amp; Opera</h4>
+
+<p>I have bundled these four browsers together as, from my own experience, the current versions of these browsers support the important parts of HTML5 pretty consistently. These include the new semantic tags used for laying out elements: header, nav, section, article, aside, figure and footer. They do, however, typically need to be pointed in the right direction when it comes to styling them. Fortunately this is a simple task, completed by adding the following CSS into your stylesheet.</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">header</span><span class="o">,</span>
+<span class="nt">section</span><span class="o">,</span>
+<span class="nt">footer</span><span class="o">,</span>
+<span class="nt">aside</span><span class="o">,</span>
+<span class="nt">nav</span><span class="o">,</span>
+<span class="nt">article</span><span class="o">,</span>
+<span class="nt">figure</span> <span class="p">{</span>
+	<span class="k">display</span><span class="o">:</span><span class="k">block</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>This code will ensure that all elements that <em>should</em> be displayed as block by default <em>are</em> displayed as block when pages load. This will almost certainly be a default in future versions of browsers.</p>
+
+<h5 id="older-browsers">Older Browsers</h5>
+
+<p>Older browsers, as well as browsers that are rarely updated, really are the problem children when any new standard is released, as they cannot be developed to support features that have yet to be created. It’s quite understandable but I thought I’d go into a little detail about what the result of this is.</p>
+
+<p>As pointed out already, the current versions of these browsers all support, to some extent, HTML5. The problem with older browsers is that they don’t see, or register, HTML5 elements. This can cause problems when using elements such as header, section or pretty much any of the elements I have mentioned so far, as they make up an important part of sites developed using HTML5.</p>
+
+<p>This causes a really tragic breakage, for lack of a better work, of the design of a site. Without the styling of such features a design can, and quite possibly would, fall apart. Fortunately these browsers are <em>very</em> good in terms of updating their software, ensuring that such incidents are very much the exception than the norm.</p>
+
+<h4 id="internet-explorers-6-7-amp-8">Internet Explorers 6, 7 &amp; 8</h4>
+
+<p>Internet Explorer has a mixed reputation, as the browser has become increasingly good, or less bad, over the past several years and, with Internet Explorer 9, will become even better, with full HTML5 support. That, however, is the future. I’m discussing the here and now in terms of support for HTML5.</p>
+
+<p>I’ll keep it brief for you, there isn’t any. Currently Internet Explorer does not support HTML5 in any way, shape or form. Fortunately, there’s a way to force Internet Explorer to acknowledge the existence of HTML5 elements, which has both upsides and downsides.</p>
+
+<p><strong>Upsides</strong></p>
+
+<ol>
+  <li>HTML5 element support</li>
+  <li>Allows for CSS Styling</li>
+</ol>
+
+<p><strong>Downsides</strong></p>
+
+<ol>
+  <li>Project becomes JavaScript Dependant</li>
+</ol>
+
+<p>That’s right, the solution for Internet Explorer’s lack of HTML5 support is dependant upon JavaScript. How does JavaScript help? JavaScript has a rather nice command, document.createElement(), which when used in the <code>&lt;head&gt;</code> section of the site forces the browser to acknowledge that the element created can be styled. An example of how this can be done would be:</p>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;article&#39;</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;footer&#39;</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;header&#39;</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;hgroup&#39;</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;nav&#39;</span><span class="p">);</span></code></pre></div>
+
+<p>The code above would force Internet Explorer to acknowledge the existence of the 5 elements mentioned. Personally I would recommend that you look into making use of <a href="http://remysharp.com/">Remy Sharp’s</a> fantastic <a href="http://remysharp.com/2009/01/07/html5-enabling-script/">HTML5 Enabling Script</a>, which is also available on <a href="http://code.google.com/p/html5shiv/">Google Code</a>, which spares you from having to manually create each element.</p>
+
+<p>An alternative that you could make use of <a href="http://www.modernizr.com/">Modernizr</a>, which is useful for much more than making HTML5 work for Internet Explorer, having the capability to detect what features a browser supports using JavaScript.</p>
+
+<p>Anyway, that’s it for today’s post. My next HTML5 post will look at how you can start using HTML5 now, covering what has changed and will cover a guide on making the switch from XHTML/HTML4 to HTML5.</p>

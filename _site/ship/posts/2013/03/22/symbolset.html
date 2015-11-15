@@ -1,0 +1,60 @@
+<p><a href="http://symbolset.com/">Symbolset</a> has a selection of, simply put, <em>awesome</em> icon fonts that make life easier when it comes to using icons on the web. Rather than creating static images of the icons, which can get unweildy and time consuming, you include a custom font and you’re good to go.</p>
+
+<p>Which is great, but sadly it comes with two issues:</p>
+
+<ol>
+  <li>Loading multiple files for icons can get quite unweildy, <em>especially</em> if you only need one of two icons.</li>
+  <li>The default CSS can get quite lengthy if you use it <em>as is</em>.</li>
+</ol>
+
+<p>Fortunately the people providing the fonts <a href="http://help.symbolset.com/customer/portal/questions/872838-subsetting">are working to fix the first issue</a>. I thought I’d share one of the approaches I’ve been using for a while. I’ve <a href="/simple-css-goodness/">written about another</a> in the past. This one’s a bit more Sass-y.</p>
+
+<p>I’ve put together a series of Sass functions that can be used to return the content you need based on keywords entered. I’ve managed to put together a series of mixins that cover the following fonts:</p>
+
+<ul>
+  <li>Symbolset Standard</li>
+  <li>Symbolset Social (and SS Social Circle)</li>
+  <li>Symbolset Pika</li>
+  <li>Symbolset Symbolicons Block (should work for Symbolicons Line too)</li>
+  <li>Symbolset Gizmo</li>
+</ul>
+
+<h2 id="how">How?</h2>
+
+<p>I’ve put together a Sass file on Github (link removed) that you can use in any Sass/Compass project. I’ve defaulted things to not include any fonts by default, you can enable fonts as you need them by changing any of the <code>0</code> values to <code>1</code>. You can also change the default font location by changing <code>'../fonts/'</code> to a value that suits your own file structure.</p>
+
+<p>Once you’ve got the file included you can start using the Sass functions in your code. Each function requires a keyword, and will return the characters used in their respective Symbolset Font CSS. The keywords you’d use are the <em>exact</em> ones you see in the documentation for the fonts.</p>
+
+<p>Example usage:</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.rss</span><span class="nd">:before</span> <span class="p">{</span>
+  <span class="k">content</span><span class="o">:</span> <span class="n">ss</span><span class="o">-</span><span class="n">standard</span><span class="o">-</span><span class="k">icon</span> <span class="p">(</span> <span class="s1">&#39;mail&#39;</span> <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+<p>This would return the output the following CSS:</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.rss</span><span class="nd">:before</span> <span class="p">{</span>
+  <span class="k">content</span><span class="o">:</span> <span class="s1">&#39;✉&#39;</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>The different functions currently available are:</p>
+
+<ul>
+  <li><code>ss-standard-icon ( 'keyword' )</code> for Symbolset Standard</li>
+  <li><code>ss-social-icon ( 'keyword' )</code> for Symbolset Social (and Social Circle)</li>
+  <li><code>ss-pika-icon ( 'keyword' )</code> for Symbolset Pika</li>
+  <li><code>ss-symbolicons-icon ( 'keyword' )</code> for Symbolset Symbolicons</li>
+  <li><code>ss-gizmo-icon ( 'keyword' )</code> for Symbolset Gizmo</li>
+</ul>
+
+<h2 id="doesnt-include">Doesn’t Include</h2>
+
+<p>Please note that this code does <em>not</em> include any of the Symbolset fonts, this is merely something that allows you to cut down on the amount of CSS in your code, because unnecessary code is never a good thing.</p>
+
+<h2 id="things-to-note">Things to Note</h2>
+
+<p>I’ve found, whilst working out how best to automate this system, that Sass doesn’t seem to like <code>if</code> statements past a certain number of options. You’ll see that there are multiple functions called to return the right character. I found that these fonts simply had too many glyphs for Sass to be able to work their way through in a single function. If people are aware of any better way to implement this kind of thing (I’d <em>love</em> some kind of Sass switch function for this) then I’d love to hear it.</p>
+
+<p>This is also a smaller part of a Sass toolbelt type framework I’m currently working on. If you find this useful and would like to play around with the more complete package let me know. I plan to release the full thing once I am happy with how it is structured and how it works.</p>
+
+<!-- [symbolset-sass-functions]: /symbolset/ -->

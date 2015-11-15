@@ -1,0 +1,32 @@
+<p>I’m a big fan of gulp.js for automating tasks when it comes to design and front-end development. I use it for my own personal work, any freelance work I’ve undertaken, and we make heavy use of it at <a href="https://getinvited.to">Get Invited</a>. It makes our lives easier and I plan to write a bit more about that, and share how we use gulp.js day-to-day, in a future post.</p>
+
+<p>Today I wanted to write a little bit about my contribution to gulp.js in the form of a package I released several months ago. I haven’t written anything about it until today.</p>
+
+<h2 id="building-upon-gulpjs">Building Upon Gulp.js</h2>
+
+<p>Gulp.js is built upon packages, and there are quite a few available to users. It doesn’t have as comprehensive a list of packages as other tools like Grunt.js does, but it covers what I’ve found to be my standard needs.</p>
+
+<p>Except one.</p>
+
+<p>Sending emails.</p>
+
+<p><em>Fucking</em> emails.</p>
+
+<p>One of the areas that we need to test at Get Invited is cross-service email client consistency. We send a lot of emails out to customers so it’s important that we test all email layouts thoroughly to make sure that everything works. Services like <a href="https://litmus.com">Litmus</a> are great for testing how an email looks but we needed to get the email through to the service before we could test things.</p>
+
+<p>Gulp didn’t have anything that fit our needs, but <a href="https://www.npmjs.com/package/grunt-mailgun">Grunt.js did</a>. Both gulp.js and grunt.js are powered by JavaScript, so at their core they’re the same thing. If there’s one thing that I’ve always been good at, it’s breaking one thing and reassembling it as something else. It’s how I taught myself to code in my teens, and I applied that approach to learning here.</p>
+
+<p>Much confusion and frustration later, and I had a working implementation of mailgun for sending emails directly from gulp.js. I could send emails quickly and easily as a part of my build process, rather than having to manually submit the markup via a web interface.</p>
+
+<p>It was bliss.</p>
+
+<h2 id="released-into-the-wild">Released into the Wild</h2>
+
+<p>I quickly put it up on Github, but I’ve <a href="https://www.npmjs.com/package/gulp-mailgun">published the package on NPM</a>, as it makes installing gulp-mailgun a lot easier. It’s been seeing usage since I released it but I’d love to hear what people think of it.</p>
+
+<h2 id="more-to-come">More to Come</h2>
+
+<p>I’m planning to write more about how we use gulp.js at <a href="https://getinvited.to">Get Invited</a> in the future, and hope to share some of the tools and approaches we use with things over the coming weeks and months.</p>
+
+<p>I’m also hoping to inflict more of my own thoughts and processes on you all too. Running a startup really eats into my time but this year I plan to set aside the time to share my thoughts more often. I hope that it’ll be as beneficial to those who read my articles as it is for me to write them.</p>
+

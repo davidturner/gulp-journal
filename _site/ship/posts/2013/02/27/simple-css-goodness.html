@@ -1,0 +1,46 @@
+<p>I’ve been tinkering with my site over the last few days, and it’s resulted in a few under the hood improvements that I thought I’d share. None of it is especially mind-blowing, it may even be common sense to a some people, but when I mentioned it on twitter some people thought it was a neat idea, so here it is.</p>
+
+<h2 id="styling-based-on-attributes">Styling Based on Attributes</h2>
+
+<p>This is something Chris Coyier has <a href="http://css-tricks.com/attribute-selectors/">written about in the past</a> in the past, styling elements that have certain attributes attached to them. This can work really well for providing styling defaults to mutliple classes at once, such as <code>btn-large</code> and <code>btn-small</code> by identifying that they both start with <code>btn-</code>.</p>
+
+<p>It’s possible to do more though with CSS by using content <em>of</em> selectors using CSS. This is something that A List Apart <a href="http://alistapart.com/article/goingtoprint">has covered</a> when talking about styling things for print, showing URLs after links as a user can’t click on a printed page. It’s also a fundamental part of the <a href="http://nicolasgallagher.com/micro-clearfix-hack/">clearfix hack</a> that anyone on the web is likely to be familiar with.</p>
+
+<p>We can do some pretty clever stuff with these two things. I’ve recently put it to work with regards to using icon characters from the <a href="http://symbolset.com">Symbolset</a> fonts. The CSS that they provide requires adding a lot of CSS classes to both your markup and in your stylesheet. I switched away from that to a set of Sass mixins that return characters, but it still requires that I add a chunk of CSS to my site to handle individual characters.</p>
+
+<p>Then it struck me, I could switch to using an attribute on the HTML elements that I wanted to have these characters appear on. Something like this:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/&quot;</span> <span class="na">data-icon-standard=</span><span class="s">&quot;⌂&quot;</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;</span></code></pre></div>
+
+<p>The important part of this is the HTML5 <code>data-</code> attribute on the link. It’s got a standardised name for a specific type of character. I currently have two different attributes that I make use of:</p>
+
+<ol>
+  <li><code>data-icon-standard</code>: I use this for characters from Symbolsets’s SS-Standard font</li>
+  <li><code>data-icon-social</code>: I use this for characters from Symbolsets’s SS-Social font</li>
+</ol>
+
+<p>This <em>vastly</em> simplifies the CSS I need to use to style these elements up. Previously each icon I wanted would have needed a new CSS class to add the right character for me. something like:</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.home</span><span class="nd">:before</span> <span class="p">{</span> <span class="k">content</span><span class="o">:</span> <span class="s2">&quot;⌂&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="nc">.email</span><span class="nd">:before</span> <span class="p">{</span> <span class="k">content</span><span class="o">:</span> <span class="s2">&quot;✉&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="nc">.plus</span><span class="nd">:before</span> <span class="p">{</span> <span class="k">content</span><span class="o">:</span> <span class="s2">&quot;+&quot;</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
+
+<p>Add more characters to this and you can see that it could, quite rapidly, become quite unweildy. Instead I can add the specific characters to my markup, and have them added using CSS:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/&quot;</span> <span class="na">data-icon-standard=</span><span class="s">&quot;⌂&quot;</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/&quot;</span> <span class="na">data-icon-standard=</span><span class="s">&quot;✉&quot;</span><span class="nt">&gt;</span>Email<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/&quot;</span> <span class="na">data-icon-standard=</span><span class="s">&quot;+&quot;</span><span class="nt">&gt;</span>Add<span class="nt">&lt;/a&gt;</span></code></pre></div>
+
+<p>With this in place I can simplify my CSS to the following:</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="o">[</span><span class="nt">data-icon-standard</span><span class="o">]</span><span class="nd">:before</span> <span class="p">{</span>
+  <span class="k">content</span><span class="o">:</span> <span class="n">attr</span><span class="p">(</span><span class="n">data</span><span class="o">-</span><span class="k">icon</span><span class="o">-</span><span class="n">standard</span><span class="p">);</span>
+  <span class="k">font-family</span><span class="o">:</span> <span class="n">SSStandard</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>This takes care of the character <em>and</em> sets the correct font. It might be a bit over the top for just a single icon, but if you find yourself using multiple icons over the course of a project this simplifies the addition of characters to a site quite a bit.</p>
+
+<h2 id="let-me-know-what-you-think">Let Me Know What You Think</h2>
+
+<p>This is something I’ve just started experiementing with, and you can see it on the navigation above but also in the footer below. I’d love to hear about how other people put this kind of thing to use, either in the comments on below on on twitter.</p>
+

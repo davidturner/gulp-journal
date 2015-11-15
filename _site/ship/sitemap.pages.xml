@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+    
+  
+    
+    <url>
+      <loc>/examples/2010-03-29-php-generated-mosaic.html</loc>
+      
+        <lastmod>2010-03-29T21:33:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/examples/2010-03-31-jquery-image-switcher.html</loc>
+      
+        <lastmod>2010-03-31T19:48:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/examples/2010-05-12-simple-css3-buttons.html</loc>
+      
+        <lastmod>2010-05-12T18:55:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/examples/2010-05-16-jquery-image-slider.html</loc>
+      
+        <lastmod>2010-05-16T17:55:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/examples/2010-05-17-dynamic-jquery-graph.html</loc>
+      
+        <lastmod>2010-05-17T16:10:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/examples/2010-06-07-jquery-completion-bar.html</loc>
+      
+        <lastmod>2010-06-07T16:02:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/examples/2010-06-09-jquery-progress-bar.html</loc>
+      
+        <lastmod>2010-06-09T15:32:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/examples/2010-07-09-minigamereviews-html5.html</loc>
+      
+        <lastmod>2010-07-09T15:13:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/examples/2010-07-13-responsive-web-design-960-grid-style.html</loc>
+      
+        <lastmod>2010-07-13T18:18:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/examples/2011-08-23-responsive-phpthumb.html</loc>
+      
+        <lastmod>2011-08-23T21:57:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/examples/2011-08-29-opera-html5-validation-glitch.html</loc>
+      
+        <lastmod>2011-08-29T16:34:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/examples/2011-11-15-parsing-youtube-urls.html</loc>
+      
+        <lastmod>2011-11-15T11:04:00+00:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/examples/2012-05-16-playing-with-responsive-images.html</loc>
+      
+        <lastmod>2012-05-16T13:24:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+  
+    
+    <url>
+      <loc>/about/</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+  
+    
+    <url>
+      <loc>/colophon/</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/node_modules/cssnext/docs/content/credits.html</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/node_modules/cssnext/docs/content/features.html</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/ship/feed.xml</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/ship/feed.xsl</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+  
+    
+    <url>
+      <loc>/hcard/</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/ship/</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/node_modules/cssnext/docs/content/</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/node_modules/cssnext/docs/content/it-s-cssnext-not-CSSNext.html</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/node_modules/cssnext/docs/content/playground.html</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/projects/</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+  
+    
+    <url>
+      <loc>/ship/robots.txt</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/node_modules/gulp-imagemin/node_modules/imagemin/node_modules/imagemin-svgo/node_modules/svgo/node_modules/js-yaml/examples/sample_document.yml</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/node_modules/gulp-svg-sprite/node_modules/svg-sprite/node_modules/js-yaml/examples/sample_document.yml</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/node_modules/cssnext/docs/content/setup.html</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+  
+    
+    <url>
+      <loc>/ship/sitemap.pages.xml</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/ship/sitemap.posts.xml</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/ship/sitemap.xml</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/node_modules/cssnext/docs/content/usage.html</loc>
+      
+        <lastmod>2015-07-30T16:48:39+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+</urlset>

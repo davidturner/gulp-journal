@@ -1,0 +1,101 @@
+<p>CSS gives us a lot of control over how things look and feel in our projects, but I find time and again, that there is a single element that seems to consistently cause issues. The beloved <code>&lt;select&gt;</code> element.</p>
+
+<p>It’s such a useful element to have on a site, yet it seems to have default styling in many browsers that limits what we can do. Bizarrely, I’ve found Internet Explorer to have the best implementation in terms of styling. That’s just <em>wrong</em>.</p>
+
+<!--[More]-->
+
+<h2 id="working-around-things">Working Around Things</h2>
+
+<p>Unfortunately there’s no way to change some default styling decisions made with this element, so instead we have to come up with creative ways to work around the issue. In a recent project I found myself needing to do exactly that.</p>
+
+<p>It is something that I have attempted before, during my final year of my Interactive Multimedia Design degree. The solution I implemented there worked, but wasn’t very flexible. As this is something I find myself having to attempt ever more frequently, I wanted something that could work any time I needed it. I wanted to create an easy to use jQuery plugin for select styling.</p>
+
+<p>Here it is.</p>
+
+<h2 id="what-does-it-do">What Does It Do?</h2>
+
+<p>This plugin takes a look at select boxes that match the selector you provide, and will add in a label after matching <code>&lt;select&gt;</code> boxes. It will also add some classes to these elements for the purposes of styling.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>The plugin has been built with ease of use in mind, so that you can set it up and get <em>straight</em> to using it. Being a jQuery plugin you will want to load both jQuery and the plugin to ensure that it will actually run. If you’re already using jQuery then you just need to load the plugin script, there is no need to add jQuery multiple times:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/jquery.select.min.js&quot;</span><span class="nt">&gt;</span></code></pre></div>
+
+<p>With the plugin loaded, and jQuery running as well, it’s simple to get things running. Simply copy/paste the following code into your site, somewhere after the plugin:</p>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;select&quot;</span><span class="p">).</span><span class="nx">customStyle</span><span class="p">();</span>
+<span class="p">});</span></code></pre></div>
+
+<p>That’s it. The plugin will work its way through all the select boxes on the site and start adding in extra labels. There’s some styling that you’ll need to add. I’ll show the HTML &amp; CSS that I’m using in the demo so you can see how I’ve implemented things. First, the HTML:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;select-1&quot;</span><span class="nt">&gt;</span>
+  Pick a dinosaur, any dinosaur:
+  <span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">&quot;select-1&quot;</span> <span class="na">id=</span><span class="s">&quot;select-1&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;Pterodactyl&quot;</span><span class="nt">&gt;</span>Pterodactyl<span class="nt">&lt;/option&gt;</span>
+    <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;Triceritops&quot;</span><span class="nt">&gt;</span>Triceritops<span class="nt">&lt;/option&gt;</span>
+    <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;Stegasaurus&quot;</span><span class="nt">&gt;</span>Stegasaurus<span class="nt">&lt;/option&gt;</span>
+  <span class="nt">&lt;/select&gt;</span>
+<span class="nt">&lt;/label&gt;</span></code></pre></div>
+
+<p>And now the CSS:</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.custom-select</span><span class="o">,</span> <span class="nc">.custom-select-label</span><span class="p">{</span>
+  <span class="k">height</span><span class="o">:</span> <span class="m">2em</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="o">:</span> <span class="m">2em</span><span class="p">;</span>
+  <span class="k">position</span><span class="o">:</span> <span class="k">relative</span><span class="p">;</span>
+  <span class="k">width</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="k">display</span><span class="o">:</span> <span class="k">block</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.custom-select</span><span class="p">{</span>
+  <span class="k">margin-bottom</span><span class="o">:</span> <span class="m">-2em</span><span class="p">;</span>
+  <span class="k">z-index</span><span class="o">:</span> <span class="m">2</span><span class="p">;</span>
+  <span class="k">opacity</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">appearance</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.custom-select-label</span><span class="p">{</span>
+  <span class="k">padding-left</span><span class="o">:</span> <span class="m">0.5em</span><span class="p">;</span>
+  <span class="k">background</span><span class="o">:</span> <span class="m">#ddd</span><span class="p">;</span>
+  <span class="k">margin</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="n">shadow</span><span class="o">:</span> <span class="m">0px</span> <span class="m">1px</span> <span class="m">5px</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">.</span><span class="m">4</span><span class="p">);</span>
+  <span class="n">box</span><span class="o">-</span><span class="n">shadow</span><span class="o">:</span> <span class="m">0px</span> <span class="m">1px</span> <span class="m">5px</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">.</span><span class="m">4</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nc">.custom-select-label</span><span class="nd">:after</span><span class="p">{</span>
+  <span class="k">content</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+  <span class="k">display</span><span class="o">:</span> <span class="k">block</span><span class="p">;</span>
+  <span class="k">border</span><span class="o">:</span> <span class="m">6px</span> <span class="k">solid</span> <span class="k">transparent</span><span class="p">;</span>
+  <span class="k">border-top-color</span><span class="o">:</span> <span class="m">#222</span><span class="p">;</span>
+  <span class="k">position</span><span class="o">:</span> <span class="k">absolute</span><span class="p">;</span>
+  <span class="k">top</span><span class="o">:</span> <span class="m">50%</span><span class="p">;</span>
+  <span class="k">right</span><span class="o">:</span> <span class="m">0.5em</span><span class="p">;</span>
+  <span class="k">margin-top</span><span class="o">:</span> <span class="m">-3px</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>That’s all it takes to get some rather nice looking <code>&lt;select&gt;</code> boxes going.</p>
+
+<h2 id="extra-settings">Extra Settings</h2>
+
+<p>There are a few pre-defined classes that are used that you might have noticed up above, <code>.custom-select</code> and <code>.custom-select-label</code>. These can be changed as you see fit, by defining some settings for the plugin, like so:</p>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;select&quot;</span><span class="p">).</span><span class="nx">customStyle</span><span class="p">({</span>
+    <span class="nx">selClass</span><span class="o">:</span> <span class="s2">&quot;custom-select&quot;</span><span class="p">,</span>
+    <span class="nx">labelClass</span><span class="o">:</span> <span class="s2">&quot;custom-select-label&quot;</span>
+  <span class="p">});</span>
+<span class="p">});</span></code></pre></div>
+
+<p>This will give you complete control over the classes that are used, and over the classes applied to content on your site.</p>
+
+<h2 id="support">Support</h2>
+
+<p>In its current incarnation of things, I’ve chosen to support everything <em>except</em> Internet Explorer. In using this in site development I have found that there are certain oddities that liked to crop up that were counterproductive. This is also one of those instances where Internet Explorer actually handles styling of <code>&lt;select&gt;</code> elements pretty well, so it shouldn’t cause any issues.</p>
+
+<h2 id="download">Download</h2>
+
+<p>You can download isEmpty over at the <a href="https://github.com/DavidTurner/jQuery-Select">Github Repository</a>, but if you just want to download the latest version you can <a href="https://github.com/DavidTurner/jQuery-Select/archive/master.zip">click here</a>.</p>
+

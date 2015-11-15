@@ -1,0 +1,85 @@
+<p>In a recent article I talked about shipping curly quotes in <a href="https://getinvited.to/">Get Invited</a>, and that I’d then added it to my portfolio. I wanted to take a little time to talk about how I did this, as it turned out implementing it was a <em>lot</em> easier than I’d expected it to be.</p>
+
+<h2 id="boiling-down-complexity">Boiling Down Complexity</h2>
+
+<p>When trying to figure out how to get smart quotes working I spent a <em>lot</em> of time, probably too much looking back, in trying to find a PHP function, or library, to automagically convert quotations from the “standard” quotes to their curlier equivalents.</p>
+
+<p>I couldn’t find one, and that forced me to think about how I’d go about doing it myself. Normally character replacement is easy, you would just call a <code>str_replace()</code> function in PHP and be done with it. The problem with quotes is that the characters I’d be searching for are the same on both sides when dealing with standard quotes, but different when you convert them to their curlier equivalent.</p>
+
+<p>This caused me to consider the option of working out a way to convert every other match to the corresponding opening quote, and the remaining ones to the closing quote. This would work for double quotes, but would fail horrible when dealing with single quotes, courtesy of apostrophes.</p>
+
+<p>In the end I was able to implement a solution courtesy of <a href="https://twitter.com/keilantra/">Tami Olsen</a> who, as an author, had encountered similar issues in Microsoft Word. She suggested a solution that boiled down to looking for quotation marks with a space before or after them. A space before denotes that it is an opening quote. A space after denotes it is a closing one.</p>
+
+<p>This, with a small number of edge cases that can also be processed, leaves remaining single quotes as apostrophes. I wrapped this up in a simple function and pushed it out to Get Invited. It worked <em>perfectly</em>. The code looked like:</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">function</span> <span class="nf">smartQuotes</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nv">$search</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span>
+    <span class="s2">&quot; </span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; &quot;&quot;,</span>
+<span class="s2">    &quot;&quot; &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; “</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">” &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; ‘&quot;&quot;,</span>
+<span class="s2">    &quot;</span> <span class="s2">&quot;’&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;...&quot;</span>
+  <span class="p">);</span>
+
+  <span class="nv">$replace</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span>
+    <span class="s2">&quot; ‘&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;’ &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; “&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;” &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; “‘&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;’&quot;</span> <span class="s2">&quot;,</span>
+<span class="s2">    &quot;</span> <span class="nx">‘“</span><span class="s2">&quot;,</span>
+<span class="s2">    &quot;</span> <span class="nx">”’</span><span class="s2">&quot;,</span>
+<span class="s2">    &quot;</span><span class="nx">…</span><span class="s2">&quot;</span>
+<span class="s2">  );</span>
+
+<span class="s2">  return str_replace(&quot;</span><span class="nx">\</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;’&quot;</span><span class="p">,</span> <span class="nb">str_replace</span><span class="p">(</span><span class="nv">$search</span><span class="p">,</span> <span class="nv">$replace</span><span class="p">,</span> <span class="nv">$str</span><span class="p">));</span>
+<span class="p">}</span></code></pre></div>
+
+<h2 id="not-issue-free">Not Issue Free</h2>
+
+<p>After building this into Get Invited I was quite pleased with how it looked, and it <em>vastly</em> simplifies issues with getting smart quotes into written text, as the shortcuts for curly quotes aren’t nearly as easy to remember as the commands for the more commonly used characters. So I coded it into my portfolio.</p>
+
+<p>It broke things. Pretty badly. What was causing it to mess up? There’s <em>one</em> difference between how Get Invited uses this function and how my portfolio does, and it’s a major one. Get Invited only processes text using the function, but my own site uses a basic templating system and the function made changes to the whole template.</p>
+
+<p>This would include any HTML that was included, in particular HTML attributes, which would then cause certain important aspects of my site, such as classes, to stop registering correctly.</p>
+
+<p>I was able to find a workaround for this, though I’m not as happy with it as I would like to be. In order to resolve this issue I needed to add two regular expression filters to find text inside of HTML tags, in order to find the attribute quotations. I was then able to replace any text that had been turned into curly quotes in error back into the intended quotes. The final function looks like this:</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">function</span> <span class="nf">smartQuotes</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nv">$search</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span>
+    <span class="s2">&quot; </span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; &quot;&quot;,</span>
+<span class="s2">    &quot;&quot; &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; “</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">” &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; ‘&quot;&quot;,</span>
+<span class="s2">    &quot;</span> <span class="s2">&quot;’&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;...&quot;</span>
+  <span class="p">);</span>
+
+  <span class="nv">$replace</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span>
+    <span class="s2">&quot; ‘&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;’ &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; “&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;” &quot;</span><span class="p">,</span>
+    <span class="s2">&quot; “‘&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;’&quot;</span> <span class="s2">&quot;,</span>
+<span class="s2">    &quot;</span> <span class="nx">‘“</span><span class="s2">&quot;,</span>
+<span class="s2">    &quot;</span> <span class="nx">”’</span><span class="s2">&quot;,</span>
+<span class="s2">    &quot;</span><span class="nx">…</span><span class="s2">&quot;</span>
+<span class="s2">  );</span>
+
+<span class="s2">  </span><span class="si">$str</span><span class="s2"> = str_replace(&quot;</span><span class="nx">\</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;’&quot;</span><span class="p">,</span> <span class="nb">str_replace</span><span class="p">(</span><span class="nv">$search</span><span class="p">,</span> <span class="nv">$replace</span><span class="p">,</span> <span class="nv">$str</span><span class="p">));</span>
+  <span class="nv">$str</span> <span class="o">=</span> <span class="nb">preg_replace</span><span class="p">(</span><span class="s2">&quot;/&lt;([^&lt;&gt;]+)&gt;/e&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;&quot;</span> <span class="o">.</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s2">&quot;”&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;&quot;, &quot;</span><span class="err">$</span><span class="mi">1</span><span class="s2">&quot;) . &quot;</span><span class="o">&gt;</span><span class="s2">&quot;, </span><span class="si">$str</span><span class="s2">);</span>
+<span class="s2">  </span><span class="si">$str</span><span class="s2"> = preg_replace(&quot;</span><span class="o">/&lt;</span><span class="p">([</span><span class="o">^&lt;&gt;</span><span class="p">]</span><span class="o">+</span><span class="p">)</span><span class="o">&gt;/</span><span class="nx">e</span><span class="s2">&quot;, &quot;</span><span class="o">&lt;</span><span class="s2">&quot; . str_replace(&quot;</span><span class="nx">’</span><span class="s2">&quot;, &quot;</span><span class="nx">\</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="nv">$str</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nv">$str</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>It <em>works</em>, but I feel that it could be better. I’d love to hear if anyone has any thoughts on how to improve this code, or alternatives that people have used in the past. You know where to find me.</p>
+

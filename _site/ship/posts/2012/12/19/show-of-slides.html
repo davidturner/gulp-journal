@@ -1,0 +1,217 @@
+<p>When it comes to code for projects that I’m working on, <em>nothing</em> annoys me more than code bloat. All too often people will grab a plugin to complete a single task, which is in and of itself fine, until you realise that the codebase encompasses much more than the functionality that you need, and results in a bulky collection of files and code being tagged onto a site needlessly.</p>
+
+<p>Increasingly I find myself writing my own plugins to accomplish goals, each being coded to achieve a single thing well, rather than trying to do many things at once. It’s easier to use multiple plugins than it is to rip code out of a single plugin. That is the reason that both my <a href="/is-empty/">isEmpty</a> and <a href="/select-plugin/">Select</a> plugins exist. Today I am adding my Show of Slides Plugin to that list.</p>
+
+<h2 id="what-is-show-of-slides">What is Show of Slides?</h2>
+
+<p>I’ve increasingly found myself having to code up image slideshows for clients. At first it was a challenge, coding things up to work quickly without using a plugin that did much more than was needed but, as with all things you do repeatedly, it lost it’s appeal. So I decided to create a plugin that I can use to quickly get slideshows working.</p>
+
+<p>I have built Show of Slides from the ground up to be <em>flexible</em>. I didn’t want my work to be limited to <em>just</em> image slideshows, you can just as easily use HTML content inside of the slider. It’s all about keeping things both <em>flexible</em> and <em>minimal</em>.</p>
+
+<p>I’ve also built it to afford you the maximum amount of control over how the various elements of the slideshow are laid out. This plugin adds classes to elements as needed, but ultimately leaves styling up to you. I’ll be providing some basic CSS in this article though, so that you’ll have some guidelines you can work with.</p>
+
+<h2 id="what-show-of-slides-isnt">What Show of Slides <em>isn’t</em>?</h2>
+
+<p>In keeping this plugin flexible and light in the code base I’ve intentionally removed some things that are typically handled using jQuery as they can be handled using CSS3 in the majority of browsers these days and, for those that can’t, animation is a very minor piece of functionality in the grand scheme of things.</p>
+
+<p>By removing the animation from the plugin and placing it in the hands of CSS it also affords a much greater control over how the slides move, along with how they are presented. You’re no longer constrained by the JavaScript powering your slider. How awesome is that?</p>
+
+<h3 id="caveat">Caveat</h3>
+
+<p>There is one small problem with moving the animation from the JavaScript to the CSS, in that it becomes a bit more fiddly to handle reorganising slides once they’ve been moved from view. I’ve coded in a little bit of JavaScript math to handle this, I’ll be covering it in a little more detail later.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>Show of Slides is relatively painless to get set up. As with all jQuery plugins you’ll need to include jQuery for this plugin to work. If you’ve already included jQuery in your project you only need to add the plugin, ideally by adding the code to your a single, combined, JavaScript file:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/show-of-slides.min.js&quot;</span><span class="nt">&gt;</span></code></pre></div>
+
+<p>With the Slide of Shows plugin added to your project, it’s easy to start using it. The plugin does require a specific structure to it’s HTML though, in that it needs to look like this:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;show-of-slide show1&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;slides&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li&gt;&lt;div</span> <span class="na">class=</span><span class="s">&quot;slide-content&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/div&gt;&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;&lt;div</span> <span class="na">class=</span><span class="s">&quot;slide-content&quot;</span><span class="nt">&gt;</span>2<span class="nt">&lt;/div&gt;&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;&lt;div</span> <span class="na">class=</span><span class="s">&quot;slide-content&quot;</span><span class="nt">&gt;</span>3<span class="nt">&lt;/div&gt;&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;&lt;div</span> <span class="na">class=</span><span class="s">&quot;slide-content&quot;</span><span class="nt">&gt;</span>4<span class="nt">&lt;/div&gt;&lt;/li&gt;</span>
+  <span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+
+<p>The <em>important</em> part of this is that there is a <code>div</code> wrapped around the slideshow. The list itself can be replaced with any elements you would like. I’ll cover this a little further down as well, when I dig into the settings for the application.</p>
+
+<p>With all of this in place it’s simply a case of calling the plugin on the elements you want to become slideshows:</p>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.show1&quot;</span><span class="p">).</span><span class="nx">showOfSlides</span><span class="p">();</span>
+<span class="p">});</span></code></pre></div>
+
+<p>You can, of course, list multiple selectors or add a specific selector to all of the slideshows you’re after.</p>
+
+<h2 id="plugin-settings">Plugin Settings</h2>
+
+<p>There are, of course, multiple settings you can tweak with the plugin. The different aspects of the plugin that you can tweak are:</p>
+
+<ul>
+  <li><code>tag</code>: This is uses as the basis of CSS classes added to slides (defaults to <code>slide</code>)</li>
+  <li><code>timer</code>: The amount of time between slides changing (defaults to 5000, aka 5 seconds)</li>
+  <li><code>transition</code>: The transition time, so that the plugin can clean things up after any CSS animations have finished (defaults to 500, aka 0.5 seconds)</li>
+  <li><code>pagination</code>: true/false on enabling pagination (defaults to <code>false</code>)</li>
+  <li><code>arrows</code>: true/false on enabling previous/next buttons (defaults to <code>false</code>)</li>
+  <li><code>slides</code>: defines a default element that is used for slides (defaults to <code>li</code>)</li>
+</ul>
+
+<p>This allows you a great deal of flexibility in how it’s laid out, and what features you have enabled and disabled. I spoke about being able to adjust a few settings previously, some of which need to be adjusted depending on your CSS and one that can be adjusted if you’re not using a list for your slides.</p>
+
+<p>The first of these is that you will want to adjust the transition variable to match and CSS transition time you’ve set up. I’ve found 0.5 seconds, or 500 milliseconds, provides a suitable default. To change this you can do the following when setting up your slider:</p>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.show1&quot;</span><span class="p">).</span><span class="nx">showOfSlides</span><span class="p">({</span>
+    <span class="nx">transition</span><span class="o">:</span> <span class="mi">1000</span>
+  <span class="p">});</span>
+<span class="p">});</span></code></pre></div>
+
+<p>This changes things from the default of half a second to a full second. This timer is used to call a function that reorders slides in the slider so that there is always a next slide. You can similarly adjust the <code>timer</code> variable to adjust the time between slide changes.</p>
+
+<p>The second important piece of customisation that can be considered is that, in certain circumstances, you might not want to use a list for the slider. You can change this quite easily, by doing the following:</p>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.show1&quot;</span><span class="p">).</span><span class="nx">showOfSlides</span><span class="p">({</span>
+    <span class="nx">slides</span><span class="o">:</span> <span class="s2">&quot;div&quot;</span>
+  <span class="p">});</span>
+<span class="p">});</span></code></pre></div>
+
+<p>This will look for a selection of <code>div</code> elements and use them as the slides instead of list items. Ultimately the structure of the content will be the same, this allows you to define the HTML structure that suits your project/site.</p>
+
+<p>The CSS is also kept pretty minimal. Below is the unminified CSS used for the examples you see on this site, but you can also <a href="/show-of-slides/extra.css">view the minified source</a> to see just how small it works out at:</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.slide-pagination</span> <span class="nt">a</span><span class="o">,</span> <span class="nc">.slide-prev</span><span class="o">,</span> <span class="nc">.slide-next</span> <span class="p">{</span>
+  <span class="k">text-indent</span><span class="o">:</span><span class="m">100%</span><span class="p">;</span>
+  <span class="k">white-space</span><span class="o">:</span> <span class="k">nowrap</span><span class="p">;</span>
+  <span class="k">overflow</span><span class="o">:</span> <span class="k">hidden</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.show-of-slide</span> <span class="p">{</span>
+  <span class="k">background</span><span class="o">:</span> <span class="m">#ececec</span><span class="p">;</span>
+  <span class="k">position</span><span class="o">:</span> <span class="k">relative</span><span class="p">;</span>
+  <span class="k">padding</span><span class="o">:</span> <span class="m">0.5em</span><span class="p">;</span>
+  <span class="k">max-width</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="k">margin</span><span class="o">:</span> <span class="m">2em</span> <span class="k">auto</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slides</span> <span class="p">{</span>
+  <span class="k">margin</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="k">position</span><span class="o">:</span> <span class="k">relative</span><span class="p">;</span>
+  <span class="k">height</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="k">width</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="k">max-width</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="k">padding-bottom</span><span class="o">:</span> <span class="m">50%</span><span class="p">;</span>
+  <span class="k">overflow</span><span class="o">:</span> <span class="k">hidden</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slide</span> <span class="p">{</span>
+  <span class="k">list-style</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+  <span class="k">position</span><span class="o">:</span> <span class="k">absolute</span><span class="p">;</span>
+  <span class="k">top</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="k">left</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="k">width</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="k">height</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="n">transition</span><span class="o">:</span> <span class="n">all</span> <span class="m">0.5s</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slide-current</span> <span class="p">{</span>
+  <span class="k">z-index</span><span class="o">:</span> <span class="m">2</span><span class="p">;</span>
+  <span class="k">left</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slide-previous</span> <span class="p">{</span>
+  <span class="k">left</span><span class="o">:</span> <span class="m">-100%</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slide-pagination</span> <span class="p">{</span>
+  <span class="k">position</span><span class="o">:</span> <span class="k">absolute</span><span class="p">;</span>
+  <span class="k">z-index</span><span class="o">:</span> <span class="m">5</span><span class="p">;</span>
+  <span class="k">bottom</span><span class="o">:</span> <span class="m">0.5em</span><span class="p">;</span>
+  <span class="k">left</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="k">right</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="k">text-align</span><span class="o">:</span> <span class="k">center</span><span class="p">;</span>
+  <span class="k">margin</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="k">pointer</span><span class="o">-</span><span class="n">events</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slide-pagination</span> <span class="nt">li</span> <span class="p">{</span>
+  <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slide-pagination</span> <span class="nt">a</span> <span class="p">{</span>
+  <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">;</span>
+  <span class="k">background</span><span class="o">:</span> <span class="m">#c00</span><span class="p">;</span>
+  <span class="k">width</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+  <span class="k">height</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+  <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">50%</span><span class="p">;</span>
+  <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="m">0.25em</span><span class="p">;</span>
+  <span class="k">border</span><span class="o">:</span> <span class="m">2px</span> <span class="k">solid</span> <span class="m">#f9f9f9</span><span class="p">;</span>
+  <span class="k">pointer</span><span class="o">-</span><span class="n">events</span><span class="o">:</span> <span class="k">auto</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slide-pagination</span> <span class="nc">.slide-active</span> <span class="p">{</span>
+  <span class="k">background</span><span class="o">:</span> <span class="m">#940000</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="o">:</span> <span class="k">default</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slide-content</span> <span class="p">{</span>
+  <span class="k">width</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="k">height</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="o">:</span> <span class="m">10em</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="k">color</span><span class="o">:</span> <span class="m">#f9f9f9</span><span class="p">;</span>
+  <span class="k">background</span><span class="o">:</span> <span class="m">#8080ff</span><span class="p">;</span>
+  <span class="k">text-align</span><span class="o">:</span> <span class="k">center</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.layout-1</span> <span class="p">{</span>
+  <span class="k">background</span><span class="o">:</span> <span class="m">#a00</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.layout-2</span> <span class="p">{</span>
+  <span class="k">background</span><span class="o">:</span> <span class="m">#0a0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.layout-3</span> <span class="p">{</span>
+  <span class="k">background</span><span class="o">:</span> <span class="m">#00a</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slide-prev</span><span class="o">,</span> <span class="nc">.slide-next</span> <span class="p">{</span>
+  <span class="k">position</span><span class="o">:</span> <span class="k">absolute</span><span class="p">;</span>
+  <span class="k">top</span><span class="o">:</span> <span class="m">50%</span><span class="p">;</span>
+  <span class="k">height</span><span class="o">:</span> <span class="m">4em</span><span class="p">;</span>
+  <span class="k">width</span><span class="o">:</span> <span class="m">4em</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="o">:</span> <span class="m">4em</span><span class="p">;</span>
+  <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">0</span> <span class="m">50%</span> <span class="m">50%</span> <span class="m">0</span><span class="p">;</span>
+  <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">;</span>
+  <span class="k">margin-top</span><span class="o">:</span> <span class="m">-2em</span><span class="p">;</span>
+  <span class="k">z-index</span><span class="o">:</span> <span class="m">6</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slide-prev</span><span class="nd">:hover</span><span class="o">,</span> <span class="nc">.slide-next</span><span class="nd">:hover</span> <span class="p">{</span>
+  <span class="k">background</span><span class="o">:</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">.</span><span class="m">4</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nc">.slide-prev</span><span class="nd">:after</span><span class="o">,</span> <span class="nc">.slide-next</span><span class="nd">:after</span> <span class="p">{</span>
+  <span class="k">text-indent</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="k">display</span><span class="o">:</span> <span class="k">block</span><span class="p">;</span>
+  <span class="k">position</span><span class="o">:</span> <span class="k">absolute</span><span class="p">;</span>
+  <span class="k">top</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="k">left</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="o">:</span> <span class="m">2em</span><span class="p">;</span>
+  <span class="k">width</span><span class="o">:</span> <span class="m">2em</span><span class="p">;</span>
+  <span class="k">height</span><span class="o">:</span> <span class="m">2em</span><span class="p">;</span>
+  <span class="k">line-height</span><span class="o">:</span> <span class="m">2em</span><span class="p">;</span>
+  <span class="k">text-align</span><span class="o">:</span> <span class="k">center</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slide-prev</span> <span class="p">{</span>
+  <span class="k">left</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slide-prev</span><span class="nd">:after</span> <span class="p">{</span>
+  <span class="k">content</span><span class="o">:</span> <span class="s2">&quot;◅&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slide-next</span> <span class="p">{</span>
+  <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">50%</span> <span class="m">0</span> <span class="m">0</span> <span class="m">50%</span><span class="p">;</span>
+  <span class="k">right</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.slide-next</span><span class="nd">:after</span> <span class="p">{</span>
+  <span class="k">content</span><span class="o">:</span> <span class="s2">&quot;▻&quot;</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<h2 id="support">Support</h2>
+
+<p>This plugin should work well across pretty much any browser you care to throw at it. I’ve intentionally kept the code to a minimum which should prevent issues in older browsers. The only thing that <em>will</em> fall apart is that CSS animations won’t work across every browser. If this is something that concerns you I’d strongly suggest you reconsider your approach to web design to be a bit less rigid before you go insane.</p>
+
+<h2 id="download">Download</h2>
+
+<p>You can download isEmpty over at the <a href="https://github.com/DavidTurner/show-of-slides">Github Repository</a>, but if you just want to download the latest version you can <a href="https://github.com/DavidTurner/show-of-slides/archive/master.zip">click here</a>.</p>
+

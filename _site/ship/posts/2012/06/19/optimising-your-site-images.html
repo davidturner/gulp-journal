@@ -1,0 +1,111 @@
+<p>In my article <a href="/optimising-your-site-the-basics/">last week</a> I wanted to give an overview of some of the basic ways in which we can optimise sites, primarily for speed but also for the general well-being of sites in general. This week I want to take a look at one area I mentioned, and drill a bit deeper.</p>
+
+<h2 id="images">Images</h2>
+
+<p>Images are a tricky beast to tackle, especially when it comes to getting things 100% right. But there are steps we can take to ensure that we have done all that we can, even if it’s not perfect. In a way it mirrors how the internet is itself pretty awesome, but still not perfect.</p>
+
+<p>So when it comes to dealing with images where do we start? The three key areas I’d look at are:</p>
+
+<ol>
+  <li>Image Dimensions</li>
+  <li>Image Compression</li>
+  <li>Image Sprites</li>
+</ol>
+
+<h3 id="image-dimensions">Image Dimensions</h3>
+
+<p>The larger an image is in terms of dimensions the larger the file size is going to be. It’s an exponential growth too. A 100px by 100px image is going to be roughly a quarter of the size of a 200px by 200px image. It’s a quarter of the size, both in terms of pixelage and size.</p>
+
+<p>So don’t use an image that is larger than it needs to be. If you’re displaying an image at 300px by 200px then ensure the image is that size, not 600px by 400px. To highlight this I’m going to make an example of one of my partners in crime, <a href="http://twitter.com/kylegawley">Kyle Gawley</a>.</p>
+
+<p><img src="/img/vizuali-comparison.jpg" alt="Comparison of Image Sizes" /></p>
+
+<p>On Kyle’s <a href="http://kylegawley.com">portfolio site</a> he has four images. Each one of them is scaled down by default (<strong>Note:</strong> Caveat <a href="#caveat">down below</a>). The images he uses for his latest work are scaled down from 400px by 200px to 288px by 144px. It’s not <em>that</em> big of a difference in terms of size, right?</p>
+
+<p>There is a difference though. Of the two versions of the <a href="http://vizua.li">Vizuali</a> the largest is 11KB in size. The smaller graphic, which is the size at which the image is actually rendered, is 8KB. That’s almost a 30% saving just for using a version of the image at the right size.</p>
+
+<p>Take that 30% and multiply it by three images, and you can see that the savings can mount up. Every KB cut out is a slightly faster loading time. These savings can really mount up on the more graphical sites out there.</p>
+
+<p id="caveat">There <em>are</em> exceptions to this, as there are with everything. In the case of Kyle’s site the images are rendered in full size, but only at certain breakpoints in his responsive design. This initally slipped past unnoticed. It serves, quite nicely, to re-enforce that these serve as <em>guidelines</em>. Once you understand them you can choose to break them.</p>
+
+<h3 id="image-compression">Image Compression</h3>
+
+<p>Whilst cutting down on the dimensions of an image cuts down on the file size, we can go further. I touched upon the importance of <a href="/optimising-your-site-the-basics/#compress-content">compressing content</a> last week, but spoke only in general terms. Let’s get a bit more specific shall we?</p>
+
+<p>The comparison I listed above of the two versions of the Vizuali image has been run through <a href="http://imageoptim.com/">ImageOptim</a>, an application that does all that it can to cut down on image file sizes. I’ve also taken the liberty of preserving an <a href="/img/vizuali-comparison-uncompressed.jpg">uncompressed version</a> of the image so you can compare the two.</p>
+
+<p><img src="/img/image-optim-compression.jpg" alt="ImageOptim working it's compression magic" /></p>
+
+<p>I don’t pretend to understand the magic that makes software like ImageOptim work the way that it does, but a 16% saving on a 1000px by 300px image isn’t something to be scoffed at. Again, even the smallest savings mount up, and it <em>all</em> comes together to create a faster site.</p>
+
+<h3 id="image-sprites">Image Sprites</h3>
+
+<p>Image sprites are worth considering only if you are using a lot of smaller graphics in a site. You don’t want to be combining a series of photos into a sprite, but if you’re using image based icons then it’s something to think about.</p>
+
+<p>Why would you do this? As it turns out it’s better for a couple of reasons, which Chris Coyier talks about in more detail over in an <a href="http://css-tricks.com/css-sprites/">article on CSS Tricks</a>. But at a basic level the final image is smaller and it results in less HTTP requests.</p>
+
+<p>Every HTTP request takes time as you’re communicating with a server, waiting for a result, and then transferring the data so it can be displayed. The more requests you make the slower things can get. So if you can remove some of them by using an image sprite, it’s worth doing.</p>
+
+<p>The hardest part of using an image sprite is creating them. Back in <em>my</em> day you could spend days wrestling with pixels to get things <em>just</em> right. Forunately things have changed since then, and they’ve changed for the better.</p>
+
+<p>When it comes to working with sprites my best advice is <em>don’t</em>. Not until you’ve finalised the design. Changing sprites isn’t a pleasant experience, and is one I would recommend avoiding. When you’ve finalised a design, use a tool like <a href="http://www.spritecow.com/">Sprite Cow</a> to piece together all the images you need <em>and</em> help generate all the CSS you’ll need.</p>
+
+<p>What more could you want from a tool?</p>
+
+<h2 id="image-alternatives">Image Alternatives</h2>
+
+<p>Not everything needs to be an image these days. Web technologies are continually evolving. And the people that use them are crafty devils. We have @font-face allowing for the use of <a href="http://fontfabric.com/social-media-icons-pack/">fonts in the place of social icons</a>, the advances in CSS3 allow you to combine images with CSS to create <a href="http://duckbox.net/tests/jonnyMenu.php">awesome results</a>, and advances in browser technologies allow for increasing use of <a href="http://www.alistapart.com/issues/299">alternative technologies</a> in place of standard images.</p>
+
+<p>A lot of the alternatives are really widely supported, and those that aren’t usually degrade in a way that doesn’t completely ruin things. It really is a great time to be working on the web. I want to talk breifly about the following:</p>
+
+<ol>
+  <li>@font-face</li>
+  <li>CSS3</li>
+  <li>SVG</li>
+</ol>
+
+<h3 id="font-face">@font-face</h3>
+
+<p>Font face has become highly popular of late, with plenty of services such as <a href="https://typekit.com/">typekit</a> providing access to an ever increasing amount of fonts we can use online. The fonts can be used for more than just body text and headings. They can be used to create simple icons.</p>
+
+<p><img src="/img/social-icons-font-face.jpg" alt="@font-face in action - social media icons" /></p>
+
+<p>Above is a snap from a concept I’m tinkering with for a client site I’m currently redesigning. The icons for Facebook, Twitter, and YouTube are all icons displayed using @font-face. They’ve been put in place by some CSS to ensure that they make sense to users that are using assistive technologies. The icon is added to text that is currently hidden from view.</p>
+
+<p>That is just one example. Think of how many buttons are used in services like email, or any other online system you’re using. Quite a few of them use image sprites for these graphics, which is fine. But it’s possible that they could be better if they looked at using an icon font instead.</p>
+
+<h3 id="css3">CSS3</h3>
+
+<p>CSS3 has brought a lot of new things to the stylesheet. Many of them were only previously available if using images and a lot of dirty hacks. Lots of images in a great many cases. The power provided to us by these advances is immense.</p>
+
+<p><img src="/img/css3-buttons.jpg" alt="BonBon buttons by simurai" /></p>
+
+<p><a href="http://simurai.com/archive/2010/09/02/bonbon-buttons/">BonBon Buttons</a> provides a glimps of what is possible. An extreme case, but an amazing one. As recently as a few years ago these kinds of buttons would only have been possible using images. But these are pure CSS. Amazing.</p>
+
+<p>Of course the power of CSS3 goes far beyond the ability to style buttons nicely. You have an immense set of tools at your fingertips that, if used well, can create amazing effects. The key is, and has always been, in consideration of when and <em>how</em> to apply such things.</p>
+
+<h3 id="svg">SVG</h3>
+
+<p>SVG is one of those languages that has been around for a <em>long</em> time, but it’s really starting to see some love on the internet. I’m not sure that I can really do SVG justice, as I am only just getting to grips with it. It allows for vector image use on the web without loading an image, as SVG is an XML based language.</p>
+
+<p><img src="/img/some-basic-svg.jpg" alt="Some basic SVG" /></p>
+
+<p>The above is a mix of some CSS and a chunk of SVG. I used SVG for the bottom part of the join, the transparent white block with a semi-circle removed from it. I tried using a PNG file but, for reasons that escape me, I couldn’t get an image that would work. As I mentioned, SVG is all code, and the code I used for this was:</p>
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;svg</span> <span class="na">version=</span><span class="s">&quot;1.1&quot;</span> <span class="na">id=</span><span class="s">&quot;Layer_1&quot;</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="na">xmlns:xlink=</span><span class="s">&quot;http://www.w3.org/1999/xlink&quot;</span> <span class="na">x=</span><span class="s">&quot;0px&quot;</span> <span class="na">y=</span><span class="s">&quot;0px&quot;</span> <span class="na">width=</span><span class="s">&quot;1000px&quot;</span> <span class="na">height=</span><span class="s">&quot;60px&quot;</span> <span class="na">viewBox=</span><span class="s">&quot;0 0 1000 60&quot;</span> <span class="na">style=</span><span class="s">&quot;enable-background:new 0 0 1000 60;&quot;</span> <span class="na">xml:space=</span><span class="s">&quot;preserve&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;path</span> <span class="na">style=</span><span class="s">&quot;opacity:0.6;fill:#fff;&quot;</span> <span class="na">d=</span><span class="s">&quot;M553.501,0c-4.749,25.543-27.137,44.889-54.057,44.889</span>
+<span class="s">    	c-26.919,0-49.307-19.346-54.056-44.889H0v60h1000V0H553.501z&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/svg&gt;</span></code></pre></div>
+
+<p>That’s not a lot of code. You can copy and paste it into your HTML and, so long as you don’t have a white background, it’ll work for you. All without loading in an external image.</p>
+
+<p>Unfortunately I can’t cover it in more detail, as I have only just begun to scratch the surface of what is possible. The potential is definitely there though.</p>
+
+<h2 id="and-thats-a-wrap">And That’s A Wrap</h2>
+
+<p>We are visual thinkers. If someone says “cheese” you conjure up an image of cheese, not the word itself. This makes images an important part of communicatin information online. Getting the right image is only half the battle however. Getting it to the user of your site is the rest.</p>
+
+<p>I’ve taken a look at some of the key ways that you can help do this more efficiently, and I’ve also taken a look at some of the alternatives out there that you can consider for some things. Use what works to say what you want to say. Then make sure to say it.</p>
+
+<p>Want to add something to what I’ve said? Chime in below on the comments or <a href="https://twitter.com/intent/tweet?original_referer=&amp;source=Optimising+Your+Site%3A+Images&amp;text=@HerrWulf&amp;url=https://davidturner.name/journal/optimising-your-site-images">hit me up on twitter</a>.</p>
+

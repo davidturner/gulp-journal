@@ -1,0 +1,63 @@
+<p>HTML5 form validation is pretty cool. I’m a big fan, even if it needs to be supported with some client-side magic and server side validation. What I <em>don’t</em> like is when a form tells users that they are doing something wrong… before they have even had a chance to <em>do</em> anything. So I made something to fix that.</p>
+
+<p>The isEmpty jQuery Plugin is a simple little script that loops through specified elements, adding a specific class as necessary. It will also check to see if the field is being used, and will automagically add and remove classes as needed.</p>
+
+<h2 id="what-does-it-do">What Does it Do?</h2>
+
+<p>The isEmpty plugin is a simple jQuery plugin that works a little magic to hide error warnings from HTML form fields that are required until the user has interacted with them. It strikes me as rather poor form to tell someone they’re doing it wrong <em>before</em> they have actually done anything.</p>
+
+<p>It does this by adding an extra class to required fields that don’t have any field that is completely empty. It also monitors for when people have started typing into fields, and removes the class. It can, optionally, readd the class if the user empties a field, but this is disabled by default.</p>
+
+<p>This allows us to write a small amount of extra CSS that is more specific than the standard <code>:invalid</code> CSS, which hides the error styling from being displayed until the user interacts with elements.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>The jQuery isEmpty plugin has been built with ease of use in mind, so that you can set it up and get <em>straight</em> to using it. Being a jQuery plugin you will want to load both jQuery and the plugin to ensure that it will actually run. If you’re already using jQuery then you just need to load the plugin script, there is no need to add jQuery multiple times:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;//ajax.googleapis.com/ajax/libs/jquery/&lt;!--[jQuery]--&gt;/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/jquery.isEmpty.min.js&quot;</span><span class="nt">&gt;</span></code></pre></div>
+
+<p>With the plugin loaded, and jQuery running as well, it’s simple to get things running. Simply copy/paste the following code into your site, somewhere after the plugin:</p>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;[required]&#39;</span><span class="p">).</span><span class="nx">isEmpty</span><span class="p">();</span>
+<span class="p">});</span></code></pre></div>
+
+<p>That’s it. The isEmpty plugin is up and running, working it’s magic on any elements with a required attribute. There’s a little bit more that you’ll need to do in order to get any form of visual feedback though. You’ll need to write some CSS. By way of example, the CSS I use for my site is:</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">input</span><span class="nd">:required:invalid</span><span class="o">,</span> <span class="nt">input</span><span class="nd">:focus:invalid</span><span class="o">,</span> <span class="nt">textarea</span><span class="nd">:required:invalid</span><span class="o">,</span> <span class="nt">textarea</span><span class="nd">:focus:invalid</span> <span class="p">{</span>
+  <span class="n">box</span><span class="o">-</span><span class="n">shadow</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0.5em</span> <span class="n">rgba</span><span class="p">(</span><span class="m">255</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="o">.</span><span class="m">4</span><span class="p">)</span> <span class="k">inset</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>This flags errors with a slightly red glow around their edges. It’s subtle, but it’s noticeable. Leaving things like this would mean any empty required fields would get this glow. The isEmpty plugin adds a class on <code>empty</code> to these fields, and we can use that to get rid of the glow:</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">input</span><span class="o">,</span> <span class="nt">textarea</span><span class="o">,</span> <span class="nt">input</span><span class="nd">:required:invalid</span><span class="nc">.empty</span><span class="o">,</span> <span class="nt">input</span><span class="nd">:focus:invalid</span><span class="nc">.empty</span><span class="o">,</span> <span class="nt">textarea</span><span class="nd">:required:invalid</span><span class="nc">.empty</span><span class="o">,</span> <span class="nt">textarea</span><span class="nd">:focus:invalid</span><span class="nc">.empty</span> <span class="p">{</span>
+  <span class="n">box</span><span class="o">-</span><span class="n">shadow</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0.5em</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="o">.</span><span class="m">2</span><span class="p">)</span> <span class="k">inset</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Boom! Error styling is hidden on empty fields.</p>
+
+<h2 id="some-extra-settings">Some Extra Settings</h2>
+
+<p>The isEmpty plugin has a couple of settings you can change. They are:</p>
+
+<ol>
+  <li><code>theClass</code>: This allows you to change the class that is added to better fit your tastes. The default, as mentioned above, is <code>empty</code>.</li>
+  <li><code>addOnEmpty</code>: This allows the plugin to readd the class in the event that a user empties a field. By default this is set to <code>0</code>.</li>
+</ol>
+
+<p>The method for changing either of these settings is pretty easy. When you’re calling the plugin you can pass through your personal options, like the following:</p>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;[required]&#39;</span><span class="p">).</span><span class="nx">isEmpty</span><span class="p">({</span>
+    <span class="nx">theClass</span><span class="o">:</span> <span class="s1">&#39;hiddenWarning&#39;</span><span class="p">,</span>
+    <span class="nx">addOnEmpty</span><span class="o">:</span> <span class="mi">1</span>
+  <span class="p">});</span>
+<span class="p">});</span></code></pre></div>
+
+<p>You can use as many or as few options as you’d like, as each option has a default defined.</p>
+
+<h2 id="download">Download</h2>
+
+<p>You can download isEmpty over at the <a href="https://github.com/DavidTurner/isEmpty">Github Repository</a>, but if you just want to download the latest version you can <a href="https://github.com/DavidTurner/isEmpty/zipball/master">click here</a>.</p>
+

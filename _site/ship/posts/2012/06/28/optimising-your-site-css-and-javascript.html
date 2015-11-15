@@ -1,0 +1,108 @@
+<p>At the <a href="/optimising-your-site-the-basics/">start of this series</a> of posts I gave an overview of some of the best ways to start optimising a site. Last week I looked <a href="/optimising-your-site-images/">more in-depth at images</a> and this week I want to turn my attention to the other files I brought up: CSS and JavaScript.</p>
+
+<h2 id="css--javascript">CSS &amp; JavaScript</h2>
+
+<p>These are fundamental building blocks of the internet, alongside HTML and CSS adding visual effects to sites and JavaScript adding additional functionality and interaction to sites. As a result it isn’t all that hard to see them becoming quite large files. Which isn’t really ideal.</p>
+
+<p>Whilst CSS and JavaScript are entirely different types of content, and are written differently, the approaches to optimising them overlap and, in some cases, are identical. The guidelines I follow are:</p>
+
+<ol>
+  <li>One CSS file, one JavaScript File</li>
+  <li><em>Always</em> place CSS before JavaScript</li>
+  <li>CSS goes in the <code>&lt;head&gt;</code>, JavaScript before <code>&lt;/body&gt;</code></li>
+  <li>Compress and Minify content for deployment</li>
+  <li>CSS Preprocessors are <em>awesome</em></li>
+</ol>
+
+<p>As with all guidelines there are exceptions that I afford. I’ll cover them in the relevant areas below.</p>
+
+<h3 id="one-css-file-one-javascript-file">One CSS File, One JavaScript File</h3>
+
+<p>I default to using a single CSS file and a single JavaScript file. This provides a maximum level of efficiency when it comes to loading. One HTTP request for CSS, one HTTP request for JavaScript and then we’re good to go.</p>
+
+<p>The big exception to this is when using a CDN (Content Delivery Network) to deliver JavaScript Libraries. These files generally aren’t that small, and by using a CDN you can help mitigate some file loading times.</p>
+
+<p>How? A CDN is a way to deliver certain files quickly in a global manner. If you’re in Europe you get the file <em>from</em> Europe. The same is true in the Americas. But, better yet, these files are <em>cached</em>. So if someone else uses the same CDN as you to serve the same JavaScript file as you then the user doesn’t have to download the same file when they visit your site. They have it already.</p>
+
+<p>In addition to that it also lightens the load on your own site, as you’re not having to serve a larger file that includes whichever library you’re using.</p>
+
+<h3 id="always-place-css-before-javascript"><em>Always</em> Place CSS before JavaScript</h3>
+
+<p>JavaScript files block the rest of a site from loading. Whilst there are instances where this is fine (I’ll touch on this in the next area) you always want to have the CSS ready to go when the body of a site is rendering. The alternative is that your site looks sloppy, as if you don’t care about your users. That’s never good.</p>
+
+<p>Little things like this don’t seem important, but can have unforseen consequences if you don’t properly consider them. Which leads nicely to the next point.</p>
+
+<h3 id="css-goes-in-the-head-javascript-before-body">CSS goes in the <code>&lt;head&gt;</code>, JavaScript before <code>&lt;/body&gt;</code></h3>
+
+<p>The order of files is important in terms of page loading and rendering times. JavaScript will, for the most part, block content beneath it from loading. This can cause pages to appear to be slower loading. So we want to ensure that doesn’t happen.</p>
+
+<p>An example of this in action is a project I worked on over a year ago, called <a href="https://referenceit.org">ReferenceIt</a>. There are a few key things to note. The first is in this cut down version of the <code>&lt;head&gt;</code> element:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="ni">&amp;lt;</span>head<span class="ni">&amp;gt;</span>
+  <span class="ni">&amp;lt;</span>link rel=<span class="ni">&amp;quot;</span>stylesheet<span class="ni">&amp;quot;</span> media=<span class="ni">&amp;quot;</span>screen<span class="ni">&amp;quot;</span> href=<span class="ni">&amp;quot;</span>https://referenceit.org/-assets/css/site.live.css<span class="ni">&amp;quot;</span> /<span class="ni">&amp;gt;</span>
+  <span class="ni">&amp;lt;</span>script src=<span class="ni">&amp;quot;</span>//cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js<span class="ni">&amp;quot;&amp;gt;&amp;lt;</span>/script<span class="ni">&amp;gt;</span>
+<span class="ni">&amp;lt;</span>/head<span class="ni">&amp;gt;</span></code></pre></div>
+
+<p>There are two things of note here. A single CSS file and, what’s that, JavaScript? In <em>my</em> <code>&lt;head&gt;</code> element? Well, yes. Which leads to my first exception to this guideline. HTML5Shiv and Modernizr need to be in the <code>&lt;head&gt;</code> in order to get Internet Explorer to understand HTML5 elements.</p>
+
+<p>If we carry on down the site we’ll see that there’s some more JavaScript waiting for us:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="ni">&amp;lt;</span>script src=<span class="ni">&amp;quot;</span>//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js<span class="ni">&amp;quot;&amp;gt;&amp;lt;</span>/script<span class="ni">&amp;gt;</span>
+  <span class="ni">&amp;lt;</span>script src=<span class="ni">&amp;quot;</span>/-assets/js/site.live.js<span class="ni">&amp;quot;&amp;gt;&amp;lt;</span>/script<span class="ni">&amp;gt;</span>
+<span class="ni">&amp;lt;</span>/body<span class="ni">&amp;gt;</span></code></pre></div>
+
+<p>This is the <em>real</em> JavaScript that’s running on the site, and it’s left until the <em>very</em> end of the site. This lets the rest of the content on the site load as quickly as possible before layering extra functionality on top of the site. This lets the user get straight to <em>using</em> the site, without waiting on things to finish downloading.</p>
+
+<h3 id="compress-and-minify-content-for-deployment">Compress and Minify Content for Deployment</h3>
+
+<p>There are really two different stages to a site. Development of the project and the live version of a project. Each has it’s own nuances that need to be taken into consideration. For instance, when developing something you want to be able to quickly identify <em>what</em> is causing problems if something goes wrong.</p>
+
+<p>By the time you’re launching a project such problems shouldn’t exist, which affords us the ability to make some savings in terms of space. We do this using the wonderful technologies of compression and minification.</p>
+
+<p>I’ll stick with the example I used above, ReferenceIt. You saw in the footer there was a reference to a file called <code>site.live.js</code>. You can view it <a href="https://referenceit.org/-assets/js/site.live.js">here</a>. As you can see, it’s pretty clustered together. I didn’t write this file. The file I wrote can be viewed <a href="https://referenceit.org/-assets/js/site.js">here</a>.</p>
+
+<p>There’s quite the difference in looks, isn’t there? This is a principle I apply to both my JavaScript <em>and</em> my CSS, though it’s much more effective with JavaScript as when minifying variable names can be reloaded. What does my CSS look like then? It looks a lot like <a href="https://referenceit.org/-assets/css/site.live.css">this</a>, though it starts out quite differently.</p>
+
+<p>Why do this? The savings in terms of file size can mount up. The JavaScript I use isn’t <em>that</em> large, but by serving it as a compressed and minified file, I make a saving of about 20-25%. Think about how much space could be saved with <em>larger</em> files.</p>
+
+<p>Compressing and minifying JavaScript is simplified greatly using tools like <a href="http://incident57.com/codekit/">CodeKit</a> and <a href="http://livereload.com/">LiveReload</a>. CSS is a bit more fiddly. Compressing it, natively, usually requires a bit more in terms of manual effort. There’s an alternative though, which I’ll cover below.</p>
+
+<h3 id="css-preprocessors-are-awesome">CSS Preprocessors are <em>Awesome</em></h3>
+
+<p>I mentioned above that the CSS for ReferenceIt starts out quite differently. That’s because I didn’t write it as CSS <em>at all</em>. Instead I used a language called <a href="http://lesscss.org/">LESS</a>, a language that builds upon CSS but is compiled into the CSS that browsers know and love. Nowadays I use <a href="http://sass-lang.com/">SASS/SCSS</a>, but the principles remain the same.</p>
+
+<p>Preprocessors allow you to us a load of fantastic things in addition to the CSS you know and love. The biggest features for me:</p>
+
+<ul>
+  <li>Automatic CSS Compression</li>
+  <li>Usage of Variables</li>
+  <li>Mixins</li>
+</ul>
+
+<h4 id="automatic-css-minification">Automatic CSS Minification</h4>
+
+<p>This is probably the biggest win for me. I can write CSS that is perfectly human readable and have it compressed into the file I want to be served to browsers. This makes tweaking things nice and easy too. Save, upload, done.</p>
+
+<h4 id="usage-of-variables">Usage of Variables</h4>
+
+<p>Variables are handy for a lot of things. I mainly use them to store colours and dimensions, which allows me to quickly change the layout or design of a site by changing just a few elements of code.</p>
+
+<h4 id="mixins">Mixins</h4>
+
+<p>Think of mixins as functions and you’re pretty much there. Rather than writing multiple lines of <code>border-radius</code> CSS you can just call a function and have it work it all out for you. I use this with great results in <a href="https://github.com/DavidTurner/960-LESS">960-LESS</a>, a flexible grid framework I now use in SCSS.</p>
+
+<h4 id="theres-more">There’s More</h4>
+
+<p>I couldn’t do preprocessors justice in this post, there’s too much to cover for it to be just a part of a larger topic. Chris Coyier has done a great series of articles on this topic however, and they are well worth a read:</p>
+
+<ul>
+  <li><a href="http://css-tricks.com/musings-on-preprocessing/">Musings on Preprocessing</a></li>
+  <li><a href="http://css-tricks.com/sass-vs-less/">SASS vs. LESS</a></li>
+</ul>
+
+<h2 id="and-thats-a-wrap">And That’s A Wrap</h2>
+
+<p>I wanted to take a bit of a more in-depth look at ensuring that everything that can be done to save in terms of file space <em>has</em> been done. It’s important to get this aspect of things right before I talk about the next area of how to optimise your site, which will be dealing with caching of files and a few other technical areas which go hand in hand with caching files.</p>
+
+<p>As always your comments are appreciated, both below in the comments area and <a href="https://twitter.com/intent/tweet?original_referer=&amp;source=Optimising+Your+Site:+CSS=&amp;+JavaScript&amp;text=@HerrWulf&amp;url=https://davidturner.name/journal/optimising-your-site-css-and-javascript">on twitter</a>.</p>
+

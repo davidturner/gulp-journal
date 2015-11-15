@@ -1,0 +1,31 @@
+<p>CSS is an important part of any web design. Without it the content of you site would be a very plain looking black and white design, with blue links. It’s not that it isn’t <em>usable</em> but that it’s not very visually appealing, which is why CSS is so important. It affords people the ability to provide a unique and visually moving site design.</p>
+
+<p>As a result, every web designer worth their salt needs to have a pretty strong knowledge of how CSS works as well as how to use it. If they’re anything like me, they’re also looking for ways to speed up the process.</p>
+
+<h2 id="helping-speed-things-up">Helping Speed things up</h2>
+
+<p>For a while now there have been emerging technologies to do exactly that… speed things up. Technologies such as <a href="http://sass-lang.com/">SASS</a>, <a href="http://compass-style.org/">compass</a> and <a href="http://lesscss.org/">LESS</a> all provide server-side technologies to allow you to code better, and smarter, code.</p>
+
+<p>All of these technologies are based on Ruby though, and so far as I’m aware it’s not an overly common technology on servers, I know it’s definitely not installed on mine. There have been PHP and even .NET powered versions of these technologies available but, to me, these is an added level of complexity that I don’t want to have to deal with. Recently there has even been a javaScript version of it released. Unfortunately, I prefer not to make my site entirely reliant upon JavaScript.</p>
+
+<p>Fortunately, for Mac users at any rate, there is a <a href="http://incident57.com/less/">fantastic application</a> for Mac users that allows for the use of the LESS Platform to be used to compile .less files into fully functioning .css files, ready for deployment on the web. So what’s the benefit of this? LESS allows for a few things that can be of great use in CSS terms. Examples of these include:</p>
+
+<ul>
+  <li>Variables</li>
+  <li>Mixins (think functions in PHP or JS terms)</li>
+  <li>Nested Styling</li>
+  <li>Includes — keeping code you don’t need separate until you’re done</li>
+  <li>Adding values together (mixing colours together)</li>
+  <li>Basic Math functionality (addition, subtraction, division and multiplication)</li>
+</ul>
+
+<p>Whilst I’ve not had reason to make use of all of the functionality of LESS, in particular mixing and altering values with math, I have already found the other aspects to help speed up my coding. I’ve put together a few mixins for various CSS elements I frequently use that let me code multiple lines of CSS with very little effort on my part. Things like border-radius and box-shadow suddenly become a <em>lot</em> easier to implement without forgetting a browser-specific tag, as it’s all generated for me.</p>
+
+<p>There are a few problems with LESS though, which I hope will be fixed in the future. My main gripe currently is that I cannot use a mixin to create the font: css element, it simply refuses to work because of the syntax. I’ve also had a few instances where values (such as 14px/20px) have been divided instead of expressed as I want them. These problems are the exception rather than the norm.</p>
+
+<p>Unfortunately for those of you working on Windows Machines, I have yet to find any equivalent application that can be used locally whilst developing your CSS. If you happen to find to find one feel free to let me know in the comments.</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>I’ve only been using LESS.app in the development of my CSS but I’ve been finding it to be a fantastic tool for helping speed up my development of sites. If you’re working on a Mac I would highly recommend trying it out!</p>
+

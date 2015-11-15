@@ -42,22 +42,18 @@ blockquote p:first-of-type {
   position: relative;
   &:after {
     content: '';
-    background: $twitter url(../img/twitter.svg) center center no-repeat;
+    background: url(../img/twitter.png);
+    background: url(../img/twitter.svg),
+    linear-gradient(transparent, transparent);
+    background-color: $twitter;
+    background-position: center center;
+    background-repeat: no-repeat;
     background-size: 70%;
     width: 2em;
     position: absolute;
     top: 0;
     bottom: 0;
     right: 100%;
-  }
-}
-.no-svg {
-  .twitter-tweet, .twitter, .tweet {
-    &:after {
-      content: '';
-      background: $twitter url(../img/twitter.png) center center no-repeat;
-      background-size: 70%;
-    }
   }
 }
 

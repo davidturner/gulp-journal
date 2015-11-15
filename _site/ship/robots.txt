@@ -1,0 +1,5 @@
+User-agent: *
+Disallow:
+Sitemap: /sitemap.xml
+Sitemap: /sitemap.pages.xml
+Sitemap: /sitemap.posts.xml

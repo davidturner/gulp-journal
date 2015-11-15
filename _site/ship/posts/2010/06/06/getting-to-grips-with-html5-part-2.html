@@ -1,0 +1,118 @@
+<p>HTML5 introduces, changes and, in some cases, removes things. It streamlines some old elements and expands into new, more semantic areas. As I mentioned in the last article, there are new elements to help you set up basic areas of the site, such as the header, navigation, sidebars, content articles and footers. But there is a great deal more available. Let’s take a look, shall we?</p>
+
+<h4 id="back-to-basics--doctype">Back to Basics – DOCTYPE</h4>
+
+<p>Some of the following may look familiar to you:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;</span>
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01//EN&quot; &quot;http://www.w3.org/TR/html4/strict.dtd&quot;&gt;</span>
+<span class="cp">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span></code></pre></div>
+
+<p>What’s that? They <em>do</em>? Any web designer who knows anything about coding understands the necessity of having a DOCTYPE declared for a web site. It helps to ensure things work properly in browsers, and lets them know what’s coming up in the code. HTML5 has a DOCTYPE too, though I’m sure this doesn’t shock you in the slightest. But things have changed. Things have <strong>improved</strong>. Want to see the HTML5 DOCTYPE? Here it is:</p>
+
+<pre class="brush: xml; title: ; notranslate" title="">&lt;!DOCTYPE html&gt;</pre>
+
+<p>Complicated, isn’t it? All it does is tell the browser that it’s viewing an HTML document, and you’re golden.</p>
+
+<h4 id="letting-things-go-to-your-head">Letting things go to your &lt;head&gt;</h4>
+
+<p>The head section of the site is an important one. It contains a great deal of information about the site, including information about the character set that your site is using. It also contains some important information that is useful for helping identify &amp; display your site, covering things such as your title, your style sheets, favicon and information about the content of the site, in the form of meta tags and descriptions. Some people, though not all, use it as an area to place their JavaScript.</p>
+
+<p>HTML5 helps strip away some elements from this section, and helps streamline others. Below is an example of the code for a pretty standard XHTML Site:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=UTF-8&quot;</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;title&gt;</span>Page Title<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">media=</span><span class="s">&quot;screen&quot;</span> <span class="na">href=</span><span class="s">&quot;site.css&quot;</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;shortcut icon&quot;</span> <span class="na">href=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;keywords&quot;</span> <span class="na">content=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&#39;robots&#39;</span> <span class="na">content=</span><span class="s">&quot;noindex,nofollow&quot;</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;/head&gt;</span></code></pre></div>
+
+<p>Let’s compare that to how the template for my own site demos looks, just for comparison purposes, shall we?</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;title&gt;</span>Page Title<span class="nt">&lt;/title&gt;</span>
+		<span class="c">&lt;!--[if lt IE 9]&gt;</span>
+<span class="c">		&lt;script src=&quot;http://html5shiv.googlecode.com/svn/trunk/html5.js&quot;&gt;&lt;/script&gt;</span>
+<span class="c">		&lt;![endif]--&gt;</span>
+		<span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">media=</span><span class="s">&quot;screen&quot;</span> <span class="na">href=</span><span class="s">&quot;style.css&quot;</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;shortcut icon&quot;</span> <span class="na">href=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;keywords&quot;</span> <span class="na">content=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;robots&quot;</span> <span class="na">content=</span><span class="s">&quot;noindex,nofollow&quot;</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;/head&gt;</span></code></pre></div>
+
+<p>There’s not a whole lot of difference between the two. The HTML5 declares the language is in and also specifies, in less space, the character set that will be used. The remaining content remains pretty much identical regardless. It should be noted, just for ease of use, I have continued using the self-closing / at the end of elements as was the norm with XHTML. This isn’t required with HTML5, it’s just something I have grown accustomed to over the years.</p>
+
+<h5 id="wait-i-spy-javascript">Wait… I spy JavaScript!</h5>
+
+<p>That’s correct, you do. I covered in the <a href="/getting-to-grips-with-html5-part-1/">last post</a> that Internet Explorer doesn’t currently support HTML5 in any version currently available. The workaround for it consists of some JavaScript which forces these browsers to recognise the elements. Support for HTML5 elements <em>is</em> a part of Internet Explorer 9 but, so far as I am aware, there is no release date set yet. This means that if you hate JavaScript, HTML5 is currently off limits to you.</p>
+
+<h4 id="most-people-however-are-all-about-the-body">Most people, however, are all about the &lt;body&gt;</h4>
+
+<p>Cheap pun I know, but when it comes to web design it <em>is</em> almost all about the body. Your users don’t see your header. They don’t see your CSS or your JavaScript. What they <em>do</em> see, however, is the body content of your site and the effects of your styling and your JavaScript. So what has changed here?</p>
+
+<p>In the grand scheme of things, not a whole hell of a lot. Everything you used before in creating a web site will work <em>exactly</em> the same in HTML5 as before. It’s part of the beauty of it all. You don’t need to learn anything new, but it adds a great deal of new tools to your set. Let’s take a look, shall we?</p>
+
+<h5 id="out-with-the-old-and-in-with-the-new">Out with the old (and in with the new)</h5>
+
+<p>HTML5 doesn’t change the game a whole lot with regards to layout and structure. It merely neatens things up and makes things more consistent. To do this there are several elements removed in the HTML5 specification but, to be honest, I’ve not encountered many of them at all in recent years and none are likely to be missed. The list of removed elements in HTML5 consist of:</p>
+
+<ul>
+  <li>basefont</li>
+  <li>big</li>
+  <li>center</li>
+  <li>font</li>
+  <li>s</li>
+  <li>strike</li>
+  <li>tt</li>
+  <li>u</li>
+  <li>frame</li>
+  <li>frameset</li>
+  <li>noframes</li>
+  <li>acronym</li>
+  <li>applet</li>
+  <li>isindex</li>
+  <li>dir</li>
+</ul>
+
+<p>Honestly, I’m not going to be missing any of these elements as they have either been irrelevant for quite some time, courtesy of CSS, or superseded by newer technologies. As much as there has been stuff removed, there have also been some new elements added in that you are able to use. Some exist to make laying out your design more semantically, some exist to make your contents easier for search engines to understand and some, such as the video and audio tags, exist to make it easier for you to add multimedia to a page. The main new elements that you should concern yourself with, at this point, are:</p>
+
+<ul>
+  <li>section</li>
+  <li>article</li>
+  <li>aside</li>
+  <li>header</li>
+  <li>footer</li>
+  <li>nav</li>
+  <li>figure</li>
+  <li>figcaption</li>
+  <li>video</li>
+  <li>audio</li>
+  <li>time</li>
+</ul>
+
+<p>Whilst there are several others, several of these aren’t currently supported enough to make them usable. I would expect this to change over the coming months. In addition to new elements there are also new attributes for elements. Whilst many of these aren’t supported yet, or are self explanatory, it is possible to make use of some of them to help future-proof your code.</p>
+
+<p>This is <em>especially</em> true with form elements, as unsupported input types default to text inputs when they are unsupported in current browsers. It should be noted that this can cause problems with certain JavaScript Plugins from libraries such as jQuery and Mootools, as these often specify which elements they support.</p>
+
+<h5 id="new-ways-to-embed">New Ways to Embed</h5>
+
+<p>HTML has always provided way to provide various types of content. Images are as simple as using the img tag. HTML5 looks to expand beyond this introducing methods to embed both audio and video in web pages. This area of the HTML5 spec is currently undergoing some shifts and is a topic I intend to cover at a later date in more depth.</p>
+
+<h3 id="coming-soon">Coming Soon!</h3>
+
+<p>I <em>had</em> intended to cover the ins and outs of making the shift to HTML5 in this article. Clearly this hasn’t happened. In writing this article I believed that it was getting to be a bit unwieldy in terms of length and structure, covering too much in one go. As a result I will be covering shifting from XHTML to HTML5 in my next article, paying more attention to the code aspect rather than discussing what has changed.</p>
+
+<h3 id="references">References</h3>
+
+<ul>
+  <li>Anne van Kesteren. 2010. <em>HTML5 differences from HTML4</em>. [ONLINE] Available at: <a href="http://www.w3.org/TR/html5-diff/#backwards-compatible">http://www.w3.org/TR/html5-diff/#backwards-compatible</a>. [Accessed 28 May 10].</li>
+</ul>

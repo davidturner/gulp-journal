@@ -1,0 +1,1626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title></title>
+    <description></description>
+    <link>/</link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Thu, 30 Jul 2015 16:48:39 +0100</pubDate>
+    <lastBuildDate>Thu, 30 Jul 2015 16:48:39 +0100</lastBuildDate>
+    
+      <item>
+        <title>Setting Up Vagrant in OS X 10.11 El Capitan</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;With Apple having made OS X 10.11’s first Developer Preview available to developers, and my addiction to using new and shiny things, I’ve just finished setting up a new partition using the Developer Preview. Getting it set up was pretty simple. With the exception of Vagrant.&lt;/p&gt;
+
+&lt;h2 id=&quot;os-x-security---rootless&quot;&gt;OS X Security - Rootless&lt;/h2&gt;
+
+&lt;p&gt;Apple’s rolled out a few new security features to try and limit the damage that malicious code can do to the operating system. Part of this includes locking down the ability to access/edit certain folders. One of those folders seems to be &lt;code&gt;/usr/bin&lt;/code&gt;, one of several folders that Terminal programs include in their &lt;code&gt;$PATH&lt;/code&gt; for use by us as users. Vagrant’s installer currently symlinks a a reference to their &lt;code&gt;vagrant&lt;/code&gt; command in this folder and, in 10.11… that no longer works. Everything gets installed, but the command itself isn’t made available to the terminal because the symlink silently fails to be created.&lt;/p&gt;
+
+&lt;p&gt;Fortunately, it’s not a terribly difficult thing to work around, once you know what’s going on. The folder &lt;code&gt;/usr/local/bin&lt;/code&gt; &lt;em&gt;isn’t&lt;/em&gt; restricted in the same way as &lt;code&gt;/usr/bin&lt;/code&gt; and it’s another folder that should be included in your &lt;code&gt;$PATH&lt;/code&gt;. The relevant command we want is installed into the &lt;code&gt;/opt/vagrant/bin/&lt;/code&gt; folder. We can use the following command to create a symlink for the vagrant command:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;ln -s /opt/vagrant/bin/vagrant /usr/local/bin/vagrant&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;A quick restart of terminal and voila, Vagrant should be working once more!&lt;/p&gt;
+</description>
+        <pubDate>Fri, 19 Jun 2015 16:00:00 +0100</pubDate>
+        <link>/ship/posts/2015/06/19/setting-up-vagrant-in-os-x-10-11-el-capitan.html</link>
+        <guid isPermaLink="true">/ship/posts/2015/06/19/setting-up-vagrant-in-os-x-10-11-el-capitan.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>gulp-mailgun</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;I’m a big fan of gulp.js for automating tasks when it comes to design and front-end development. I use it for my own personal work, any freelance work I’ve undertaken, and we make heavy use of it at &lt;a href=&quot;https://getinvited.to&quot;&gt;Get Invited&lt;/a&gt;. It makes our lives easier and I plan to write a bit more about that, and share how we use gulp.js day-to-day, in a future post.&lt;/p&gt;
+
+&lt;p&gt;Today I wanted to write a little bit about my contribution to gulp.js in the form of a package I released several months ago. I haven’t written anything about it until today.&lt;/p&gt;
+
+&lt;h2 id=&quot;building-upon-gulpjs&quot;&gt;Building Upon Gulp.js&lt;/h2&gt;
+
+&lt;p&gt;Gulp.js is built upon packages, and there are quite a few available to users. It doesn’t have as comprehensive a list of packages as other tools like Grunt.js does, but it covers what I’ve found to be my standard needs.&lt;/p&gt;
+
+&lt;p&gt;Except one.&lt;/p&gt;
+
+&lt;p&gt;Sending emails.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Fucking&lt;/em&gt; emails.&lt;/p&gt;
+
+&lt;p&gt;One of the areas that we need to test at Get Invited is cross-service email client consistency. We send a lot of emails out to customers so it’s important that we test all email layouts thoroughly to make sure that everything works. Services like &lt;a href=&quot;https://litmus.com&quot;&gt;Litmus&lt;/a&gt; are great for testing how an email looks but we needed to get the email through to the service before we could test things.&lt;/p&gt;
+
+&lt;p&gt;Gulp didn’t have anything that fit our needs, but &lt;a href=&quot;https://www.npmjs.com/package/grunt-mailgun&quot;&gt;Grunt.js did&lt;/a&gt;. Both gulp.js and grunt.js are powered by JavaScript, so at their core they’re the same thing. If there’s one thing that I’ve always been good at, it’s breaking one thing and reassembling it as something else. It’s how I taught myself to code in my teens, and I applied that approach to learning here.&lt;/p&gt;
+
+&lt;p&gt;Much confusion and frustration later, and I had a working implementation of mailgun for sending emails directly from gulp.js. I could send emails quickly and easily as a part of my build process, rather than having to manually submit the markup via a web interface.&lt;/p&gt;
+
+&lt;p&gt;It was bliss.&lt;/p&gt;
+
+&lt;h2 id=&quot;released-into-the-wild&quot;&gt;Released into the Wild&lt;/h2&gt;
+
+&lt;p&gt;I quickly put it up on Github, but I’ve &lt;a href=&quot;https://www.npmjs.com/package/gulp-mailgun&quot;&gt;published the package on NPM&lt;/a&gt;, as it makes installing gulp-mailgun a lot easier. It’s been seeing usage since I released it but I’d love to hear what people think of it.&lt;/p&gt;
+
+&lt;h2 id=&quot;more-to-come&quot;&gt;More to Come&lt;/h2&gt;
+
+&lt;p&gt;I’m planning to write more about how we use gulp.js at &lt;a href=&quot;https://getinvited.to&quot;&gt;Get Invited&lt;/a&gt; in the future, and hope to share some of the tools and approaches we use with things over the coming weeks and months.&lt;/p&gt;
+
+&lt;p&gt;I’m also hoping to inflict more of my own thoughts and processes on you all too. Running a startup really eats into my time but this year I plan to set aside the time to share my thoughts more often. I hope that it’ll be as beneficial to those who read my articles as it is for me to write them.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 02 Jan 2015 20:45:00 +0000</pubDate>
+        <link>/ship/posts/2015/01/02/gulp-mailgun.html</link>
+        <guid isPermaLink="true">/ship/posts/2015/01/02/gulp-mailgun.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>Manners Maketh the Man</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;I can’t remember when I first heard the phrase “Manners Maketh the Man”, but it has always stuck with me. Being polite to one another is an all too uncommon trait in people these days, especially for how little it costs us as people to be polite to one another. It’s something that one of my mentors, and my good friend, &lt;a href=&quot;http://monographic.org&quot;&gt;Chris Murphy&lt;/a&gt; goes to great lengths to try and instill in his students, that being polite costs us nothing but can make someone’s day so much better.&lt;/p&gt;
+
+&lt;h2 id=&quot;its-the-little-things&quot;&gt;It’s the Little Things&lt;/h2&gt;
+
+&lt;p&gt;I recently saw this tweet by David Heinemeier Hansson, on the topic of how conversations tend to start in the US:&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;
+&lt;p&gt;Lived in the US a decade. Still can&amp;#39;t get over the bizarre hello protocol: &amp;quot;Hey, how are you? Great, thanks. How about you? Good, thanks!&amp;quot;&lt;/p&gt;
+&lt;p&gt;&amp;mdash; DHH (&lt;a href=&quot;https://twitter.com/dhh/&quot;&gt;@dhh&lt;/a&gt;) &lt;a href=&quot;https://twitter.com/dhh/status/505139303010541568&quot;&gt;August 28, 2014&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Last month I spent a couple of weeks in the US visiting friends, and I saw this a &lt;em&gt;lot&lt;/em&gt; but I didn’t stick to the standard script. I replied sincerely, and it showed in the responses that I received from people. Staff at stores who had gone through the motions with countless people, almost as automatons, were suddenly smiling and conversing, where they’d been quiet with every other customer. They seemed a little bit happier, a little bit more alive, whilst we were talking.&lt;/p&gt;
+
+&lt;p&gt;The same is true here in Northern Ireland as well. Chris Murphy talks about the importance of saying “thank you” to people. It doesn’t cost us anything to say, but to a bus driver who has been sat behind the wheel for hours it can truly brighten their day. This politeness can lead to recognition, and when you become a regular customer you would be amazed at what can happen.&lt;/p&gt;
+
+&lt;h2 id=&quot;business-applications&quot;&gt;Business Applications&lt;/h2&gt;
+
+&lt;p&gt;Being nice to people goes beyond being polite in our personal lives. We’ve all, at some point or another, had to deal with customer or technical support from a company we’ve bought something from. How many good experiences have you had during these interactions? Few to none in most cases.&lt;/p&gt;
+
+&lt;p&gt;At &lt;a href=&quot;https://getinvited.to&quot;&gt;Get Invited&lt;/a&gt; I tend to serve as our first point of contact for people experiencing problems using Get Invited. 90% of these requests are easily dealt with, amending a customer invoice or directing people to contact an event organiser. Sometimes, though, things require a little bit more effort, and paying attention at these times can be really beneficial.&lt;/p&gt;
+
+&lt;h3 id=&quot;supporting-customers&quot;&gt;Supporting Customers&lt;/h3&gt;
+
+&lt;p&gt;Some time ago I received a support request from a customer who had purchased a ticket to an event. The support ticket came in with the title “Please Help Me” and there was no content in the ticket. How could I help in this situation?&lt;/p&gt;
+
+&lt;p&gt;We have a rather comprehensive set of tools that tracks what’s going on with our systems, and I was able to confirm that a similar email address had been used to purchase a ticket, but that the email containing the ticket had been &lt;em&gt;Hard Bounced&lt;/em&gt; when being received. It was a case of a typo’d email address. I was also able to see that the company in question had also recently rebranded itself, taking on a new name and, along with it, a new domain name.&lt;/p&gt;
+
+&lt;p&gt;I could have replied asking this person how I was able to help them but, after investing 5 minutes of my time, I was able to reply to them explaining the situation, offer a solution, and ask them where they would like their ticket email sent to. The result was a &lt;em&gt;much happier customer&lt;/em&gt;. It was also an easy thing for me to do, and dramatically sped up the resolution of the issue for this customer. Everybody won.&lt;/p&gt;
+
+&lt;h3 id=&quot;client-invoicing&quot;&gt;Client Invoicing&lt;/h3&gt;
+
+&lt;p&gt;I also deal with sending invoices to our customers. This puts me in direct contact with the people who make our business a success. It’s one of the opportunities that allows us to directly interact with our customers, and to show them that we care about them.&lt;/p&gt;
+
+&lt;p&gt;When I’m sending out invoices I take the time to add a custom message to each email I send. When it’s my first time sending them an invoice I make sure to explain how our system works, and reassure them that no money is owed, as we charge our commission when a sale is made. I also always try and include a message that is tailored to the customer.&lt;/p&gt;
+
+&lt;p&gt;Sometimes these messages are simply hoping that the weather where the customer is is better than here in Belfast, but I have also congratulated people on recent announcements they have made or asked if they were able to enjoy a recent holiday. This has helped establish relationships with several of our customers, all for the investment of a couple of minutes of my time. This investment helps me to get to know our customers a little bit better, but also lets our customers know that we care about them and that they can approach us at any point should they feel the need.&lt;/p&gt;
+
+&lt;h2 id=&quot;manners-are-easy-and-the-benefits-are-substantial&quot;&gt;Manners are Easy, and the Benefits are Substantial&lt;/h2&gt;
+
+&lt;p&gt;A barista in a coffee shop that can remember your order, and have it ready for you when you call in is great. A barista who can remember your order for a year and recall what it is when you happen to call in… that will stick with you. It’s the rare kind of exceptional experience that helps foster loyalty.&lt;/p&gt;
+
+&lt;p&gt;In the grand scheme of things, it doesn’t take a great amount of effort to be polite to others, to provide a memorable experience, and it can help to turn around the worst of days. It can help us in our personal lives, but it can help make our professional lives better, too. Isn’t that worth the investment of a few minutes of our day?&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 08 Sep 2014 19:00:00 +0100</pubDate>
+        <link>/ship/posts/2014/09/08/manners-maketh-the-man.html</link>
+        <guid isPermaLink="true">/ship/posts/2014/09/08/manners-maketh-the-man.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>Industry Conference 2013</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;&lt;img src=&quot;/img/industry-conf.svg&quot; alt=&quot;Speaking about Get Invited&quot; /&gt;&lt;/p&gt;
+          
+          &lt;p&gt;The last few days have been quite the journey for me. It was my first time in Newcastle, my first time attending any conference aside from Build, and the first time being involved with sponsoring an event. So many new experiences for me in such a short period of time, with high quality talks over the course of the day, but it was great to spend time talking with people about Get Invited. I &lt;em&gt;loved&lt;/em&gt; it.&lt;/p&gt;
+
+&lt;h2 id=&quot;sponsoring---get-invited&quot;&gt;Sponsoring - Get Invited&lt;/h2&gt;
+
+&lt;p&gt;The real highlight of the day was to be an official sponsor for the event, complete with our own exhibit that allowed &lt;a href=&quot;http://kylegawley.com/&quot;&gt;Kyle Gawley&lt;/a&gt; and myself could demo Get Invited for attendees. We’ve spoken to people about Get Invited before, but never as a sponsor. We had a few minor kinks in the run up to Industry Conference, but things went smoothly on the day, and it was great to spend time speaking with people interested in using what we’ve built, catching up with friends working in the same area as ourselves, and talking with a represantive from a local accelerator programme.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/david-turner-get-invited.jpg&quot; alt=&quot;Speaking about Get Invited&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Getting to talk with people about Get Invited was a real joy for me, and the feedback we got from people was positive. We also got input on how to work through some of the issues we’re currently experiencing. It’s one of the truly great things about our industry, the openness we have and our willingness to share what we know with others. Something that Industry Conference attendees and speakers really demonstrated over the course of the day.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-talks&quot;&gt;The Talks&lt;/h2&gt;
+
+&lt;p&gt;There was a lot to learn at Industry Conference, and I’m sure that others picked up on things that I didn’t pick up on. Below you will find my thoughts on each of the talks.&lt;/p&gt;
+
+&lt;h3 id=&quot;rachel-andrew---things-learned-while-supporting-perch&quot;&gt;Rachel Andrew - Things Learned While Supporting Perch&lt;/h3&gt;
+
+&lt;p&gt;Rachel was the first speaker of the day, and spoke about how supporting a product that can really help that product to grow and evolve. Interacting with customers is a way to see what they like about a service, but it also lets you see where things could be better, and where they could grow. In a world of free products it is this attention to customer needs that allows a paid-for product to stand out, simply making a good product that you charge for isn’t enough.&lt;/p&gt;
+
+&lt;p&gt;This has really opened my eyes to some of the things that I, and my fellows at Get Invited, really need to start thinking about now. Having a great product isn’t enough if people running into issues then have a bad experience. Everyone had bad experiences, and almost everyone &lt;em&gt;talks&lt;/em&gt; about those experiences. The number of people who talk about the &lt;em&gt;good&lt;/em&gt; experiences is much smaller, and in my own experience they also don’t talk about them for as long.&lt;/p&gt;
+
+&lt;p&gt;In her talk she also spoke about the importance of getting the structure of supporting customers right from as early on as possible. As a product grows in popularity, the number of issues you get contacted about will too. A support structure that can’t grow with your popularity is going to be a bad experience not just for the people giving support, but for those &lt;em&gt;needing&lt;/em&gt; it. That’s not a pleasant experience for anybody.&lt;/p&gt;
+
+&lt;h3 id=&quot;harry-roberts---architecting-scalable-css&quot;&gt;Harry Roberts - Architecting Scalable CSS&lt;/h3&gt;
+
+&lt;p&gt;In my notes for this talk I jokingly referred to it as “Fixing Kyle’s CSS”. Kyle writes good code and good CSS, but I know from reading a lot of the things Harry writes that there is still a &lt;em&gt;lot&lt;/em&gt; that both Kyle and myself could do to streamline things further. The talk didn’t disappoint me. Some of what he wrote about were topics I’d already read from his site, but there was a great deal that I still picked up from listening to him.&lt;/p&gt;
+
+&lt;p&gt;I &lt;em&gt;loved&lt;/em&gt; the idea of viewing CSS as similar to Lego. You can do so much with a single Lego set. You can make the set, but you can ignore the instructions and make a limitless amount of things with the bricks you get. And that is &lt;em&gt;without&lt;/em&gt; mixing multiple kits together. You can achieve similar results with CSS. You could follow a guide/tutorial and make a specific thing but you could then turn around and, with that same knowledge, make something completely different.&lt;/p&gt;
+
+&lt;p&gt;Harry also spoke about the idea of breaking things down into components, and about the idea of having bits of CSS that do only one thing, but that do that one thing &lt;em&gt;very well&lt;/em&gt;. You can mix and match these comonents together to make things, all without repeating a vast amount of style rules in your CSS. It’s something that I try and do when I’m writing CSS but there is still room for me to improve. I think I need to focus on the idea of a Minimum Viable Component. If I have to write a few more components in my CSS, that I can then use as needed elsewhere, I don’t think I’ll mind. At all.&lt;/p&gt;
+
+&lt;p&gt;Finally he spoke about the importance of having a structure for the styles behind a site, and sticking to it. Having a structure, and a flow, to things is important. He also spoke about the idea of having a shame.css file that is where you put in temporary hacks that need to be sorted when an opportunity presents itself. I’d heard of it before, but still love the idea of it. We’ve got something similar working with Get Invited at the moment, as you can see in the admin panel’s source code:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;stylesheet&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/themes/getinvited/css/last-minute-fixes-by-dave.css&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;I plan to have that file gone within the next week.&lt;/p&gt;
+
+&lt;h3 id=&quot;chris-murphy---we-are-navigators&quot;&gt;Chris Murphy - We are Navigators&lt;/h3&gt;
+
+&lt;p&gt;After a short break we had Chris Murphy, one of the founders of Get Invited and generally awesome guy, speaking about education in our industry. As someone who is involved, in a small capacity, with education for the web, much of what he spoke about resonates with me. His talk started with a &lt;a href=&quot;http://www.youtube.com/watch?v=UJsjNNp0foE&quot;&gt;five minute clip&lt;/a&gt; from the final moments of Dead Poets Society, using it to highlight the different approaches some people take to education.&lt;/p&gt;
+
+&lt;p&gt;The clip highlights that a good educator is able to truly help their students to grow as a person, to transform into something &lt;em&gt;more&lt;/em&gt;. That this is something that education &lt;em&gt;should&lt;/em&gt; be doing as, ultimately, education helps to shape the mind… an important thing to get right. Something that, sadly, hasn’t been the case through much of my pre-university education. Even there it was only certain individuals who cared, or seemed interested, in the material they cover.&lt;/p&gt;
+
+&lt;p&gt;Chris spoke about how education isn’t just about teaching, but about the ability to teach students how to &lt;em&gt;learn&lt;/em&gt;, rather than how to &lt;em&gt;do&lt;/em&gt;. Teaching a person how to do one thing is very limited, teaching people how to learn more about what they are doing lets that person develop, grow, and ultimately do what it is they want to do, rather than doing the one thing that they were taught to do. Education should create good people, not people good at one techincial skill.&lt;/p&gt;
+
+&lt;p&gt;I’ve studied under Chris for the last year and a half and, during this time, he has been someone who has helped me turn something that I am good at, and that I enjoy, into the beginnings of a business that allows me to get paid for doing the things I love to do. Educators could, and should, be more like this, and having gone through at least some of what he covered in his talk it serves as a further motivation for me to do what I can to help in the field of education.&lt;/p&gt;
+
+&lt;p&gt;I wouldn’t be doing what I am doing now without help from people like Chris. Education needs more of the things that he is doing and I’m more committed than ever to doing what I can to help in that sector.&lt;/p&gt;
+
+&lt;h3 id=&quot;ashley-baxter---changing-a-stagnant-industry&quot;&gt;Ashley Baxter - Changing a Stagnant Industry&lt;/h3&gt;
+
+&lt;p&gt;I’d heard that this was Ashley’s first speaking engagement but there was &lt;em&gt;no&lt;/em&gt; evidence of it from where I was sitting. Speaking of her journey from her education to running a business she had no understanding of, she delivered one hell of a talk about how she’s accomplished everything she has. I can only imagine trying to get to grips with insurance, but the idea that achieving small things allows the bigger things to happen is something I have found to be very much true.&lt;/p&gt;
+
+&lt;p&gt;There are so many industries that have issues in them. Education was mentioned in the previous talk, and Ashley works in another: insurance. It’s an industry that seems so archaic, using ancient software to operate, but that seems to be continually pushing to find the smallest price possible. Technology provides an opportunity to produce a better experience to customers, an experience worth more than the “lowest price possible” that others stive for. Good things are worth paying for.&lt;/p&gt;
+
+&lt;p&gt;Insurance isn’t the only industry that suffers from these kinds of techonology-related issues, and an application of technology can give a new edge to comptetitors. I’d love to see more people or businesses harnessing technology to improve some of the most tedious of industries to make them better for the people &lt;em&gt;working&lt;/em&gt; in them, and the people that &lt;em&gt;use&lt;/em&gt; them.&lt;/p&gt;
+
+&lt;p&gt;I’d also like to take my hat off to Ashley for her ability to pick up Ruby so quickly. I’ve tried doing the same, as a developer of multiple things, and I simply cannot wrap my head around it so I have a great deal of respect for people that can make it work for them.&lt;/p&gt;
+
+&lt;h3 id=&quot;noah-stokes---50000-mistakes&quot;&gt;Noah Stokes - $50,000 Mistakes&lt;/h3&gt;
+
+&lt;p&gt;Noah’s talk covered his journey from Apple engineer through to setting up his own design studio, something that came from his lack of passion for what he was doing. A lot of what he talked about resonated with my own experiences in certain aspects of my professional life, experiences which have helped guide to to what I’m now doing professionally.&lt;/p&gt;
+
+&lt;p&gt;He also spoke about some of the other aspects of professional life, including something that I’ve heard multiple times before, that you will only get better by working at things and that you’ll only ever get to do the work you want to do if you &lt;em&gt;start doing the work you want to do&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;rasika-krishna---cross-cultural-ux&quot;&gt;Rasika Krishna - Cross-Cultural UX&lt;/h3&gt;
+
+&lt;p&gt;Rasika’s talk was an impressive talk for me, not just because of the content, but because of the fact she’d just flown in from Singapore. Her talk took a look at how different cultures can perceive a design. Many designers will, of course, be familiar with the impact of colour in a design, but her talk went a bit deeper taking a look into the principles of psychology, cultural groups, symbols, and the need for things to be a conversation when working with people.&lt;/p&gt;
+
+&lt;p&gt;I really liked hearing someone talk about things being more of a conversation when dealing with clients. Communication is an important aspect of things to get right, but it’s also important to listen and to &lt;em&gt;understand&lt;/em&gt; what is being said. I often find myself failing to do this. What a customer says is often worded in a way that we as designers don’t get, but that makes perfect sense to people talking to us. We should learn to communicate better with customers and clients, and to guide them in ways that benefit both of us.&lt;/p&gt;
+
+&lt;p&gt;Oh, and the convention of naming icons in a manner such as “hamburger icon” is absurd. Can we stop that doing that kind of nonsense?&lt;/p&gt;
+
+&lt;h3 id=&quot;josh-brewer---redesigning-twitter&quot;&gt;Josh Brewer - Redesigning Twitter&lt;/h3&gt;
+
+&lt;p&gt;Josh spoke about the process used in designing the #newnewtwitter, a large scale design project encompassing &lt;em&gt;all&lt;/em&gt; of twitter’s public facing designs. He covered some of the problems they had, and some of the methods they used to solve them. He also empahsised the importance of not letting people fall into the trap of thinking design is magic. This is something I need to do a better job of handling with my own development work.&lt;/p&gt;
+
+&lt;p&gt;He also spoke about the importance of standardising the design tools used on a project. In my freelancing I often work with people using different tools, which is fine, but it can understandably become an issue when working with a team of people continually. Having a consistent design tool makes life a lot easier.&lt;/p&gt;
+
+&lt;p&gt;He also has me convinced that I need a plotter/printer so that I can attack all of Kyle’s deisgn work with a red sharpie.&lt;/p&gt;
+
+&lt;h3 id=&quot;jeremy-keith---what-we-talk-about-when-we-talk-about-the-web&quot;&gt;Jeremy Keith - What We Talk About When We Talk About The Web&lt;/h3&gt;
+
+&lt;p&gt;Jeremy was a last minute speaker who stepped in to replace John Allsopp. Jeremy himself was the first to admit that his talk wouldn’t be the same as one by Jeremy, but it was a talk that I greatly enjoyed. He broke the web down into the components that make the web work, and upon the importance of understanding how links and forms should work. It’s already making me rethink a significant chunk of the functionality in the work I have been doing recently.&lt;/p&gt;
+
+&lt;p&gt;Whilst I agreed with a great deal of what Jeremy spoke about with regards to how links worked, that they should never perform an action instead serving to connect pages together, I &lt;em&gt;really&lt;/em&gt; loved how he spoke with regards to making things work in the &lt;em&gt;responsive&lt;/em&gt; web With the shift from designer-enforced dimensions to a fully fluid experience, with the rise of the smartphone, and with mobile data connections, optimising sites is even more important than ever. Some of what he pointed out I had heard about/read up on before, but some of the ideas were new, and I’ll definitely be putting them to use going forward.&lt;/p&gt;
+
+&lt;h2 id=&quot;community&quot;&gt;Community&lt;/h2&gt;
+
+&lt;p&gt;I really enjoyed the talks and being there representing Get Invited, but the thing that I loved most about Industry Conference was the people there. The industry we work in has a great community, and I loved catching up with friends, finally meeting people I’ve spoken with for months on twitter, and making new friends at the fringe events that were put on over the time I was in Newcastle. I can’t wait to do it again.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 28 Apr 2013 12:14:00 +0100</pubDate>
+        <link>/ship/posts/2013/04/28/industry-conference-2013.html</link>
+        <guid isPermaLink="true">/ship/posts/2013/04/28/industry-conference-2013.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>Symbolset Sass Functions</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;&lt;a href=&quot;http://symbolset.com/&quot;&gt;Symbolset&lt;/a&gt; has a selection of, simply put, &lt;em&gt;awesome&lt;/em&gt; icon fonts that make life easier when it comes to using icons on the web. Rather than creating static images of the icons, which can get unweildy and time consuming, you include a custom font and you’re good to go.&lt;/p&gt;
+
+&lt;p&gt;Which is great, but sadly it comes with two issues:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Loading multiple files for icons can get quite unweildy, &lt;em&gt;especially&lt;/em&gt; if you only need one of two icons.&lt;/li&gt;
+  &lt;li&gt;The default CSS can get quite lengthy if you use it &lt;em&gt;as is&lt;/em&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Fortunately the people providing the fonts &lt;a href=&quot;http://help.symbolset.com/customer/portal/questions/872838-subsetting&quot;&gt;are working to fix the first issue&lt;/a&gt;. I thought I’d share one of the approaches I’ve been using for a while. I’ve &lt;a href=&quot;/simple-css-goodness/&quot;&gt;written about another&lt;/a&gt; in the past. This one’s a bit more Sass-y.&lt;/p&gt;
+
+&lt;p&gt;I’ve put together a series of Sass functions that can be used to return the content you need based on keywords entered. I’ve managed to put together a series of mixins that cover the following fonts:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Symbolset Standard&lt;/li&gt;
+  &lt;li&gt;Symbolset Social (and SS Social Circle)&lt;/li&gt;
+  &lt;li&gt;Symbolset Pika&lt;/li&gt;
+  &lt;li&gt;Symbolset Symbolicons Block (should work for Symbolicons Line too)&lt;/li&gt;
+  &lt;li&gt;Symbolset Gizmo&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how&quot;&gt;How?&lt;/h2&gt;
+
+&lt;p&gt;I’ve put together a Sass file on Github (link removed) that you can use in any Sass/Compass project. I’ve defaulted things to not include any fonts by default, you can enable fonts as you need them by changing any of the &lt;code&gt;0&lt;/code&gt; values to &lt;code&gt;1&lt;/code&gt;. You can also change the default font location by changing &lt;code&gt;&#39;../fonts/&#39;&lt;/code&gt; to a value that suits your own file structure.&lt;/p&gt;
+
+&lt;p&gt;Once you’ve got the file included you can start using the Sass functions in your code. Each function requires a keyword, and will return the characters used in their respective Symbolset Font CSS. The keywords you’d use are the &lt;em&gt;exact&lt;/em&gt; ones you see in the documentation for the fonts.&lt;/p&gt;
+
+&lt;p&gt;Example usage:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nc&quot;&gt;.rss&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:before&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ss&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;standard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;icon&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;mail&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This would return the output the following CSS:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nc&quot;&gt;.rss&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:before&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;✉&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The different functions currently available are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;ss-standard-icon ( &#39;keyword&#39; )&lt;/code&gt; for Symbolset Standard&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;ss-social-icon ( &#39;keyword&#39; )&lt;/code&gt; for Symbolset Social (and Social Circle)&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;ss-pika-icon ( &#39;keyword&#39; )&lt;/code&gt; for Symbolset Pika&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;ss-symbolicons-icon ( &#39;keyword&#39; )&lt;/code&gt; for Symbolset Symbolicons&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;ss-gizmo-icon ( &#39;keyword&#39; )&lt;/code&gt; for Symbolset Gizmo&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;doesnt-include&quot;&gt;Doesn’t Include&lt;/h2&gt;
+
+&lt;p&gt;Please note that this code does &lt;em&gt;not&lt;/em&gt; include any of the Symbolset fonts, this is merely something that allows you to cut down on the amount of CSS in your code, because unnecessary code is never a good thing.&lt;/p&gt;
+
+&lt;h2 id=&quot;things-to-note&quot;&gt;Things to Note&lt;/h2&gt;
+
+&lt;p&gt;I’ve found, whilst working out how best to automate this system, that Sass doesn’t seem to like &lt;code&gt;if&lt;/code&gt; statements past a certain number of options. You’ll see that there are multiple functions called to return the right character. I found that these fonts simply had too many glyphs for Sass to be able to work their way through in a single function. If people are aware of any better way to implement this kind of thing (I’d &lt;em&gt;love&lt;/em&gt; some kind of Sass switch function for this) then I’d love to hear it.&lt;/p&gt;
+
+&lt;p&gt;This is also a smaller part of a Sass toolbelt type framework I’m currently working on. If you find this useful and would like to play around with the more complete package let me know. I plan to release the full thing once I am happy with how it is structured and how it works.&lt;/p&gt;
+
+&lt;!-- [symbolset-sass-functions]: /symbolset/ --&gt;
+</description>
+        <pubDate>Fri, 22 Mar 2013 15:03:00 +0000</pubDate>
+        <link>/ship/posts/2013/03/22/symbolset.html</link>
+        <guid isPermaLink="true">/ship/posts/2013/03/22/symbolset.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>Simple CSS Goodness</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;I’ve been tinkering with my site over the last few days, and it’s resulted in a few under the hood improvements that I thought I’d share. None of it is especially mind-blowing, it may even be common sense to a some people, but when I mentioned it on twitter some people thought it was a neat idea, so here it is.&lt;/p&gt;
+
+&lt;h2 id=&quot;styling-based-on-attributes&quot;&gt;Styling Based on Attributes&lt;/h2&gt;
+
+&lt;p&gt;This is something Chris Coyier has &lt;a href=&quot;http://css-tricks.com/attribute-selectors/&quot;&gt;written about in the past&lt;/a&gt; in the past, styling elements that have certain attributes attached to them. This can work really well for providing styling defaults to mutliple classes at once, such as &lt;code&gt;btn-large&lt;/code&gt; and &lt;code&gt;btn-small&lt;/code&gt; by identifying that they both start with &lt;code&gt;btn-&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;It’s possible to do more though with CSS by using content &lt;em&gt;of&lt;/em&gt; selectors using CSS. This is something that A List Apart &lt;a href=&quot;http://alistapart.com/article/goingtoprint&quot;&gt;has covered&lt;/a&gt; when talking about styling things for print, showing URLs after links as a user can’t click on a printed page. It’s also a fundamental part of the &lt;a href=&quot;http://nicolasgallagher.com/micro-clearfix-hack/&quot;&gt;clearfix hack&lt;/a&gt; that anyone on the web is likely to be familiar with.&lt;/p&gt;
+
+&lt;p&gt;We can do some pretty clever stuff with these two things. I’ve recently put it to work with regards to using icon characters from the &lt;a href=&quot;http://symbolset.com&quot;&gt;Symbolset&lt;/a&gt; fonts. The CSS that they provide requires adding a lot of CSS classes to both your markup and in your stylesheet. I switched away from that to a set of Sass mixins that return characters, but it still requires that I add a chunk of CSS to my site to handle individual characters.&lt;/p&gt;
+
+&lt;p&gt;Then it struck me, I could switch to using an attribute on the HTML elements that I wanted to have these characters appear on. Something like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-icon-standard=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;⌂&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Home&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The important part of this is the HTML5 &lt;code&gt;data-&lt;/code&gt; attribute on the link. It’s got a standardised name for a specific type of character. I currently have two different attributes that I make use of:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code&gt;data-icon-standard&lt;/code&gt;: I use this for characters from Symbolsets’s SS-Standard font&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;data-icon-social&lt;/code&gt;: I use this for characters from Symbolsets’s SS-Social font&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This &lt;em&gt;vastly&lt;/em&gt; simplifies the CSS I need to use to style these elements up. Previously each icon I wanted would have needed a new CSS class to add the right character for me. something like:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nc&quot;&gt;.home&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:before&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;⌂&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.email&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:before&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;✉&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.plus&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:before&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;+&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Add more characters to this and you can see that it could, quite rapidly, become quite unweildy. Instead I can add the specific characters to my markup, and have them added using CSS:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-icon-standard=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;⌂&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Home&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-icon-standard=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;✉&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Email&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-icon-standard=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;+&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Add&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;With this in place I can simplify my CSS to the following:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;data-icon-standard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:before&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;icon&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;standard&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;font-family&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SSStandard&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This takes care of the character &lt;em&gt;and&lt;/em&gt; sets the correct font. It might be a bit over the top for just a single icon, but if you find yourself using multiple icons over the course of a project this simplifies the addition of characters to a site quite a bit.&lt;/p&gt;
+
+&lt;h2 id=&quot;let-me-know-what-you-think&quot;&gt;Let Me Know What You Think&lt;/h2&gt;
+
+&lt;p&gt;This is something I’ve just started experiementing with, and you can see it on the navigation above but also in the footer below. I’d love to hear about how other people put this kind of thing to use, either in the comments on below on on twitter.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 27 Feb 2013 11:09:00 +0000</pubDate>
+        <link>/ship/posts/2013/02/27/simple-css-goodness.html</link>
+        <guid isPermaLink="true">/ship/posts/2013/02/27/simple-css-goodness.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>Pronto</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;&lt;img src=&quot;/img/pronto.jpg&quot; alt=&quot;Speaking about Get Invited&quot; /&gt;&lt;/p&gt;
+          
+          &lt;p&gt;Pronto is a rather awesome little jQuery plugin I’ve just implemented in my site. In the words of the plugin’s author, Ben Plum:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Using a “partial page load” technique, Pronto reduces the over all server load and font-end render time by only updating pieces of a page instead of the entire document.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The initial setup can be a bit fiddly, but I’ve found it to be pretty smooth sailing once it’s all set up. Well worth checking out.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 15 Feb 2013 13:38:00 +0000</pubDate>
+        <link>/ship/posts/2013/02/15/pronto.html</link>
+        <guid isPermaLink="true">/ship/posts/2013/02/15/pronto.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>Presto Chango</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;This week marks another step forward for me. I’ve received my last mark for my Masters, it has been confirmed that I’ve passed. Excellent, but where to next? The answer, with me, is &lt;em&gt;always&lt;/em&gt; onwards.&lt;/p&gt;
+
+&lt;p&gt;Yesterday marked a step forward for me, I’ve made some adjustments to the site. Some of them are quite noticeable, others are under the hood. All of it has been done with a goal in mind, that of getting me to be more active on the site.&lt;/p&gt;
+
+&lt;!--[More]--&gt;
+
+&lt;h2 id=&quot;design&quot;&gt;Design&lt;/h2&gt;
+
+&lt;p&gt;I’ve changed the overall design quite a bit as a part of the process of updating things, but I have maintained a consistent visual style. I look at it as more of an iteration than a redesign. What I had before wasn’t bad, but I was capable of producing something &lt;em&gt;better&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Text is now larger, and fills out across a larger area, the full column rather than the previous half column. A lot of what I do is text heavy, and keeping things constrained in such a small column was proving troublesome for the writing that I do.&lt;/p&gt;
+
+&lt;p&gt;As a part of this I have rethought how I want certain elements to appear in the design. I don’t use graphics terribly often on my site, so when they do appear, I want them to stand out.&lt;/p&gt;
+
+&lt;p&gt;The same is true of certain other elements in my writing. In addition to images, code blocks and blockquotes are displayed across the full width of the site, though any written elements will be kept to the same width as other written content.&lt;/p&gt;
+
+&lt;h2 id=&quot;development&quot;&gt;Development&lt;/h2&gt;
+
+&lt;p&gt;I’ve also made a few adjustments to the site under the hood. I’ve stripped out my previous code syntax highlighter, PrettyPrint, and replaced it with the rather lovely &lt;a href=&quot;http://prismjs.com/&quot;&gt;prism&lt;/a&gt; syntax highlighter. It’s a lot lighter, and supports (after a &lt;em&gt;little&lt;/em&gt; work) all of the languages I write in.&lt;/p&gt;
+
+&lt;p&gt;This helps make things just a little bit snappier, but I really wanted to speed things up when it comes to loading content. I already cache my site, so that you’re almost never loading something generated on the server side, but could I do better? Yes.&lt;/p&gt;
+
+&lt;p&gt;I already use jQuery on my site for certain things, which made implementing the &lt;a href=&quot;http://www.benplum.com/projects/pronto/&quot;&gt;pronto&lt;/a&gt; plugin an easy choice for me. Pronto allows a site to update just the main content of a site, rather than downloading the whole page each time. Smaller download, faster loading.&lt;/p&gt;
+
+&lt;p&gt;This required some tinkering with how my pages are generated. Pronto uses a JSON based structure to update the content, whilst the average page load will return a complete HTML page. Fortunately pronto makes the process of telling when JSON is needed quite easy.&lt;/p&gt;
+
+&lt;p&gt;Pronto attaches a &lt;code&gt;GET&lt;/code&gt; variable of &lt;code&gt;pronto&lt;/code&gt; when it’s requesting a specific page. Using this I was able to determine whether or not to return JSON or HTML. I’ve also been able to cache the returned JSON, so everything should be pretty smooth. You can check out the &lt;a href=&quot;?pronto=true&quot;&gt;pronto data for this page&lt;/a&gt; if you’d like.&lt;/p&gt;
+
+&lt;p&gt;I’ve also put some thought into how I’m going to be handling images on the site going forward. I’m a big fan of the &lt;a href=&quot;http://adaptive-images.com/&quot;&gt;adaptive images&lt;/a&gt; approach to handling images. Set a cookie that tells a script how large the screen viewing the site is, and use a script to process images so that the image is at an optimal size.&lt;/p&gt;
+
+&lt;p&gt;I’ve also become quite the fan of &lt;a href=&quot;http://www.filamentgroup.com/lab/rwd_img_compression/&quot;&gt;compressive images&lt;/a&gt;, the idea of making an image larger in terms of dimensions, but dropping the image quality right down, and then letting the browser scale the image down. This results in an image of comparable quality that is much smaller than a higher quality image would be.&lt;/p&gt;
+
+&lt;blockquote class=&quot;pullquote&quot;&gt;
+  &lt;p&gt;I cannot overstate my love of &lt;a href=&quot;http://imageoptim.com/&quot;&gt;ImageOptim&lt;/a&gt;. If you use images on the web, and use a Mac, you should be using this.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I’ve combined both of these approaches on my site. Smaller devices get smaller versions of the image, but they’re still large images that get scaled down. The savings have been quite impressive. Each image on my portfolio was taken as a full screen image at 1920px by 1200px, cropped slightly, and then blown up to 200% of their original size to get a final size of 3840px by 2320px. They saved out at about 250kb, and when processed through &lt;a href=&quot;http://imageoptim.com/&quot;&gt;ImageOptim&lt;/a&gt; this size was cut by about 50%. By contrast images saved at the original size, with a decent level fo quality, where coming in at sizes up to &lt;strong&gt;eight&lt;/strong&gt; times this size. &lt;em&gt;Madness!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;I also managed to resolve a long standing issue with my site when dealing with the responsive versions of this site. The day before launching, ironically the day Opera announced it will be switching to webkit for their rendering engine, I managed to resolve an issue that I had been having with Opera displaying my responsive navigation.&lt;/p&gt;
+
+&lt;h2 id=&quot;comments-on&quot;&gt;Comments On&lt;/h2&gt;
+
+&lt;p&gt;Finally, I’ve flipped the switch on site comments back over to on. I’m not sure that this will last, as spam bots seem to quite love harassing comment systems and I’m not sure that the hassle of dealing with them is worth the comment goodness I get. The quantiy of spam can get quite insane at times.&lt;/p&gt;
+
+&lt;p&gt;I’ll likely be tweaking things over the forseeable future, and I’ll be adding more content to the site as things progress. Feel free to sound off on things either on the comments below or hit me up on &lt;a href=&quot;https://twitter.com/intent/tweet?original_referer=&amp;amp;source=Presto%20Chango%20%E2%80%A2%20Portfolio%20of%20David%20Turner&amp;amp;text=@HerrWulf&quot;&gt;twitter&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 15 Feb 2013 10:18:00 +0000</pubDate>
+        <link>/ship/posts/2013/02/15/presto-chango.html</link>
+        <guid isPermaLink="true">/ship/posts/2013/02/15/presto-chango.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>jQuery Show of Slides Plugin</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;When it comes to code for projects that I’m working on, &lt;em&gt;nothing&lt;/em&gt; annoys me more than code bloat. All too often people will grab a plugin to complete a single task, which is in and of itself fine, until you realise that the codebase encompasses much more than the functionality that you need, and results in a bulky collection of files and code being tagged onto a site needlessly.&lt;/p&gt;
+
+&lt;p&gt;Increasingly I find myself writing my own plugins to accomplish goals, each being coded to achieve a single thing well, rather than trying to do many things at once. It’s easier to use multiple plugins than it is to rip code out of a single plugin. That is the reason that both my &lt;a href=&quot;/is-empty/&quot;&gt;isEmpty&lt;/a&gt; and &lt;a href=&quot;/select-plugin/&quot;&gt;Select&lt;/a&gt; plugins exist. Today I am adding my Show of Slides Plugin to that list.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-show-of-slides&quot;&gt;What is Show of Slides?&lt;/h2&gt;
+
+&lt;p&gt;I’ve increasingly found myself having to code up image slideshows for clients. At first it was a challenge, coding things up to work quickly without using a plugin that did much more than was needed but, as with all things you do repeatedly, it lost it’s appeal. So I decided to create a plugin that I can use to quickly get slideshows working.&lt;/p&gt;
+
+&lt;p&gt;I have built Show of Slides from the ground up to be &lt;em&gt;flexible&lt;/em&gt;. I didn’t want my work to be limited to &lt;em&gt;just&lt;/em&gt; image slideshows, you can just as easily use HTML content inside of the slider. It’s all about keeping things both &lt;em&gt;flexible&lt;/em&gt; and &lt;em&gt;minimal&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;I’ve also built it to afford you the maximum amount of control over how the various elements of the slideshow are laid out. This plugin adds classes to elements as needed, but ultimately leaves styling up to you. I’ll be providing some basic CSS in this article though, so that you’ll have some guidelines you can work with.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-show-of-slides-isnt&quot;&gt;What Show of Slides &lt;em&gt;isn’t&lt;/em&gt;?&lt;/h2&gt;
+
+&lt;p&gt;In keeping this plugin flexible and light in the code base I’ve intentionally removed some things that are typically handled using jQuery as they can be handled using CSS3 in the majority of browsers these days and, for those that can’t, animation is a very minor piece of functionality in the grand scheme of things.&lt;/p&gt;
+
+&lt;p&gt;By removing the animation from the plugin and placing it in the hands of CSS it also affords a much greater control over how the slides move, along with how they are presented. You’re no longer constrained by the JavaScript powering your slider. How awesome is that?&lt;/p&gt;
+
+&lt;h3 id=&quot;caveat&quot;&gt;Caveat&lt;/h3&gt;
+
+&lt;p&gt;There is one small problem with moving the animation from the JavaScript to the CSS, in that it becomes a bit more fiddly to handle reorganising slides once they’ve been moved from view. I’ve coded in a little bit of JavaScript math to handle this, I’ll be covering it in a little more detail later.&lt;/p&gt;
+
+&lt;h2 id=&quot;getting-started&quot;&gt;Getting Started&lt;/h2&gt;
+
+&lt;p&gt;Show of Slides is relatively painless to get set up. As with all jQuery plugins you’ll need to include jQuery for this plugin to work. If you’ve already included jQuery in your project you only need to add the plugin, ideally by adding the code to your a single, combined, JavaScript file:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;js/show-of-slides.min.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;With the Slide of Shows plugin added to your project, it’s easy to start using it. The plugin does require a specific structure to it’s HTML though, in that it needs to look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;show-of-slide show1&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;slides&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;slide-content&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;slide-content&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;slide-content&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;3&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;slide-content&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;4&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;em&gt;important&lt;/em&gt; part of this is that there is a &lt;code&gt;div&lt;/code&gt; wrapped around the slideshow. The list itself can be replaced with any elements you would like. I’ll cover this a little further down as well, when I dig into the settings for the application.&lt;/p&gt;
+
+&lt;p&gt;With all of this in place it’s simply a case of calling the plugin on the elements you want to become slideshows:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;.show1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;showOfSlides&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You can, of course, list multiple selectors or add a specific selector to all of the slideshows you’re after.&lt;/p&gt;
+
+&lt;h2 id=&quot;plugin-settings&quot;&gt;Plugin Settings&lt;/h2&gt;
+
+&lt;p&gt;There are, of course, multiple settings you can tweak with the plugin. The different aspects of the plugin that you can tweak are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;tag&lt;/code&gt;: This is uses as the basis of CSS classes added to slides (defaults to &lt;code&gt;slide&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;timer&lt;/code&gt;: The amount of time between slides changing (defaults to 5000, aka 5 seconds)&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;transition&lt;/code&gt;: The transition time, so that the plugin can clean things up after any CSS animations have finished (defaults to 500, aka 0.5 seconds)&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;pagination&lt;/code&gt;: true/false on enabling pagination (defaults to &lt;code&gt;false&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;arrows&lt;/code&gt;: true/false on enabling previous/next buttons (defaults to &lt;code&gt;false&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;slides&lt;/code&gt;: defines a default element that is used for slides (defaults to &lt;code&gt;li&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This allows you a great deal of flexibility in how it’s laid out, and what features you have enabled and disabled. I spoke about being able to adjust a few settings previously, some of which need to be adjusted depending on your CSS and one that can be adjusted if you’re not using a list for your slides.&lt;/p&gt;
+
+&lt;p&gt;The first of these is that you will want to adjust the transition variable to match and CSS transition time you’ve set up. I’ve found 0.5 seconds, or 500 milliseconds, provides a suitable default. To change this you can do the following when setting up your slider:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;.show1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;showOfSlides&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;transition&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This changes things from the default of half a second to a full second. This timer is used to call a function that reorders slides in the slider so that there is always a next slide. You can similarly adjust the &lt;code&gt;timer&lt;/code&gt; variable to adjust the time between slide changes.&lt;/p&gt;
+
+&lt;p&gt;The second important piece of customisation that can be considered is that, in certain circumstances, you might not want to use a list for the slider. You can change this quite easily, by doing the following:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;.show1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;showOfSlides&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;slides&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;div&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This will look for a selection of &lt;code&gt;div&lt;/code&gt; elements and use them as the slides instead of list items. Ultimately the structure of the content will be the same, this allows you to define the HTML structure that suits your project/site.&lt;/p&gt;
+
+&lt;p&gt;The CSS is also kept pretty minimal. Below is the unminified CSS used for the examples you see on this site, but you can also &lt;a href=&quot;/show-of-slides/extra.css&quot;&gt;view the minified source&lt;/a&gt; to see just how small it works out at:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nc&quot;&gt;.slide-pagination&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.slide-prev&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.slide-next&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;text-indent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;white-space&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;nowrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;overflow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;hidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.show-of-slide&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#ececec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;relative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;max-width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;margin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2em&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slides&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;margin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;relative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;max-width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;padding-bottom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;overflow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;hidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;list-style&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;transition&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide-current&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;z-index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide-previous&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;-100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide-pagination&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;z-index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;bottom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;text-align&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;margin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;pointer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;events&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide-pagination&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;li&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;inline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide-pagination&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;inline&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#c00&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;20px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radius&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;margin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.25em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2px&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#f9f9f9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;pointer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;events&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide-pagination&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.slide-active&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#940000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;cursor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide-content&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;line-height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#f9f9f9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#8080ff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;text-align&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.layout-1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#a00&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.layout-2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#0a0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.layout-3&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#00a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide-prev&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.slide-next&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;line-height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radius&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;inline&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;margin-top&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;-2em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;z-index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide-prev&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:hover&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.slide-next&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:hover&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rgba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide-prev&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:after&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.slide-next&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:after&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;text-indent&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;line-height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;text-align&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;center&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide-prev&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide-prev&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:after&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;◅&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide-next&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radius&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.slide-next&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:after&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;▻&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;support&quot;&gt;Support&lt;/h2&gt;
+
+&lt;p&gt;This plugin should work well across pretty much any browser you care to throw at it. I’ve intentionally kept the code to a minimum which should prevent issues in older browsers. The only thing that &lt;em&gt;will&lt;/em&gt; fall apart is that CSS animations won’t work across every browser. If this is something that concerns you I’d strongly suggest you reconsider your approach to web design to be a bit less rigid before you go insane.&lt;/p&gt;
+
+&lt;h2 id=&quot;download&quot;&gt;Download&lt;/h2&gt;
+
+&lt;p&gt;You can download isEmpty over at the &lt;a href=&quot;https://github.com/DavidTurner/show-of-slides&quot;&gt;Github Repository&lt;/a&gt;, but if you just want to download the latest version you can &lt;a href=&quot;https://github.com/DavidTurner/show-of-slides/archive/master.zip&quot;&gt;click here&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 19 Dec 2012 15:21:00 +0000</pubDate>
+        <link>/ship/posts/2012/12/19/show-of-slides.html</link>
+        <guid isPermaLink="true">/ship/posts/2012/12/19/show-of-slides.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>Simple Smart Quotes</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;&lt;img src=&quot;/img/simple-smart-quotes.jpg&quot; alt=&quot;Speaking about Get Invited&quot; /&gt;&lt;/p&gt;
+          
+          &lt;p&gt;In a recent article I talked about shipping curly quotes in &lt;a href=&quot;https://getinvited.to/&quot;&gt;Get Invited&lt;/a&gt;, and that I’d then added it to my portfolio. I wanted to take a little time to talk about how I did this, as it turned out implementing it was a &lt;em&gt;lot&lt;/em&gt; easier than I’d expected it to be.&lt;/p&gt;
+
+&lt;h2 id=&quot;boiling-down-complexity&quot;&gt;Boiling Down Complexity&lt;/h2&gt;
+
+&lt;p&gt;When trying to figure out how to get smart quotes working I spent a &lt;em&gt;lot&lt;/em&gt; of time, probably too much looking back, in trying to find a PHP function, or library, to automagically convert quotations from the “standard” quotes to their curlier equivalents.&lt;/p&gt;
+
+&lt;p&gt;I couldn’t find one, and that forced me to think about how I’d go about doing it myself. Normally character replacement is easy, you would just call a &lt;code&gt;str_replace()&lt;/code&gt; function in PHP and be done with it. The problem with quotes is that the characters I’d be searching for are the same on both sides when dealing with standard quotes, but different when you convert them to their curlier equivalent.&lt;/p&gt;
+
+&lt;p&gt;This caused me to consider the option of working out a way to convert every other match to the corresponding opening quote, and the remaining ones to the closing quote. This would work for double quotes, but would fail horrible when dealing with single quotes, courtesy of apostrophes.&lt;/p&gt;
+
+&lt;p&gt;In the end I was able to implement a solution courtesy of &lt;a href=&quot;https://twitter.com/keilantra/&quot;&gt;Tami Olsen&lt;/a&gt; who, as an author, had encountered similar issues in Microsoft Word. She suggested a solution that boiled down to looking for quotation marks with a space before or after them. A space before denotes that it is an opening quote. A space after denotes it is a closing one.&lt;/p&gt;
+
+&lt;p&gt;This, with a small number of edge cases that can also be processed, leaves remaining single quotes as apostrophes. I wrapped this up in a simple function and pushed it out to Get Invited. It worked &lt;em&gt;perfectly&lt;/em&gt;. The code looked like:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;smartQuotes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;$search&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;array&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot; &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&amp;quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&amp;quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot; &amp;quot;&amp;quot;,&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;    &amp;quot;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot; “&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&amp;quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&amp;quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;” &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot; ‘&amp;quot;&amp;quot;,&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;    &amp;quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;’&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;...&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+  &lt;span class=&quot;nv&quot;&gt;$replace&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;array&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot; ‘&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;’ &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot; “&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;” &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot; “‘&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;’&amp;quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;,&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;    &amp;quot;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;‘“&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;,&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;    &amp;quot;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;”’&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;,&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;    &amp;quot;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;…&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;  );&lt;/span&gt;
+
+&lt;span class=&quot;s2&quot;&gt;  return str_replace(&amp;quot;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;’&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str_replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;not-issue-free&quot;&gt;Not Issue Free&lt;/h2&gt;
+
+&lt;p&gt;After building this into Get Invited I was quite pleased with how it looked, and it &lt;em&gt;vastly&lt;/em&gt; simplifies issues with getting smart quotes into written text, as the shortcuts for curly quotes aren’t nearly as easy to remember as the commands for the more commonly used characters. So I coded it into my portfolio.&lt;/p&gt;
+
+&lt;p&gt;It broke things. Pretty badly. What was causing it to mess up? There’s &lt;em&gt;one&lt;/em&gt; difference between how Get Invited uses this function and how my portfolio does, and it’s a major one. Get Invited only processes text using the function, but my own site uses a basic templating system and the function made changes to the whole template.&lt;/p&gt;
+
+&lt;p&gt;This would include any HTML that was included, in particular HTML attributes, which would then cause certain important aspects of my site, such as classes, to stop registering correctly.&lt;/p&gt;
+
+&lt;p&gt;I was able to find a workaround for this, though I’m not as happy with it as I would like to be. In order to resolve this issue I needed to add two regular expression filters to find text inside of HTML tags, in order to find the attribute quotations. I was then able to replace any text that had been turned into curly quotes in error back into the intended quotes. The final function looks like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;smartQuotes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;$search&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;array&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot; &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&amp;quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&amp;quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot; &amp;quot;&amp;quot;,&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;    &amp;quot;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot; “&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&amp;quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&amp;quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;” &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot; ‘&amp;quot;&amp;quot;,&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;    &amp;quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;’&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;...&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+  &lt;span class=&quot;nv&quot;&gt;$replace&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;array&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot; ‘&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;’ &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot; “&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;” &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot; “‘&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;’&amp;quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;,&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;    &amp;quot;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;‘“&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;,&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;    &amp;quot;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;”’&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;,&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;    &amp;quot;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;…&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;  );&lt;/span&gt;
+
+&lt;span class=&quot;s2&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$str&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; = str_replace(&amp;quot;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;’&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str_replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;$str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;preg_replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;/&amp;lt;([^&amp;lt;&amp;gt;]+)&amp;gt;/e&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str_replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;”&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;) . &amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$str&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$str&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; = preg_replace(&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&amp;lt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&amp;lt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot; . str_replace(&amp;quot;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;’&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;, &amp;quot;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;It &lt;em&gt;works&lt;/em&gt;, but I feel that it could be better. I’d love to hear if anyone has any thoughts on how to improve this code, or alternatives that people have used in the past. You know where to find me.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 14 Dec 2012 10:25:00 +0000</pubDate>
+        <link>/ship/posts/2012/12/14/simple-smart-quotes.html</link>
+        <guid isPermaLink="true">/ship/posts/2012/12/14/simple-smart-quotes.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>Just Fucking Ship It</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;&lt;img src=&quot;/img/real-artists-ship.jpg&quot; alt=&quot;Speaking about Get Invited&quot; /&gt;&lt;/p&gt;
+          
+          &lt;p&gt;Ideas are fundamental to the concept of change, but by themselves they are next to meaningless. An idea without some form of implementation doesn’t &lt;em&gt;do&lt;/em&gt; anything. It doesn’t demonstrate how things could change, it doesn’t &lt;em&gt;mean&lt;/em&gt; anything.&lt;/p&gt;
+
+&lt;!--[More]--&gt;
+
+&lt;p&gt;It doesn’t need to be this way, turning an idea into something tangible can be relatively quick, and the rewards for doing so can be immense. It allows you to test the idea, and determine its worth. It can weed out the bad ideas and help improve the good ones.&lt;/p&gt;
+
+&lt;p&gt;This is something that &lt;a href=&quot;https://twitter.com/fehler&quot;&gt;Chris Murphy&lt;/a&gt;, &lt;a href=&quot;https://twitter.com/kylegawley&quot;&gt;Kyle Gawley&lt;/a&gt;, and myself have done with &lt;a href=&quot;https://getinvited.to/&quot;&gt;Get Invited&lt;/a&gt;. We quickly built it up and used it earlier in the year for the University of Ulster’s Festival of Art &amp;amp; Design, encompassing a whopping &lt;strong&gt;23&lt;/strong&gt; events.&lt;/p&gt;
+
+&lt;p&gt;It was something of a trial by fire for the service, and for us, but it ultimately demonstrated the viability of our product, and was a sign that we were onto something. The project was able to progress as a result, rather than remaining an idea.&lt;/p&gt;
+
+&lt;p&gt;Without pushing ourselves to take our idea and make it real, we wouldn’t have a product, and we wouldn’t be ticketing for next week’s &lt;a href=&quot;https://getinvited.to/refreshbelfast/the-12-days-of-christmas-refresh-xmas-special/&quot;&gt;Refresh Belfast&lt;/a&gt;. How did we get here? By not trying to be perfect before shipping.&lt;/p&gt;
+
+&lt;h2 id=&quot;perfection-is-an-impossible-goal&quot;&gt;Perfection is an Impossible Goal&lt;/h2&gt;
+
+&lt;p&gt;It’s impossible to create the &lt;em&gt;perfect&lt;/em&gt; product. Perfect for &lt;em&gt;what&lt;/em&gt;? Perfect for &lt;em&gt;who&lt;/em&gt;? You can’t please everybody, so you need to identify a market and work towards perfection for it. You aren’t working to achieve perfection, but it helps provide direction.&lt;/p&gt;
+
+&lt;p&gt;Get Invited is designed to bring ticketing back to its very core. Getting tickets from the hands of you, an event organiser, into the hands of people that want to attend your events. No clutter, and no barriers.&lt;/p&gt;
+
+&lt;p&gt;This allowed us to strip away a lot of what other event organisers seem to be building in today, and to focus on the core of making ticketing &lt;em&gt;great&lt;/em&gt;. It’s simple, it’s fast, and it doesn’t ask for all of the personal details of your life. We started with the basics.&lt;/p&gt;
+
+&lt;h2 id=&quot;good-enough-is-good-to-go&quot;&gt;Good Enough is Good to Go&lt;/h2&gt;
+
+&lt;p&gt;Get Invited isn’t finished, it’s not all we plan for it to be. It &lt;em&gt;certainly&lt;/em&gt; wasn’t when we first shipped it. What we shipped was very much a &lt;em&gt;Minimum Viable Product&lt;/em&gt;, but that comes with a couple of key benefits:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;It makes the project &lt;em&gt;real&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;It gets you &lt;em&gt;feedback&lt;/em&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The former is a psychological thing, it lets you know that you’ve made something, because it’s out there in the wild. The latter is &lt;em&gt;much&lt;/em&gt; more important, it will let you know if what you’ve made is worth continuing. Having that conversation early can be a major time saver. If your project is a dud, you can stop there and invest your time in other projects.&lt;/p&gt;
+
+&lt;p&gt;Shipping a project will get you feedback that will help you improve what you’re working on. That’s right, improving. Once you’ve pushed a project live it doesn’t just sit idly, it adapts and grows. Sometimes this is based on user feedback, but often times it’s based upon internal decisions to improve or tweak aspects of what you are working on. These changes wouldn’t be possible without shipping for two reasons:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;You’d have no feedback.&lt;/li&gt;
+  &lt;li&gt;You’re guessing how your project will be used.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;You can’t make changes based on user feedback if you don’t &lt;em&gt;have&lt;/em&gt; any users. You simply can’t. If you’re working on a service, such as Get Invited, you also cannot know exactly how people will use your product.&lt;/p&gt;
+
+&lt;p&gt;An example of this happened with Refresh Belfast this week. Their event title made use of some quotes, and when it went live we all realised that it would be much nicer if they were converted to ‘Smart Quotes’ rather than the standard quotations around the text.&lt;/p&gt;
+
+&lt;p&gt;It is unlikely we would have encountered this issue without actual usage of Get Invited, and it has helped us to improve the service (and also my portfolio, expect a post on the code in the near future) as a result.&lt;/p&gt;
+
+&lt;h2 id=&quot;shipping-makes-it-tangible&quot;&gt;Shipping Makes It Tangible&lt;/h2&gt;
+
+&lt;p&gt;This is all a long winded way of saying that if you don’t ship your idea, then the idea doesn’t mean anything. An idea is intangible, you can’t hold it and you can’t demonstrate it. It’s harder to improve something you can’t see. Pinning it down and building it makes it a tangible, real, thing.&lt;/p&gt;
+
+&lt;p&gt;There are people who are blessed with brilliant ideas, and gifted with the ability and the technology to be able share their ideas with a global audience. For some people it takes them a while to realise the benefits of getting things out there, but once they do they’re finally able to create their ideas, make them real, and share them with the world.&lt;/p&gt;
+
+&lt;p&gt;Don’t bottle your ideas up. Just. Fucking. Ship. It.&lt;/p&gt;
+
+&lt;h3 id=&quot;credits&quot;&gt;Credits&lt;/h3&gt;
+
+&lt;p&gt;The image used at the beginning of this article is taken from &lt;a href=&quot;http://cargocollective.com/andrewpower&quot;&gt;Andrew Power’s&lt;/a&gt; Dribbble shot of a poster design, &lt;a href=&quot;http://dribbble.com/shots/286479-Real-Artists-Ship&quot;&gt;Real Artists Ship&lt;/a&gt;, which he made available as a wallpaper for download. His work is awesome, you should check it out.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 11 Dec 2012 14:46:00 +0000</pubDate>
+        <link>/ship/posts/2012/12/11/just-fucking-ship-it.html</link>
+        <guid isPermaLink="true">/ship/posts/2012/12/11/just-fucking-ship-it.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>FontPrep - The Missing Font Generator</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;&lt;img src=&quot;/img/fontprep-the-missing-font-generator.png&quot; alt=&quot;Speaking about Get Invited&quot; /&gt;&lt;/p&gt;
+          
+          &lt;p&gt;@font-face is an amazing tool for providing custom fonts on the web. There are a couple of ways to do add fonts to a site. The first is by usng a service like TypeKit to serve the fonts for you. The second is to use a service like FontSquirrel to convert them for you. FontPrep is a Mac App that lets you do this from the comfort of your computer, all for a mere $5. Sold.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 11 Dec 2012 14:44:00 +0000</pubDate>
+        <link>/ship/posts/2012/12/11/fontprep.html</link>
+        <guid isPermaLink="true">/ship/posts/2012/12/11/fontprep.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>jQuery Select Plugin</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;CSS gives us a lot of control over how things look and feel in our projects, but I find time and again, that there is a single element that seems to consistently cause issues. The beloved &lt;code&gt;&amp;lt;select&amp;gt;&lt;/code&gt; element.&lt;/p&gt;
+
+&lt;p&gt;It’s such a useful element to have on a site, yet it seems to have default styling in many browsers that limits what we can do. Bizarrely, I’ve found Internet Explorer to have the best implementation in terms of styling. That’s just &lt;em&gt;wrong&lt;/em&gt;.&lt;/p&gt;
+
+&lt;!--[More]--&gt;
+
+&lt;h2 id=&quot;working-around-things&quot;&gt;Working Around Things&lt;/h2&gt;
+
+&lt;p&gt;Unfortunately there’s no way to change some default styling decisions made with this element, so instead we have to come up with creative ways to work around the issue. In a recent project I found myself needing to do exactly that.&lt;/p&gt;
+
+&lt;p&gt;It is something that I have attempted before, during my final year of my Interactive Multimedia Design degree. The solution I implemented there worked, but wasn’t very flexible. As this is something I find myself having to attempt ever more frequently, I wanted something that could work any time I needed it. I wanted to create an easy to use jQuery plugin for select styling.&lt;/p&gt;
+
+&lt;p&gt;Here it is.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-does-it-do&quot;&gt;What Does It Do?&lt;/h2&gt;
+
+&lt;p&gt;This plugin takes a look at select boxes that match the selector you provide, and will add in a label after matching &lt;code&gt;&amp;lt;select&amp;gt;&lt;/code&gt; boxes. It will also add some classes to these elements for the purposes of styling.&lt;/p&gt;
+
+&lt;h2 id=&quot;usage&quot;&gt;Usage&lt;/h2&gt;
+
+&lt;p&gt;The plugin has been built with ease of use in mind, so that you can set it up and get &lt;em&gt;straight&lt;/em&gt; to using it. Being a jQuery plugin you will want to load both jQuery and the plugin to ensure that it will actually run. If you’re already using jQuery then you just need to load the plugin script, there is no need to add jQuery multiple times:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;js/jquery.select.min.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;With the plugin loaded, and jQuery running as well, it’s simple to get things running. Simply copy/paste the following code into your site, somewhere after the plugin:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;select&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;customStyle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That’s it. The plugin will work its way through all the select boxes on the site and start adding in extra labels. There’s some styling that you’ll need to add. I’ll show the HTML &amp;amp; CSS that I’m using in the demo so you can see how I’ve implemented things. First, the HTML:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;label&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;for=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;select-1&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  Pick a dinosaur, any dinosaur:
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;select&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;select-1&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;select-1&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Pterodactyl&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Pterodactyl&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Triceritops&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Triceritops&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Stegasaurus&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Stegasaurus&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/select&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/label&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And now the CSS:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nc&quot;&gt;.custom-select&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.custom-select-label&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;line-height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;relative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nc&quot;&gt;.custom-select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;margin-bottom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;-2em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;z-index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;opacity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;webkit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;appearance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;none&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nc&quot;&gt;.custom-select-label&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;padding-left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#ddd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;margin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;webkit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shadow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rgba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shadow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rgba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nc&quot;&gt;.custom-select-label&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:after&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;6px&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;transparent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;border-top-color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#222&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;margin-top&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;-3px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That’s all it takes to get some rather nice looking &lt;code&gt;&amp;lt;select&amp;gt;&lt;/code&gt; boxes going.&lt;/p&gt;
+
+&lt;h2 id=&quot;extra-settings&quot;&gt;Extra Settings&lt;/h2&gt;
+
+&lt;p&gt;There are a few pre-defined classes that are used that you might have noticed up above, &lt;code&gt;.custom-select&lt;/code&gt; and &lt;code&gt;.custom-select-label&lt;/code&gt;. These can be changed as you see fit, by defining some settings for the plugin, like so:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;select&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;customStyle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;selClass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;custom-select&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;labelClass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;custom-select-label&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This will give you complete control over the classes that are used, and over the classes applied to content on your site.&lt;/p&gt;
+
+&lt;h2 id=&quot;support&quot;&gt;Support&lt;/h2&gt;
+
+&lt;p&gt;In its current incarnation of things, I’ve chosen to support everything &lt;em&gt;except&lt;/em&gt; Internet Explorer. In using this in site development I have found that there are certain oddities that liked to crop up that were counterproductive. This is also one of those instances where Internet Explorer actually handles styling of &lt;code&gt;&amp;lt;select&amp;gt;&lt;/code&gt; elements pretty well, so it shouldn’t cause any issues.&lt;/p&gt;
+
+&lt;h2 id=&quot;download&quot;&gt;Download&lt;/h2&gt;
+
+&lt;p&gt;You can download isEmpty over at the &lt;a href=&quot;https://github.com/DavidTurner/jQuery-Select&quot;&gt;Github Repository&lt;/a&gt;, but if you just want to download the latest version you can &lt;a href=&quot;https://github.com/DavidTurner/jQuery-Select/archive/master.zip&quot;&gt;click here&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 05 Nov 2012 17:12:00 +0000</pubDate>
+        <link>/ship/posts/2012/11/05/select-plugin.html</link>
+        <guid isPermaLink="true">/ship/posts/2012/11/05/select-plugin.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>Building Simply Written</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;A couple of weeks ago I publicly introduced &lt;a href=&quot;http://simply-written.com/&quot;&gt;Simply Written&lt;/a&gt; to the world. It’s been an idea in my head for some time now, and I’m really happy that it’s finally out where people can start using it.&lt;/p&gt;
+
+&lt;p&gt;In my original article on the project, I discussed the thought process behind it and how I took it from being an idea to being the web app that you can make use of today. I didn’t really talk about how I &lt;em&gt;built&lt;/em&gt; it, or any of the technical aspects of it.&lt;/p&gt;
+
+&lt;p&gt;Let’s remedy that.&lt;/p&gt;
+
+&lt;!--[More]--&gt;
+
+&lt;h2 id=&quot;goals&quot;&gt;Goals&lt;/h2&gt;
+
+&lt;p&gt;Every project has goals. The development of Simply Written was no different. The goals in this particular project were:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;High quality output&lt;/li&gt;
+  &lt;li&gt;Simplicity&lt;/li&gt;
+  &lt;li&gt;Gets out of the way&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Each of these goals impacts the work in some capacity.&lt;/p&gt;
+
+&lt;h3 id=&quot;high-quality-output&quot;&gt;High Quality Output&lt;/h3&gt;
+
+&lt;p&gt;This goal serves as the bedrock of Simply Written. It’s why I started the project. Digital books were being mangled by automating the process of digital book creation. Simply Written needed to get this right, otherwise it just contributes to the problem.&lt;/p&gt;
+
+&lt;h3 id=&quot;simplicity&quot;&gt;Simplicity&lt;/h3&gt;
+
+&lt;p&gt;Simplicity in a service is difficult to get right, and is one of the key principles I have identified that help my work &lt;a href=&quot;/making-people-happier/&quot;&gt;make people happier&lt;/a&gt;. Simplifying a process doesn’t mean dumbing something down, it means removing complexity. I don’t want users to have to jump through hoops and perform tricks in order to create.&lt;/p&gt;
+
+&lt;h3 id=&quot;gets-out-of-the-way&quot;&gt;Gets Out of the Way&lt;/h3&gt;
+
+&lt;p&gt;This goal goes hand in hand with Simplicity. I don’t want Simply Written to require hand-holding. I don’t want the service I built to get in the way. It shouldn’t be a tool that holds users back from creating. Microsoft Word can do that, I don’t need to.&lt;/p&gt;
+
+&lt;h2 id=&quot;problems&quot;&gt;Problems&lt;/h2&gt;
+
+&lt;p&gt;Simply Written’s inspiration comes from a problem I encountered: &lt;em&gt;Digital Books aren’t being generated in a manner that provides a quality product.&lt;/em&gt; That serves as an encompassing problem, but it’s not really a solvable problem as there are components that create it. To me, the problems are:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Content output quality sucks&lt;/li&gt;
+  &lt;li&gt;Generating multiple formats&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;content-output-quality-sucks&quot;&gt;Content Output Quality Sucks&lt;/h3&gt;
+
+&lt;p&gt;This is closely related to the original problem above. Digital books being generated quite often are sloppily done. They’re being created from content aimed at being printed, and the end result suffers for this&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;In addition the best of the digital book formats, ePub, suffers from such automation as there is no way to identify break points that could be used to create high quality ePub files. I’ll talk about this later.&lt;/p&gt;
+
+&lt;h3 id=&quot;generating-multiple-formats&quot;&gt;Generating Multiple Formats&lt;/h3&gt;
+
+&lt;p&gt;As mentioned above, converting from a format meant for print to a digital format is messy. Doing the same for multiple formats isn’t going to be any better. It’s important to ensure that all the output formats are of a high quality. If it’s not something I would be proud of, I don’t want to make it available.&lt;/p&gt;
+
+&lt;p&gt;It’s also important, to me, that content isn’t &lt;em&gt;converted&lt;/em&gt; between the different formats. The content should be slotted in to them. Conversion of content rarely ends well. I don’t want to see that happen to content in Simply Written.&lt;/p&gt;
+
+&lt;h2 id=&quot;having-a-system&quot;&gt;Having a System&lt;/h2&gt;
+
+&lt;p&gt;I didn’t just throw myself into building the current version of Simply Written. I did that for closed testing and, whilst it worked, it wasn’t as good as it could have been. I was able to build upon some of what I learned during closed testing, along with other work I have done. The key things for Simply Written were:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Use a Framework&lt;/li&gt;
+  &lt;li&gt;User Authorisation and Security&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;use-a-framework&quot;&gt;Use a Framework&lt;/h3&gt;
+
+&lt;p&gt;Having a framework in place allows me to get the ball rolling quickly. Over the last two years I have been using/developing my own framework, called the Wee_ Framework&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;, that provides a basic shell for web apps. It also provides me with a great deal of flexibility.&lt;/p&gt;
+
+&lt;p&gt;It’s something of a Model &amp;amp; View framework, with a single file controlling what is loaded. I’ve tried many of the common MVC frameworks out there and the have always felt that they do more to get in my way than help me get things done.&lt;/p&gt;
+
+&lt;h3 id=&quot;user-authorisation-and-security&quot;&gt;User Authorisation and Security&lt;/h3&gt;
+
+&lt;p&gt;Any service that handles user details should have this on the top of their “Get This Shit Right” list. Sadly it seems that not every service out there does. Ever since I started work on my first web app, &lt;a href=&quot;https://referenceit.org/&quot;&gt;ReferenceIt&lt;/a&gt;, I have worked to ensure that user information is secured.&lt;/p&gt;
+
+&lt;p&gt;The majority of information that I store is encrypted. Email addresses and passwords are stored in such a manner that if the system is somehow compromised that the information accessed is rendered useless. The only person who will ever know a user’s password is the user. The way it should be.&lt;/p&gt;
+
+&lt;h2 id=&quot;building-a-system&quot;&gt;Building a System&lt;/h2&gt;
+
+&lt;p&gt;As mentioned above I didn’t just &lt;em&gt;build&lt;/em&gt; Simply Written, I thought things through to ensure that what I built would be of high quality. This required an understanding of what I wanted the site to have, and how I wanted the site to be.&lt;/p&gt;
+
+&lt;p&gt;The closed testing of Simply Written served as the first test for identifying the structure required for the service. Some of this was obvious, as there would have to be a user-only area. For the current version I was able to build on this to create a more fully formed structure.&lt;/p&gt;
+
+&lt;h3 id=&quot;registration&quot;&gt;Registration&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/simply-written-registration.png&quot; alt=&quot;Simply Written Registration Form - Complex but it&#39;s all I need to let a registered user immediately start writing&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I wanted to ensure that the process for registering for an account would let those who register immediately start writing. As a result the registration process asks for a decent amount of information, more than I would normally ask for. The information is important though, it is used in digital book publishing.&lt;/p&gt;
+
+&lt;p&gt;Every book has an author, every author has a name. Every digital book needs a method to create a unique identifier for a book, and the username allows this to be created with ease. Every account requires an email address and password to login, as email addresses are easier to remember than usernames.&lt;/p&gt;
+
+&lt;h3 id=&quot;book-setup&quot;&gt;Book Setup&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/simply-written-logged-in.png&quot; alt=&quot;Simply Written once logged in - you can immediately start writing&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;With the information users provide on registration I am able to let them &lt;em&gt;immediately&lt;/em&gt; start creating books. Digital books require a great deal of information, but getting started requires only one thing: a title. With that anyone can immediately start writing.&lt;/p&gt;
+
+&lt;p&gt;There is a collection of extra information available that is hidden from view. It’s important information but isn’t necessary for a book to be generated, and is all optional. Some of the more useful information is pre-populated at this point, but all of this information can be edited at any point.&lt;/p&gt;
+
+&lt;p&gt;Once a book has been created an extra piece of information can be added, a cover for the book. This isn’t available when initially creating a book for technical reasons, and book covers are organised based on information about both the author and the book. The information needed to save the cover isn’t available until the book has been created.&lt;/p&gt;
+
+&lt;p&gt;Users will also note that books are listed on this home section in order of most recently added. This sidebar allows users to re-order their books as they see fit. It can also be used to delete entire books if necessary. Obviously, deleting a book will delete all the chapters it contains.&lt;/p&gt;
+
+&lt;h3 id=&quot;chapter-creation&quot;&gt;Chapter Creation&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/simply-written-new-book-no-chapters.png&quot; alt=&quot;A freshly created book, awaiting new chapters&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once you have created your book, you are taken to a book edit view. The structure is similar to that of the create book page, but with two notable differences:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;A book cover can now be added&lt;/li&gt;
+  &lt;li&gt;The sidebar now lists chapters, not books&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The sidebar will adopt this view when you are handling a single book, allowing a user to quickly switch between chapters as necessary. As with the books, it is also possible to re-order and delete chapters as they desire.&lt;/p&gt;
+
+&lt;p&gt;Having just created a book, there will be no chapters created just yet. In place of a list of chapters will be a note letting the user know that there aren’t any chapters, asking them if they would like to create one.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/simply-written-content-editing.png&quot; alt=&quot;Writing using Simply Written is just like using Microsoft Word or WordPress - easy&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Creating content for chapters is much like writing content using Microsoft Word, or popular Content Management Systems like WordPress. I want to provide the best experience possible and doing this can involve providing a familiar experience. Not everything needs to be re-invented to provide an improvement.&lt;/p&gt;
+
+&lt;h2 id=&quot;providing-a-high-quality-structure&quot;&gt;Providing a High Quality Structure&lt;/h2&gt;
+
+&lt;p&gt;The goal of simplifying the process of digital book creation isn’t an easy one. Simplicity isn’t an easy thing to achieve, there needs to be a solid structure in place to ensure that simplicity doesn’t turn out to be a dumbed down process. It is important to ensure that you get this right from the start, as it can be &lt;em&gt;very&lt;/em&gt; difficult to go back and fix this later without scrapping things.&lt;/p&gt;
+
+&lt;p&gt;To get books right there were two key areas that I needed to think about, and ensure that I handled them properly:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Content management&lt;/li&gt;
+  &lt;li&gt;Output formats&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Content is &lt;em&gt;key&lt;/em&gt; to any form of book, printed or digital. If you handle content poorly or, worse, fail to store it properly then Simply Written would not be a service people would care for. Ensuring that content was handled appropriately formed one half of the puzzle I needed to solve.&lt;/p&gt;
+
+&lt;p&gt;The second half was the formats that digital books are typically formatted in. There’s a small collection of key areas to get right: ePub, mobi (Kindle), and PDF. To provide a service that does justice to users, I needed to build a system that would allow Simply Written to provide these formats.&lt;/p&gt;
+
+&lt;p&gt;These areas formed the basic issue that I felt needed to be solved, that of allowing users to write content once and be able to publish it in the multiple digital formats required. How did I go about solving them?&lt;/p&gt;
+
+&lt;h3 id=&quot;content-management&quot;&gt;Content Management&lt;/h3&gt;
+
+&lt;p&gt;Solving the issue of content was one I put a lot of time into. It forms the basic inspiration of creating Simply Written. Taking a book formatted for print and trying to create a digital edition wasn’t working.&lt;/p&gt;
+
+&lt;p&gt;Similarly I didn’t want to take a book formatted for ePub use and try to and wrap it up as a mobi file. It wouldn’t work, and if it did it would be poorly done and deliver a sub-par experience.&lt;/p&gt;
+
+&lt;p&gt;The solution to this problem came from looking at what these formats had in common. HTML is the underlying structure of the web, and digital books have a &lt;em&gt;lot&lt;/em&gt; in common with the web. Content written in HTML would fit perfectly into both ePub and mobi formats, and PDF files can be easily created from HTML. I had a winner.&lt;/p&gt;
+
+&lt;h3 id=&quot;formats&quot;&gt;Formats&lt;/h3&gt;
+
+&lt;p&gt;Handling digital book formats can be tricky. What works for ePub might, sometimes, work for mobi and PDF plays by a different set of rules entirely. As I mentioned in the original Simply Written Beta Launch, ePub and mobi files have a lot in common when it comes to building them.&lt;/p&gt;
+
+&lt;p&gt;An ePub file is essentially a zipped up collection of files and folders. The book’s content is saved as XHTML files, it’s styled using CSS and there are a collection of files that handle information about the book. It can be a bit messy when you dive into it, but as you progress things start to make a lot of sense.&lt;/p&gt;
+
+&lt;p&gt;To provide the best experience it is also important to properly separate content in the book. The most suitable manner to do this is by chapter. The reason for this is to provide a better experience for people reading the content.&lt;/p&gt;
+
+&lt;p&gt;To provide an example: If someone is reading a book that isn’t split, digital book readers need to load content from the start of the book. This is fine when someone is starting a book. It’s not so great if they’re five chapters in. Then they have to &lt;em&gt;wait&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Splitting a book into multiple smaller chunks allows the reading software to start from a more suitable start point, such as the beginning of the chapter the person is trying to read, and then load in extra content as needed.&lt;/p&gt;
+
+&lt;p&gt;A finished mobi file is rather mysterious, as it’s a proprietary format owned by Amazon. There are tools you can use to extract the content from mobi files but don’t. It’s a terrifying and scary thing to look at&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;Fortunately you &lt;em&gt;never&lt;/em&gt; need to look inside of these files, as the same structure you would use to create an ePub file can, with a few adjustments to some of the files that store information, be used to generate mobi files.&lt;/p&gt;
+
+&lt;p&gt;Some considerations need to be made for some files though, as all images are processed into mobi friendly content and, if you have any PNG files with transparent areas in them, the end result of this process is not a pretty one.&lt;/p&gt;
+
+&lt;h2 id=&quot;generating-digital-books&quot;&gt;Generating Digital Books&lt;/h2&gt;
+
+&lt;p&gt;Every part of Simply Written is important, but if any part serves as the cornerstone of the project it is the book generation process. Making it easy for users to register, create books, and write means &lt;em&gt;nothing&lt;/em&gt; if the end result is of poor quality.&lt;/p&gt;
+
+&lt;p&gt;It should come as no surprise then that this is the part of Simply Written that took the longest to implement, and is the most tweaked part of the service as I continue to improve the quality of the content generated here.&lt;/p&gt;
+
+&lt;p&gt;To ensure that each format available (currently ePub and mobi) is of the highest quality, each has a separate book generation system. This means that I can optimise ePub files separate from mobi, and vice versa. The same will be true as additional formats (namely PDF) are added.&lt;/p&gt;
+
+&lt;p&gt;Each of these formats has slightly different structures and needs. Simply Written’s book generators cater to these. They also deal with some of the more fiddly aspects of content styling for the various formats. The mobi format isn’t nearly as flexible as ePub when it comes to CSS support, I do what I can to provide a consistent experience where it is suitable, and embrace difference when it’s appropriate.&lt;/p&gt;
+
+&lt;h2 id=&quot;moving-forward&quot;&gt;Moving Forward&lt;/h2&gt;
+
+&lt;p&gt;I have put a great amount of time and effort into Simply Written to date, but there is still room for growth. At the moment there are three key things I will be implementing in the future:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;PDF format&lt;/li&gt;
+  &lt;li&gt;Image support&lt;/li&gt;
+  &lt;li&gt;Charging a Fee&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;pdf-support&quot;&gt;PDF Support&lt;/h3&gt;
+
+&lt;p&gt;Of the three key formats for digital books, I currently handle two. The third, PDF, has proven to be a bit trickier. It’s not that I have difficulty generating them, that part is surprisingly easy. The difficult part is generating PDF files with a quality of design that I expect from books my system will provide.&lt;/p&gt;
+
+&lt;p&gt;I’m a firm believer in not releasing a product until it is at a level you are happy with. PDF will happen, but only once it is of a high enough quality.&lt;/p&gt;
+
+&lt;h3 id=&quot;image-support&quot;&gt;Image Support&lt;/h3&gt;
+
+&lt;p&gt;So far I’ve added support for book covers to Simply Written. They’re a bit easier to implement than images in a book’s content, as I have more direct control over how a book cover is used. Graphics in the book’s content become trickier to manage, which is why they’re not included just yet.&lt;/p&gt;
+
+&lt;p&gt;Again this is a case of not wanting to implement something that isn’t ready for use. I want it to be usable when it’s implemented, not a mess.&lt;/p&gt;
+
+&lt;h3 id=&quot;charging-a-fee&quot;&gt;Charging a Fee&lt;/h3&gt;
+
+&lt;p&gt;Money makes the world go round. It pays for important things, like coffee, electricity, and internet connections. It also covers things like rent, travel, food, and hosting. I want to make things better for people, and that includes for myself.&lt;/p&gt;
+
+&lt;p&gt;By charging for the usage of Simply Written I am able to ensure that the service remains available, and it further motivates me to continue working on it. If I can’t afford to keep a service running I won’t, so it’s in the best interests of everyone that uses the service that it’s profitable.&lt;/p&gt;
+
+&lt;h2 id=&quot;lots-done-but-more-to-do&quot;&gt;Lots Done but More to Do&lt;/h2&gt;
+
+&lt;p&gt;Simply Written has come a long way recently, but there is plenty more to be done. I hope to be able to dig a bit more into some aspects of what Simply Written does in the future, looking more closely at some of the technical aspects of the site.&lt;/p&gt;
+
+&lt;h2 id=&quot;further-reading&quot;&gt;Further Reading&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/introducing-simply-written/&quot;&gt;Introducing Simply Written&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;This really shouldn’t be tolerated in any aspect of content management. Trying to convert a poster into a web page doesn’t work. Why would anyone think it would with books? &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;Wow, it’s hard to believe I started work on both Wee_ CMS and this framework two years ago. Time flies sometimes. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;Interesting note for the developer folks out there. Simply Written’s codebase weighs in at 23.4MB, the file that Amazon provides for creating mobi files weighs in at 20.5MB. Yikes! &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Wed, 01 Aug 2012 19:18:00 +0100</pubDate>
+        <link>/ship/posts/2012/08/01/building-simply-written.html</link>
+        <guid isPermaLink="true">/ship/posts/2012/08/01/building-simply-written.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>Introducing Simply Written</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;In the design community there is a &lt;em&gt;lot&lt;/em&gt; of sharing. Information, ideas, concepts, and suggestions. Feedback, criticism, and Q&amp;amp;A sessions. There’s a &lt;em&gt;lot&lt;/em&gt; of consumption. People wouldn’t share the things they do if nobody was noticing them.&lt;/p&gt;
+
+&lt;p&gt;Sharing things online is great, but putting content up online isn’t always the best medium for sharing. There are alternatives, most notably digital publications. They have a lot in common with online content, but creating the formats for them can be troublesome. I’d like to change that.&lt;/p&gt;
+
+&lt;h2 id=&quot;meet-simply-written&quot;&gt;Meet Simply Written&lt;/h2&gt;
+
+&lt;p&gt;Simply Written is a project I’ve been working on for quite some time now. The idea first appeared in the autumn of 2011, and the first real “demo” cropped up in January before it took a back seat to &lt;a href=&quot;https://getinvited.to/&quot;&gt;other projects&lt;/a&gt;. Last week I took the time to resolve this, and I feel it’s now ready for sharing with the world.&lt;/p&gt;
+
+&lt;p&gt;At its core, Simply Written exists as a service, a system, to allow authors and writers to create content that can be wrapped up into multiple book formats with ease. Right now it works with ePub and mobi (Kindle uses the format) but I intend to add PDF support once I figure out the best approach to doing so.&lt;/p&gt;
+
+&lt;p&gt;In my experience most digital books aren’t created, they are &lt;em&gt;converted&lt;/em&gt;. This leads to sub-par books, as machines aren’t good enough to get the conversion process right. We could sit and wait for them to become good enough, or we could use something that works now. &lt;em&gt;You&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Simply Written uses you, as the author of your content, to work out how content should be structured. It processes what you write into a format that can be used in any of the popular digital media readers. Rather than &lt;em&gt;converting&lt;/em&gt; content, it &lt;em&gt;processes&lt;/em&gt; it, wrapping it up in the relevant code to make an ePub file, or a mobi file.&lt;/p&gt;
+
+&lt;h3 id=&quot;how&quot;&gt;How?&lt;/h3&gt;
+
+&lt;p&gt;Simply Written takes a complex process and simplifies it. It’s actually not that difficult to create an ePub file from static HTML content. Working with mobi files is a bit trickier, there’s some extra bits needed and some that need removed, but the format can be generated from the same content as an ePub file.&lt;/p&gt;
+
+&lt;p&gt;It is, however, &lt;em&gt;tedious&lt;/em&gt;, and it takes up time. That time could be better spent writing, or having fun. So Simply Written takes the tedious parts of book creation and leaves you with the most fundamental area of digital book authoring, the authoring part. You create your content, and Simply Written will handle the rest.&lt;/p&gt;
+
+&lt;h3 id=&quot;why&quot;&gt;Why?&lt;/h3&gt;
+
+&lt;p&gt;Over the course of this year I have really grown to enjoy writing content, content that I believe is &lt;em&gt;good&lt;/em&gt;. I have always enjoyed sitting down with a good book and getting lost in it. With the shift towards digital, and being able to carry a whole collection of books in my iPad, I have embraced digital books quite happily.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately not everyone creating content has embraced it as much as I have, and many that &lt;em&gt;have&lt;/em&gt; embraced it create sub-par versions of their printed books. I witnessed a few tweets about books published by Penguin, showcasing how &lt;em&gt;badly&lt;/em&gt; structured the content was. I witnessed it first hand with one of &lt;a href=&quot;https://twitter.com/keilantra&quot;&gt;Tami Olsen&lt;/a&gt;’s books.&lt;/p&gt;
+
+&lt;p&gt;I owned a copy of her printed books, and really enjoyed them. Unfortunately the experience with the digital books wasn’t nearly as good. They weren’t responsive, I’d say they were sluggish. It made reading them less than enjoyable. A painful side effect of converting a PDF file into an ePub file. The result is sub-par, which frustrated me when trying to read them.&lt;/p&gt;
+
+&lt;h2 id=&quot;from-frustration-to-prototype&quot;&gt;From Frustration to Prototype&lt;/h2&gt;
+
+&lt;p&gt;Books deserve to be looked after regardless of the medium, and I decided to do something to prevent as many of these stories as I could. Over the months of November and December I pieced together a prototype that could be used for content authoring. It supported text-only content, and no covers could be added. It &lt;em&gt;worked&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;From the very start I knew that supporting the open format of ePub was vital to Simply Written. I also knew that supporting kindle devices would be important, as Amazon is a powerhouse in the sales department. I invested time in ensuring that these formats were crafted in a way that was valid, and provided a high quality of content.&lt;/p&gt;
+
+&lt;p&gt;With the structure in place I turned my attention to creating a platform for the actual authoring. Having a solid system for creating books means nothing if people don’t have an enjoyable writing experience, as they won’t &lt;em&gt;use&lt;/em&gt; it. Sadly at this point my university studies, and work on &lt;a href=&quot;https://getinvited.to/&quot;&gt;Get Invited&lt;/a&gt; took over my life, and Simply Written became a lower priority in my work schedule.&lt;/p&gt;
+
+&lt;h2 id=&quot;from-prototype-to-beta&quot;&gt;From Prototype to Beta&lt;/h2&gt;
+
+&lt;p&gt;This changed last week, when I decided I was going to undertake a solid week of development on a single project, and take it from where it was already to something I could share with the world. Simply Written was the &lt;em&gt;obvious&lt;/em&gt; choice. It had sat neglected for too long, and I already had a solid idea for what I wanted to achieve.&lt;/p&gt;
+
+&lt;p&gt;The week consisted of a complete redesign of the site, and a major overhaul of the codebase. I’ve pieced together the key tweets I sent marking progress throughout the week in &lt;a href=&quot;http://storify.com/HerrWulf/simplywritten-dev-week&quot;&gt;this storify&lt;/a&gt; story. All told, the week consisted of:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Site design overhaul&lt;/li&gt;
+  &lt;li&gt;Site architecture overhaul&lt;/li&gt;
+  &lt;li&gt;Better book details&lt;/li&gt;
+  &lt;li&gt;Better authoring functionality&lt;/li&gt;
+  &lt;li&gt;Support for WYSIWYG &lt;em&gt;and&lt;/em&gt; markdown editing&lt;/li&gt;
+  &lt;li&gt;Chapter and book organisation&lt;/li&gt;
+  &lt;li&gt;Chapter and book deletion&lt;/li&gt;
+  &lt;li&gt;Book cover support&lt;/li&gt;
+  &lt;li&gt;Inclusion of important book pages:
+    &lt;ul&gt;
+      &lt;li&gt;Title&lt;/li&gt;
+      &lt;li&gt;Copyright&lt;/li&gt;
+      &lt;li&gt;Dedication&lt;/li&gt;
+      &lt;li&gt;Epigraph&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Improved book generation suporting new book features&lt;/li&gt;
+  &lt;li&gt;Account settings&lt;/li&gt;
+  &lt;li&gt;Allow chapters to have headings removed&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Looking at that list is actually rather overwhelming, it’s amazing what can be achieved in a short space of time if you break things down into smaller parts. I wanted to work towards a solid goal, of allowing for book creation, and the above list matches nicely with that goal.&lt;/p&gt;
+
+&lt;p&gt;It’s not the final goal for Simply Written, as it doesn’t allow for the addition of images inside of chapters, something that is beneficial in many types of content. Thus far Simply Written also lacks PDF generation. I realise that this is something that &lt;em&gt;is&lt;/em&gt; needed but I don’t want to add functionality until I am confident that it will meet user expectations. I &lt;em&gt;will&lt;/em&gt; work it out though.&lt;/p&gt;
+
+&lt;h2 id=&quot;beta-launch&quot;&gt;Beta Launch&lt;/h2&gt;
+
+&lt;p&gt;I’ve had a few quieter launches of Simply Written, largely due to needing to show off progess during the last two semesters of university. Today marks a more public beta, as I feel that things have reached a level of stability and quality that I can open things up to a wider audience.&lt;/p&gt;
+
+&lt;p&gt;Today marks the public beta launch of &lt;a href=&quot;http://simply-written.com/&quot;&gt;Simply Written&lt;/a&gt;, and I invite you all to &lt;a href=&quot;http://simply-written.com/register/&quot;&gt;register&lt;/a&gt; and try it out. Try things out, make some books, and if you break things please &lt;a href=&quot;&amp;#109;&amp;#097;&amp;#105;&amp;#108;&amp;#116;&amp;#111;:&amp;#104;&amp;#105;&amp;#064;&amp;#100;&amp;#097;&amp;#118;&amp;#105;&amp;#100;&amp;#116;&amp;#117;&amp;#114;&amp;#110;&amp;#101;&amp;#114;&amp;#046;&amp;#110;&amp;#097;&amp;#109;&amp;#101;&quot;&gt;let me know&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;first-steps&quot;&gt;First Steps&lt;/h2&gt;
+
+&lt;p&gt;Simply Written is only just starting out, but it is already being put to good use. I mentioned earlier that I encountered a sub-par experience with one of &lt;a href=&quot;https://twitter.com/keilantra&quot;&gt;Tami Olsen&lt;/a&gt;’s books. As much as she is an author, I also view her as a friend, and I believed that her books deserved better than they had received.&lt;/p&gt;
+
+&lt;p&gt;As a result of this I have been working with her to provide copies of her books in both ePub and mobi format that she can sell online. Those books are now ready for her to sell, and she plans to via both the iBookstore and Amazon. The book is now available on Amazon, both in the &lt;a href=&quot;http://www.amazon.co.uk/gp/product/B008LXQJGW/ref=as_li_ss_tl?ie=UTF8&amp;amp;tag=refer05-21&amp;amp;linkCode=as2&amp;amp;camp=1634&amp;amp;creative=19450&amp;amp;creativeASIN=B008LXQJGW&quot;&gt;United Kingdom&lt;/a&gt; and the &lt;a href=&quot;http://www.amazon.com/gp/product/B008LXQJGW/ref=as_li_ss_tl?ie=UTF8&amp;amp;camp=1789&amp;amp;creative=390957&amp;amp;creativeASIN=B008LXQJGW&amp;amp;linkCode=as2&amp;amp;tag=refer05-20&quot;&gt;United States&lt;/a&gt;. Once they’re available on the iBookstore I’ll update this post with links there too.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-goal-the-future&quot;&gt;The Goal, The Future&lt;/h2&gt;
+
+&lt;p&gt;The goal for Simply Written is to allow authors to follow in Tami’s steps, to author content that they can then sell online. To facilitate that there are some features that I want to add, but over time, so that I can get Simply Written out there. Iteration allows me to add new features as things progress and lets me get people using things &lt;em&gt;now&lt;/em&gt;. Things I plan to add in the future:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Adding images to chapters&lt;/li&gt;
+  &lt;li&gt;Multi-author support&lt;/li&gt;
+  &lt;li&gt;Billing for the system&lt;/li&gt;
+  &lt;li&gt;Book promotion system&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I currently plan to charge for the service, but that’s it. You get your books from Simply Written and any profits you make are yours. I don’t have any plans to sell content directly from Simply Written, I believe that there are already services out there for handling that. I &lt;em&gt;do&lt;/em&gt; want to provide a means to promote content authored using Simply Written.&lt;/p&gt;
+
+&lt;h2 id=&quot;check-it-out&quot;&gt;Check It Out&lt;/h2&gt;
+
+&lt;p&gt;To close, I’d love it if people would check out the &lt;a href=&quot;http://simply-written.com/&quot;&gt;beta&lt;/a&gt;. Write books, follow &lt;a href=&quot;https://twitter.com/simply_written_&quot;&gt;Simply Written&lt;/a&gt; or &lt;a href=&quot;https://twitter.com/HerrWulf&quot;&gt;myself&lt;/a&gt; on twitter, and let me know what you think.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 18 Jul 2012 10:09:00 +0100</pubDate>
+        <link>/ship/posts/2012/07/18/introducing-simply-written.html</link>
+        <guid isPermaLink="true">/ship/posts/2012/07/18/introducing-simply-written.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>Gravatar</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;&lt;img src=&quot;/img/gravatar.jpg&quot; alt=&quot;Speaking about Get Invited&quot; /&gt;&lt;/p&gt;
+          
+          &lt;p&gt;Globally Recognized Avatars, AKA Gravatars, serve as a really easy way to implement avatars that are attached to your email address, not to an account on a site. It makes setting up avatars on sites simpler and gives people better control over what appears on sites. It’s pretty awesome and, if you’ve not already registered an account with them you really should.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 17 Jul 2012 14:52:00 +0100</pubDate>
+        <link>/ship/posts/2012/07/17/gravatar.html</link>
+        <guid isPermaLink="true">/ship/posts/2012/07/17/gravatar.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>Symbolset</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;&lt;img src=&quot;/img/symbolset.jpg&quot; alt=&quot;Speaking about Get Invited&quot; /&gt;&lt;/p&gt;
+          
+          &lt;p&gt;Symbolset is a rather awesome semantic font (soon to be collection of fonts) for use on the web and elsewhere. What’s so awesome about it? Write twitter and get the twitter icon. If a browser doesn’t support the font, then they get the word twitter, as opposed to a random character. Awesome stuff. $30. Sold. Get yours now.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 06 Jul 2012 14:53:00 +0100</pubDate>
+        <link>/ship/posts/2012/07/06/symbolset.html</link>
+        <guid isPermaLink="true">/ship/posts/2012/07/06/symbolset.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>isEmpty jQuery Plugin</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;HTML5 form validation is pretty cool. I’m a big fan, even if it needs to be supported with some client-side magic and server side validation. What I &lt;em&gt;don’t&lt;/em&gt; like is when a form tells users that they are doing something wrong… before they have even had a chance to &lt;em&gt;do&lt;/em&gt; anything. So I made something to fix that.&lt;/p&gt;
+
+&lt;p&gt;The isEmpty jQuery Plugin is a simple little script that loops through specified elements, adding a specific class as necessary. It will also check to see if the field is being used, and will automagically add and remove classes as needed.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-does-it-do&quot;&gt;What Does it Do?&lt;/h2&gt;
+
+&lt;p&gt;The isEmpty plugin is a simple jQuery plugin that works a little magic to hide error warnings from HTML form fields that are required until the user has interacted with them. It strikes me as rather poor form to tell someone they’re doing it wrong &lt;em&gt;before&lt;/em&gt; they have actually done anything.&lt;/p&gt;
+
+&lt;p&gt;It does this by adding an extra class to required fields that don’t have any field that is completely empty. It also monitors for when people have started typing into fields, and removes the class. It can, optionally, readd the class if the user empties a field, but this is disabled by default.&lt;/p&gt;
+
+&lt;p&gt;This allows us to write a small amount of extra CSS that is more specific than the standard &lt;code&gt;:invalid&lt;/code&gt; CSS, which hides the error styling from being displayed until the user interacts with elements.&lt;/p&gt;
+
+&lt;h2 id=&quot;usage&quot;&gt;Usage&lt;/h2&gt;
+
+&lt;p&gt;The jQuery isEmpty plugin has been built with ease of use in mind, so that you can set it up and get &lt;em&gt;straight&lt;/em&gt; to using it. Being a jQuery plugin you will want to load both jQuery and the plugin to ensure that it will actually run. If you’re already using jQuery then you just need to load the plugin script, there is no need to add jQuery multiple times:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;//ajax.googleapis.com/ajax/libs/jquery/&amp;lt;!--[jQuery]--&amp;gt;/jquery.min.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;js/jquery.isEmpty.min.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;With the plugin loaded, and jQuery running as well, it’s simple to get things running. Simply copy/paste the following code into your site, somewhere after the plugin:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;[required]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isEmpty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That’s it. The isEmpty plugin is up and running, working it’s magic on any elements with a required attribute. There’s a little bit more that you’ll need to do in order to get any form of visual feedback though. You’ll need to write some CSS. By way of example, the CSS I use for my site is:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nt&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:required:invalid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:focus:invalid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;textarea&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:required:invalid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;textarea&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:focus:invalid&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shadow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5em&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rgba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;inset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This flags errors with a slightly red glow around their edges. It’s subtle, but it’s noticeable. Leaving things like this would mean any empty required fields would get this glow. The isEmpty plugin adds a class on &lt;code&gt;empty&lt;/code&gt; to these fields, and we can use that to get rid of the glow:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nt&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;textarea&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:required:invalid&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;.empty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:focus:invalid&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;.empty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;textarea&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:required:invalid&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;.empty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;textarea&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;:focus:invalid&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;.empty&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;box&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shadow&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5em&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rgba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;inset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Boom! Error styling is hidden on empty fields.&lt;/p&gt;
+
+&lt;h2 id=&quot;some-extra-settings&quot;&gt;Some Extra Settings&lt;/h2&gt;
+
+&lt;p&gt;The isEmpty plugin has a couple of settings you can change. They are:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code&gt;theClass&lt;/code&gt;: This allows you to change the class that is added to better fit your tastes. The default, as mentioned above, is &lt;code&gt;empty&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;addOnEmpty&lt;/code&gt;: This allows the plugin to readd the class in the event that a user empties a field. By default this is set to &lt;code&gt;0&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The method for changing either of these settings is pretty easy. When you’re calling the plugin you can pass through your personal options, like the following:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;[required]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isEmpty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;theClass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;hiddenWarning&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;addOnEmpty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You can use as many or as few options as you’d like, as each option has a default defined.&lt;/p&gt;
+
+&lt;h2 id=&quot;download&quot;&gt;Download&lt;/h2&gt;
+
+&lt;p&gt;You can download isEmpty over at the &lt;a href=&quot;https://github.com/DavidTurner/isEmpty&quot;&gt;Github Repository&lt;/a&gt;, but if you just want to download the latest version you can &lt;a href=&quot;https://github.com/DavidTurner/isEmpty/zipball/master&quot;&gt;click here&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 04 Jul 2012 16:39:00 +0100</pubDate>
+        <link>/ship/posts/2012/07/04/is-empty.html</link>
+        <guid isPermaLink="true">/ship/posts/2012/07/04/is-empty.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>2012 So Far</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;&lt;img src=&quot;/img/july-4th.jpg&quot; alt=&quot;Speaking about Get Invited&quot; /&gt;&lt;/p&gt;
+          
+          &lt;p&gt;We are four days into the month of July, the month that marks the half way point of the year. On New Year’s eve I wrote a little regarding my &lt;a href=&quot;/plans-for-2012/&quot;&gt;plans for 2012&lt;/a&gt;. Six months in, how are things looking?&lt;/p&gt;
+
+&lt;h2 id=&quot;what-have-i-done&quot;&gt;What Have I Done?&lt;/h2&gt;
+
+&lt;p&gt;In the original topic laying out my plans for 2012, I covered several key areas that I wanted to focus on. In this post I thought it would make sense to maintain a similar structure. It makes things easier to measure against the original goals.&lt;/p&gt;
+
+&lt;h3 id=&quot;education&quot;&gt;Education&lt;/h3&gt;
+
+&lt;p&gt;2012 has been a year of split personalities on the education front, as I have found myself on both sides of the table. I have been a student on the MA course, but I have also been on the teaching side of things on the Interactive Multimedia Design Degree. It’s been weird. It’s been &lt;em&gt;great&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;On the student side of things I have received my marks for the first year of the course. I was pleasantly surprised with my marks, which placed me &lt;em&gt;just&lt;/em&gt; shy of my goals for the year. This is in spite of a terrible apathy that swamped me in the week leading to deadlines for the year. This has obviously impacted my marks, but hasn’t thrown things off balance as much as I had expected.&lt;/p&gt;
+
+&lt;p&gt;On the teaching side of things I greatly enjoyed my time with the first year Interactive Multimedia Design students, and will be expecting great things from them over the course of the next three years.&lt;/p&gt;
+
+&lt;p&gt;I am still unsure of my future in a role as an educator. With the final semester of my time on the MA drawing near I will need to focus on my work for it, but in the future I could see myself returning to this role in some capacity if it were an option.&lt;/p&gt;
+
+&lt;h3 id=&quot;professional&quot;&gt;Professional&lt;/h3&gt;
+
+&lt;p&gt;As with 2011, this year has proven to be pretty packed with work to get done. Being a full time MA student really pushes you to be the best that you can be. It’s helped me to really push forward with a web based ticketing system, &lt;a href=&quot;https://getinvited.to&quot;&gt;Get Invited&lt;/a&gt;, alongside &lt;a href=&quot;http://twitter.com/fehler&quot;&gt;Mr Murphy&lt;/a&gt; and &lt;a href=&quot;http://twitter.com/kylegawley&quot;&gt;Mr Gawley&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This serves as the first step towards one of my goals for the year, to set up a business alongside Kyle. We have individual projects, &lt;a href=&quot;https://referenceit.org&quot;&gt;ReferenceIt&lt;/a&gt; and &lt;a href=&quot;http://vizua.li&quot;&gt;Vizuali&lt;/a&gt;, but this is the first solid step towards meeting this goal.&lt;/p&gt;
+
+&lt;p&gt;The second key area I identified in my previous article was that I wanted to network more. I feel that I have, thus far, been modestly successful with this but I also feel I could do more. Baby steps.&lt;/p&gt;
+
+&lt;p&gt;I have also met my goal of starting to take a more active role in events, having spoken at &lt;a href=&quot;/creative-camp-2012/&quot;&gt;Creative Camp 2012&lt;/a&gt;. Whilst it’s only a single event thus far, I really enjoyed it and &lt;em&gt;want&lt;/em&gt; to do similar things more often in the future.&lt;/p&gt;
+
+&lt;p&gt;One final area I discussed back in December, though in a more general manner, is the topic of writing. I wanted to write more. This is a goal I have made progress on, but have only recently really settled into a rhythm with. I have set myself the goal of writing an article a week, with the aim of publishing a post every Wednesday.&lt;/p&gt;
+
+&lt;p&gt;Having settled into this rhythm I have decided that I wanted to up my game. I used to do sketchwork, and I greatly enjoyed it, but I don’t have the time for it that I used to. Now, with each article I write I have a secondary goal, that of producing a piece of artwork for each post. So far, so good.&lt;/p&gt;
+
+&lt;h3 id=&quot;personal&quot;&gt;Personal&lt;/h3&gt;
+
+&lt;p&gt;Matters in my personal life have probably been the area in which things have least improved and, in some cases, have taken a turn for the worse. I have, to a limited extent, made progress regarding a balance between professional and personal lives. Unfortunately this currently seems to be an on/off switch, where I’m either working lots or not working at all. Not the best of situations, but it’s still a start.&lt;/p&gt;
+
+&lt;p&gt;Money hasn’t been as free flowing as it has in previous years, which has impacted my ability to travel. This is unforunate for a great many reasons, not the least of which because it served as an opportunity to get away from things and get some, almost always, much needed down time.&lt;/p&gt;
+
+&lt;p&gt;Exercise continues along at the same pace as it always has. It’s better than nothing, but I still feel that this could, and &lt;em&gt;should&lt;/em&gt;, be improved on. A starting point would be to work the mornings elsewhere, and walking to/from the location. Simply increasing the quantity of excercise would serve to improve matters.&lt;/p&gt;
+
+&lt;p&gt;Reading &lt;em&gt;has&lt;/em&gt; improved. I tend to go through bursts of reading, consuming a handful of books in a few nights before taking a break. It’s an enjoyable cycle, but I feel that I am still not reading enough.&lt;/p&gt;
+
+&lt;h3 id=&quot;misc&quot;&gt;Misc&lt;/h3&gt;
+
+&lt;p&gt;Sadly &lt;em&gt;nothing&lt;/em&gt; has changed with this aspect of things. The twitter handle &lt;a href=&quot;http://twitter.com/davidturner&quot;&gt;@davidturner&lt;/a&gt; sits idle, three years of seeming inactivity and all. Which is slightly infuriating, but I’ll continue to keep an eye on things and, if it ever becomes available, you can bet I’ll be snapping it up.&lt;/p&gt;
+
+&lt;h2 id=&quot;another-six-months&quot;&gt;Another Six Months&lt;/h2&gt;
+
+&lt;p&gt;On the whole I think things have improved, but I dislike that some areas have stagnated or suffered in the first half of the year. It looks like I’ll be upping my game in the second half of the year.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 03 Jul 2012 14:11:00 +0100</pubDate>
+        <link>/ship/posts/2012/07/03/2012-so-far.html</link>
+        <guid isPermaLink="true">/ship/posts/2012/07/03/2012-so-far.html</guid>
+        
+      </item>
+    
+      <item>
+        <title>Optimising Your Site: CSS &amp; Javascript</title>
+        <dc:creator>David Turner</dc:creator>
+        <author></author>
+        <description>
+          
+          &lt;p&gt;&lt;img src=&quot;/img/hand-optimised-code.jpg&quot; alt=&quot;Speaking about Get Invited&quot; /&gt;&lt;/p&gt;
+          
+          &lt;p&gt;At the &lt;a href=&quot;/optimising-your-site-the-basics/&quot;&gt;start of this series&lt;/a&gt; of posts I gave an overview of some of the best ways to start optimising a site. Last week I looked &lt;a href=&quot;/optimising-your-site-images/&quot;&gt;more in-depth at images&lt;/a&gt; and this week I want to turn my attention to the other files I brought up: CSS and JavaScript.&lt;/p&gt;
+
+&lt;h2 id=&quot;css--javascript&quot;&gt;CSS &amp;amp; JavaScript&lt;/h2&gt;
+
+&lt;p&gt;These are fundamental building blocks of the internet, alongside HTML and CSS adding visual effects to sites and JavaScript adding additional functionality and interaction to sites. As a result it isn’t all that hard to see them becoming quite large files. Which isn’t really ideal.&lt;/p&gt;
+
+&lt;p&gt;Whilst CSS and JavaScript are entirely different types of content, and are written differently, the approaches to optimising them overlap and, in some cases, are identical. The guidelines I follow are:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;One CSS file, one JavaScript File&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Always&lt;/em&gt; place CSS before JavaScript&lt;/li&gt;
+  &lt;li&gt;CSS goes in the &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt;, JavaScript before &lt;code&gt;&amp;lt;/body&amp;gt;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Compress and Minify content for deployment&lt;/li&gt;
+  &lt;li&gt;CSS Preprocessors are &lt;em&gt;awesome&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;As with all guidelines there are exceptions that I afford. I’ll cover them in the relevant areas below.&lt;/p&gt;
+
+&lt;h3 id=&quot;one-css-file-one-javascript-file&quot;&gt;One CSS File, One JavaScript File&lt;/h3&gt;
+
+&lt;p&gt;I default to using a single CSS file and a single JavaScript file. This provides a maximum level of efficiency when it comes to loading. One HTTP request for CSS, one HTTP request for JavaScript and then we’re good to go.&lt;/p&gt;
+
+&lt;p&gt;The big exception to this is when using a CDN (Content Delivery Network) to deliver JavaScript Libraries. These files generally aren’t that small, and by using a CDN you can help mitigate some file loading times.&lt;/p&gt;
+
+&lt;p&gt;How? A CDN is a way to deliver certain files quickly in a global manner. If you’re in Europe you get the file &lt;em&gt;from&lt;/em&gt; Europe. The same is true in the Americas. But, better yet, these files are &lt;em&gt;cached&lt;/em&gt;. So if someone else uses the same CDN as you to serve the same JavaScript file as you then the user doesn’t have to download the same file when they visit your site. They have it already.&lt;/p&gt;
+
+&lt;p&gt;In addition to that it also lightens the load on your own site, as you’re not having to serve a larger file that includes whichever library you’re using.&lt;/p&gt;
+
+&lt;h3 id=&quot;always-place-css-before-javascript&quot;&gt;&lt;em&gt;Always&lt;/em&gt; Place CSS before JavaScript&lt;/h3&gt;
+
+&lt;p&gt;JavaScript files block the rest of a site from loading. Whilst there are instances where this is fine (I’ll touch on this in the next area) you always want to have the CSS ready to go when the body of a site is rendering. The alternative is that your site looks sloppy, as if you don’t care about your users. That’s never good.&lt;/p&gt;
+
+&lt;p&gt;Little things like this don’t seem important, but can have unforseen consequences if you don’t properly consider them. Which leads nicely to the next point.&lt;/p&gt;
+
+&lt;h3 id=&quot;css-goes-in-the-head-javascript-before-body&quot;&gt;CSS goes in the &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt;, JavaScript before &lt;code&gt;&amp;lt;/body&amp;gt;&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;The order of files is important in terms of page loading and rendering times. JavaScript will, for the most part, block content beneath it from loading. This can cause pages to appear to be slower loading. So we want to ensure that doesn’t happen.&lt;/p&gt;
+
+&lt;p&gt;An example of this in action is a project I worked on over a year ago, called &lt;a href=&quot;https://referenceit.org&quot;&gt;ReferenceIt&lt;/a&gt;. There are a few key things to note. The first is in this cut down version of the &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; element:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;ni&quot;&gt;&amp;amp;lt;&lt;/span&gt;head&lt;span class=&quot;ni&quot;&gt;&amp;amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;ni&quot;&gt;&amp;amp;lt;&lt;/span&gt;link rel=&lt;span class=&quot;ni&quot;&gt;&amp;amp;quot;&lt;/span&gt;stylesheet&lt;span class=&quot;ni&quot;&gt;&amp;amp;quot;&lt;/span&gt; media=&lt;span class=&quot;ni&quot;&gt;&amp;amp;quot;&lt;/span&gt;screen&lt;span class=&quot;ni&quot;&gt;&amp;amp;quot;&lt;/span&gt; href=&lt;span class=&quot;ni&quot;&gt;&amp;amp;quot;&lt;/span&gt;https://referenceit.org/-assets/css/site.live.css&lt;span class=&quot;ni&quot;&gt;&amp;amp;quot;&lt;/span&gt; /&lt;span class=&quot;ni&quot;&gt;&amp;amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;ni&quot;&gt;&amp;amp;lt;&lt;/span&gt;script src=&lt;span class=&quot;ni&quot;&gt;&amp;amp;quot;&lt;/span&gt;//cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js&lt;span class=&quot;ni&quot;&gt;&amp;amp;quot;&amp;amp;gt;&amp;amp;lt;&lt;/span&gt;/script&lt;span class=&quot;ni&quot;&gt;&amp;amp;gt;&lt;/span&gt;
+&lt;span class=&quot;ni&quot;&gt;&amp;amp;lt;&lt;/span&gt;/head&lt;span class=&quot;ni&quot;&gt;&amp;amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;There are two things of note here. A single CSS file and, what’s that, JavaScript? In &lt;em&gt;my&lt;/em&gt; &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; element? Well, yes. Which leads to my first exception to this guideline. HTML5Shiv and Modernizr need to be in the &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; in order to get Internet Explorer to understand HTML5 elements.&lt;/p&gt;
+
+&lt;p&gt;If we carry on down the site we’ll see that there’s some more JavaScript waiting for us:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;ni&quot;&gt;&amp;amp;lt;&lt;/span&gt;script src=&lt;span class=&quot;ni&quot;&gt;&amp;amp;quot;&lt;/span&gt;//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js&lt;span class=&quot;ni&quot;&gt;&amp;amp;quot;&amp;amp;gt;&amp;amp;lt;&lt;/span&gt;/script&lt;span class=&quot;ni&quot;&gt;&amp;amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;ni&quot;&gt;&amp;amp;lt;&lt;/span&gt;script src=&lt;span class=&quot;ni&quot;&gt;&amp;amp;quot;&lt;/span&gt;/-assets/js/site.live.js&lt;span class=&quot;ni&quot;&gt;&amp;amp;quot;&amp;amp;gt;&amp;amp;lt;&lt;/span&gt;/script&lt;span class=&quot;ni&quot;&gt;&amp;amp;gt;&lt;/span&gt;
+&lt;span class=&quot;ni&quot;&gt;&amp;amp;lt;&lt;/span&gt;/body&lt;span class=&quot;ni&quot;&gt;&amp;amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This is the &lt;em&gt;real&lt;/em&gt; JavaScript that’s running on the site, and it’s left until the &lt;em&gt;very&lt;/em&gt; end of the site. This lets the rest of the content on the site load as quickly as possible before layering extra functionality on top of the site. This lets the user get straight to &lt;em&gt;using&lt;/em&gt; the site, without waiting on things to finish downloading.&lt;/p&gt;
+
+&lt;h3 id=&quot;compress-and-minify-content-for-deployment&quot;&gt;Compress and Minify Content for Deployment&lt;/h3&gt;
+
+&lt;p&gt;There are really two different stages to a site. Development of the project and the live version of a project. Each has it’s own nuances that need to be taken into consideration. For instance, when developing something you want to be able to quickly identify &lt;em&gt;what&lt;/em&gt; is causing problems if something goes wrong.&lt;/p&gt;
+
+&lt;p&gt;By the time you’re launching a project such problems shouldn’t exist, which affords us the ability to make some savings in terms of space. We do this using the wonderful technologies of compression and minification.&lt;/p&gt;
+
+&lt;p&gt;I’ll stick with the example I used above, ReferenceIt. You saw in the footer there was a reference to a file called &lt;code&gt;site.live.js&lt;/code&gt;. You can view it &lt;a href=&quot;https://referenceit.org/-assets/js/site.live.js&quot;&gt;here&lt;/a&gt;. As you can see, it’s pretty clustered together. I didn’t write this file. The file I wrote can be viewed &lt;a href=&quot;https://referenceit.org/-assets/js/site.js&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;There’s quite the difference in looks, isn’t there? This is a principle I apply to both my JavaScript &lt;em&gt;and&lt;/em&gt; my CSS, though it’s much more effective with JavaScript as when minifying variable names can be reloaded. What does my CSS look like then? It looks a lot like &lt;a href=&quot;https://referenceit.org/-assets/css/site.live.css&quot;&gt;this&lt;/a&gt;, though it starts out quite differently.&lt;/p&gt;
+
+&lt;p&gt;Why do this? The savings in terms of file size can mount up. The JavaScript I use isn’t &lt;em&gt;that&lt;/em&gt; large, but by serving it as a compressed and minified file, I make a saving of about 20-25%. Think about how much space could be saved with &lt;em&gt;larger&lt;/em&gt; files.&lt;/p&gt;
+
+&lt;p&gt;Compressing and minifying JavaScript is simplified greatly using tools like &lt;a href=&quot;http://incident57.com/codekit/&quot;&gt;CodeKit&lt;/a&gt; and &lt;a href=&quot;http://livereload.com/&quot;&gt;LiveReload&lt;/a&gt;. CSS is a bit more fiddly. Compressing it, natively, usually requires a bit more in terms of manual effort. There’s an alternative though, which I’ll cover below.&lt;/p&gt;
+
+&lt;h3 id=&quot;css-preprocessors-are-awesome&quot;&gt;CSS Preprocessors are &lt;em&gt;Awesome&lt;/em&gt;&lt;/h3&gt;
+
+&lt;p&gt;I mentioned above that the CSS for ReferenceIt starts out quite differently. That’s because I didn’t write it as CSS &lt;em&gt;at all&lt;/em&gt;. Instead I used a language called &lt;a href=&quot;http://lesscss.org/&quot;&gt;LESS&lt;/a&gt;, a language that builds upon CSS but is compiled into the CSS that browsers know and love. Nowadays I use &lt;a href=&quot;http://sass-lang.com/&quot;&gt;SASS/SCSS&lt;/a&gt;, but the principles remain the same.&lt;/p&gt;
+
+&lt;p&gt;Preprocessors allow you to us a load of fantastic things in addition to the CSS you know and love. The biggest features for me:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Automatic CSS Compression&lt;/li&gt;
+  &lt;li&gt;Usage of Variables&lt;/li&gt;
+  &lt;li&gt;Mixins&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;automatic-css-minification&quot;&gt;Automatic CSS Minification&lt;/h4&gt;
+
+&lt;p&gt;This is probably the biggest win for me. I can write CSS that is perfectly human readable and have it compressed into the file I want to be served to browsers. This makes tweaking things nice and easy too. Save, upload, done.&lt;/p&gt;
+
+&lt;h4 id=&quot;usage-of-variables&quot;&gt;Usage of Variables&lt;/h4&gt;
+
+&lt;p&gt;Variables are handy for a lot of things. I mainly use them to store colours and dimensions, which allows me to quickly change the layout or design of a site by changing just a few elements of code.&lt;/p&gt;
+
+&lt;h4 id=&quot;mixins&quot;&gt;Mixins&lt;/h4&gt;
+
+&lt;p&gt;Think of mixins as functions and you’re pretty much there. Rather than writing multiple lines of &lt;code&gt;border-radius&lt;/code&gt; CSS you can just call a function and have it work it all out for you. I use this with great results in &lt;a href=&quot;https://github.com/DavidTurner/960-LESS&quot;&gt;960-LESS&lt;/a&gt;, a flexible grid framework I now use in SCSS.&lt;/p&gt;
+
+&lt;h4 id=&quot;theres-more&quot;&gt;There’s More&lt;/h4&gt;
+
+&lt;p&gt;I couldn’t do preprocessors justice in this post, there’s too much to cover for it to be just a part of a larger topic. Chris Coyier has done a great series of articles on this topic however, and they are well worth a read:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://css-tricks.com/musings-on-preprocessing/&quot;&gt;Musings on Preprocessing&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://css-tricks.com/sass-vs-less/&quot;&gt;SASS vs. LESS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;and-thats-a-wrap&quot;&gt;And That’s A Wrap&lt;/h2&gt;
+
+&lt;p&gt;I wanted to take a bit of a more in-depth look at ensuring that everything that can be done to save in terms of file space &lt;em&gt;has&lt;/em&gt; been done. It’s important to get this aspect of things right before I talk about the next area of how to optimise your site, which will be dealing with caching of files and a few other technical areas which go hand in hand with caching files.&lt;/p&gt;
+
+&lt;p&gt;As always your comments are appreciated, both below in the comments area and &lt;a href=&quot;https://twitter.com/intent/tweet?original_referer=&amp;amp;source=Optimising+Your+Site:+CSS=&amp;amp;+JavaScript&amp;amp;text=@HerrWulf&amp;amp;url=https://davidturner.name/journal/optimising-your-site-css-and-javascript&quot;&gt;on twitter&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 28 Jun 2012 18:57:00 +0100</pubDate>
+        <link>/ship/posts/2012/06/28/optimising-your-site-css-and-javascript.html</link>
+        <guid isPermaLink="true">/ship/posts/2012/06/28/optimising-your-site-css-and-javascript.html</guid>
+        
+      </item>
+    
+  </channel>
+</rss>

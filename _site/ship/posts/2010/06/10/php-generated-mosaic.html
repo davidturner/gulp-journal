@@ -1,0 +1,39 @@
+<p>This particular piece of experimentation came about as a result of needing to get reacquainted with PHP’s ability to generate images. Why? I was working on an image related piece of script and, at the time, couldn’t find anything suitable. It also gave me a chance to reacquaint myself with PHP scripting for something other than handling Database Content.</p>
+
+<h2 id="how">How?</h2>
+
+<p>PHP has a great deal of functionality when it comes to generating content to be displayed on a website. One thing it can’t do, by itself, is produce images. To do this it needs a little bit of help, in the form of the GD Library, which enables image generation with PHP. Two files were needed to generate the example. The first was the file that loops through all of the required number of images to get them displayed, and the second generating the images, which looks something like this:</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$w</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">];</span>
+<span class="nv">$h</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;h&#39;</span><span class="p">];</span>
+<span class="nv">$r</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">);</span>
+<span class="nv">$g</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">);</span>
+<span class="nv">$b</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">);</span>
+<span class="nb">header</span><span class="p">(</span><span class="s2">&quot;Content-type: image/png&quot;</span><span class="p">);</span>
+<span class="nv">$im</span> <span class="o">=</span> <span class="o">@</span><span class="nb">imagecreate</span><span class="p">(</span><span class="nv">$w</span><span class="p">,</span> <span class="nv">$h</span><span class="p">)</span> <span class="k">or</span> <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Cannot Initialize new GD image stream&#39;</span><span class="p">);</span>
+<span class="nv">$background_color</span> <span class="o">=</span> <span class="nb">imagecolorallocate</span><span class="p">(</span><span class="nv">$im</span><span class="p">,</span> <span class="nv">$r</span><span class="p">,</span> <span class="nv">$g</span><span class="p">,</span> <span class="nv">$b</span><span class="p">);</span>
+<span class="nb">imagepng</span><span class="p">(</span><span class="nv">$im</span><span class="p">);</span>
+<span class="nb">imagedestroy</span><span class="p">(</span><span class="nv">$im</span><span class="p">);</span></code></pre></div>
+
+<p>This allows for easy image genration, passing in variables for the required width and height. Click the link below to see an example of it in action.</p>
+
+<p><strong>Update:</strong> I’ve updated the demo to use css backgrounds generated using PHP rather than generating multiple images using PHP. The updated code is:</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">function</span> <span class="nf">image</span><span class="p">(){</span>
+	<span class="nv">$r</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">);</span>
+	<span class="nv">$g</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">);</span>
+	<span class="nv">$b</span> <span class="o">=</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">);</span>
+	<span class="k">return</span> <span class="nv">$r</span><span class="o">.</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="nv">$g</span><span class="o">.</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="nv">$b</span><span class="p">;</span>
+	<span class="nb">unset</span><span class="p">(</span><span class="nv">$r</span><span class="p">);</span>
+	<span class="nb">unset</span><span class="p">(</span><span class="nv">$g</span><span class="p">);</span>
+	<span class="nb">unset</span><span class="p">(</span><span class="nv">$b</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nv">$total</span> <span class="o">=</span> <span class="mi">30</span><span class="o">*</span><span class="mi">20</span><span class="o">*</span><span class="mi">20</span><span class="p">;</span>
+<span class="nv">$start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span><span class="p">(</span><span class="nv">$start</span> <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span><span class="o">=</span> <span class="nv">$total</span><span class="p">){</span>
+  <span class="k">echo</span> <span class="s1">&#39;&amp;lt;span style=&amp;quot;display:inline-block;width:32px;height:32px;background:rgb(&#39;</span><span class="o">.</span><span class="nx">image</span><span class="p">()</span><span class="o">.</span><span class="s1">&#39;);&amp;quot;&amp;gt;&amp;amp;nbsp;&amp;lt;/span&amp;gt;&#39;</span><span class="p">;</span>
+	<span class="nv">$start</span> <span class="o">=</span> <span class="nv">$start</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>A demo of this can be viewed <a href="/php-generated-mosaic/">here</a>.</p>
+

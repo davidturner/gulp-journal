@@ -1,0 +1,88 @@
+<p>In my work I spend a lot of time doing all that I can to ensure that things load <em>quickly</em> and <em>efficiently</em>. Speed is always a factor when it comes to loading content and, whilst home internet connections are always speeding up, mobile data plans vary from blazingly fast to painfully slow.</p>
+
+<p>I have been pondering how best to go about this post. With the increasing fluidity of the web, some of the “best” practices are becoming more difficult to impliment efficiently. In researching for this article I myself discovered I could make a large saving in loading times. So this is more of a guide than a rulebook, since the best way for one site might not be the best way for another.</p>
+
+<p>If you are interested in getting to grips with this aspect of site development, I’m going to start with some basics and work towards more complex aspects over a series of additional articles. I hope that by the end of the series everyone reading will have added a new tool to their belt, be that knowledge or an application that makes life easier.</p>
+
+<h2 id="the-basics">The Basics</h2>
+
+<p>When it comes to getting a site loading as quickly as possible there are a lot of technical aspects to consider. There are also some very basic ones that are, sadly, too often overlooked:</p>
+
+<ul>
+  <li>Number of Files</li>
+  <li>File Size</li>
+  <li>Ordering Files</li>
+</ul>
+
+<p>These aren’t necessarily things that can be completely controlled, there are always going to be lots of images in a photo gallery for example. Even with these kinds of sites there are aspects that you will have contol over.</p>
+
+<h3 id="number-of-files">Number of Files</h3>
+
+<p>All too often I see sites with code that looks like this:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">media=</span><span class="s">&quot;screen&quot;</span> <span class="na">href=</span><span class="s">&quot;/style/style_reset.css&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">media=</span><span class="s">&quot;screen&quot;</span> <span class="na">href=</span><span class="s">&quot;/style/style_960.css&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">media=</span><span class="s">&quot;screen&quot;</span> <span class="na">href=</span><span class="s">&quot;/style/style_structure.css&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">media=</span><span class="s">&quot;print&quot;</span> <span class="na">href=</span><span class="s">&quot;/style/style_print.css&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
+
+<p>In terms of styling a site there isn’t anything wrong with this. In fact, when coding a site I’ve always found keeping some things separate to be a good thing, as it keeps them out of the way. When it comes to launching a site, however, it’s not quite as ideal.</p>
+
+<p>The reason for this is that each time you load a file the browser has to fetch that file, which takes time. It’s not a large amount of time, but <a href="http://googlewebmastercentral.blogspot.co.uk/2010/04/using-site-speed-in-web-search-ranking.html">every millisecond counts</a>. The more files you add the longer it takes for a site to load.</p>
+
+<h4 id="solution-combine-files-for-launch">Solution: Combine Files for Launch</h4>
+
+<p>Keeping multiple files separate is fine for development of a site, but you want to combine them for launch. The above code could, with ease, be combined down to:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">media=</span><span class="s">&quot;screen&quot;</span> <span class="na">href=</span><span class="s">&quot;/style/site.css&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
+
+<p>Isn’t that much nicer? As an added bonus, if you’re using a <a href="/sometimes-less-is-more/">CSS precompiler</a> you can have it take care of this kind of thing for you.</p>
+
+<h3 id="file-size">File Size</h3>
+
+<p>Lots of files is a problem, but it’s not the only problem. Files that are larger than they need to be cause problems too, and is probably the area in which most savings can be made. This applies largely to images, but it also applies to JavaScript, CSS, and even HTML. Writing code that is easy to read is always a good thing. But indenting code, via tabs or spaces, serves to bulk out files.</p>
+
+<p>When it comes to a live site every saving is beneficial. Smaller size results in faster load times. Faster load times result in users getting to your content faster. This results in less users leaving before seeing your content. It also results in Google being slightly happier with your site too. Everyone wins.</p>
+
+<h4 id="compress-content">Solution: Compress Content</h4>
+
+<p>Compressing code results in files that are slightly smaller. Whilst small amounts of compression won’t impact load times <em>that</em> much, these savings can build up. It also results in a saving in terms of bandwidth, which is a financial incentive for adopting this approach.</p>
+
+<p>It’s possible to go even further with JavaScript, using minification tools. When writing JavaScript it makes sense to name variables in a manner that makes sense to you. When deploying it to a server, it doesn’t. The only difference between a variable named <code>a</code> and a variable named <code>humanReadableVariable</code> is the amount of space it takes up.</p>
+
+<p>Images are the other area that vast savings can be made. The first area that you can make heavy savings is by ensuring that the size of the image is the size it needs to be. If you display a 400px by 400px at 200px by 200px, you’re loading in four times the amount of data you need to. Never do that.</p>
+
+<p>You can make even further savings though. Images almost always have extra information attached to them. Extra information takes up space. What can we do to get rid of that imformation? We use something to strip the excess data from the files.</p>
+
+<p><a href="http://imageoptim.com/">ImageOptim</a> is a Mac application that can take care of that for you, and generally removes all the bits of an image that serve to make files bigger than they need to be. For anyone on Windows <a href="http://luci.criosweb.ro/riot/">RIOT</a> seems to be similar.</p>
+
+<p>For an application that handles everything, however, I would strongly recommend <a href="http://incident57.com/codekit/">CodeKit</a>. It can be used to compress files, minify JavaScript, and strip excess data from images. Unfortunately it’s a Mac-only app, so not useful for those Windows using readers out there.</p>
+
+<p><strong>Update:</strong> <a href="http://twitter.com/duckbox">Chris Grant</a> suggests looking at <a href="http://livereload.com/">LiveReload</a> as a partial alternative for Window users. It doesn’t handle all of the things CodeKit can, but it’s a start. It can also serve as an alternative for Mac users as well.</p>
+
+<h3 id="order-of-files">Order of Files</h3>
+
+<p>The rules with the order of files seem to vary depending on who you ask. I follow a very strict set in the development work that I do. CSS in the <code>&lt;head&gt;</code> element, JavaScript goes right before the <code>&lt;/body&gt;</code> tag. With <em>two</em> exceptions:</p>
+
+<ol>
+  <li><a href="http://code.google.com/p/html5shiv/">HTML5Shiv</a>/<a href="http://modernizr.com/">Modernizr</a> JavaScript goes before the <code>&lt;/head&gt;</code> tag</li>
+  <li><a href="http://adaptive-images.com/">Adaptive Images</a> JavaScript typically goes before the <code>&lt;/head&gt;</code> tag</li>
+</ol>
+
+<p>Both of these exceptions exist for <em>very</em> good reasons. Both HTML5Shiv and Modernizr are used to ensure that HTML5 renders properly in older versions of Internet Explorer. For them to function they need to be loaded before the content of the site.</p>
+
+<p>The logic behind the Adaptive Images JavaScript is to ensure maximum effectiveness. In order to achieve this the cookie it creates needs to be in place <em>before</em> any images start loading. To do this I typically insert the code before the <code>&lt;/head&gt;</code> tag. The current exception is this site, as I explicitly wanted to be able to measure the dimensions of an element of the site.</p>
+
+<h4 id="solution-css-in-the-head-javascript-before-body">Solution: CSS in the <code>&lt;head&gt;</code>, JavaScript before <code>&lt;/body&gt;</code></h4>
+
+<p>Ordering files like this, with the exceptions listed above, results in content rendering more quickly. Yes, it doesn’t really change how quickly a page loads, but it changes the perception. The content is loaded more quickly, and the JavaScript functionality can be added on once it’s loaded.</p>
+
+<h2 id="the-basics---covered">The Basics - Covered</h2>
+
+<p>When it comes to optimising a site to load quickly, the above are some of the most basic areas that can be looked at in order to improve things. These simple guidelines can get things going in the right direction pretty quickly. There’s a great deal more to cover, and I intend to look at other areas in future articles, taking a more in-depth look at things as I go.</p>
+
+<p>If you feel I’ve missed something out, disagree with what I’ve said, or just want some more detail on a particular area feel free to comment below or <a href="https://twitter.com/intent/tweet?original_referer=&amp;source=Optimising+Your+Site+-+The+Basics&amp;text=@HerrWulf&amp;url=https://davidturner.name/journal/optimising-your-site/">message me on twitter</a>.</p>
+
+<h2 id="whats-next">What’s Next?</h2>
+
+<p>This post covers some of the basics of optimising your site so that it loads more quickly. I want to take a look things in more detail going forward. Next week I’ll be taking a look at some further ways to optimise images for the web, as well as some alternatives.</p>
+
